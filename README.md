@@ -7,7 +7,7 @@ Chào mừng bạn đến với kho lưu trữ học tập Backend với Java t�
 ## 📌 Bảng Theo Dõi Tiến Độ Học Tập
 
 | STT | Giai đoạn | Mục tiêu |  Thư mục |
-| :---: | :--- | :--- | :---: | :--- |
+| :---: | :--- | :--- | :--- |
 | **0** | **Backend căn bản** | Hiểu bản chất Backend & Luồng Web |  [00-basic-backend](./00-basic-backend) |
 | **1** | **Java Core** | Nền tảng cú pháp & quản lý bộ nhớ |  [01-java-core](./01-java-core) |
 | **2** | **OOP + Collections** | Tổ chức code & Cấu trúc dữ liệu |  [02-oop-collections](./02-oop-collections) |
