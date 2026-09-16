@@ -6,16 +6,16 @@ Chào mừng bạn đến với kho lưu trữ học tập Backend với Java t�
 
 ## 📌 Bảng Theo Dõi Tiến Độ Học Tập
 
-| STT | Giai đoạn | Mục tiêu | Trạng thái | Thư mục |
+| STT | Giai đoạn | Mục tiêu |  Thư mục |
 | :---: | :--- | :--- | :---: | :--- |
-| **0** | **Backend căn bản** | Hiểu bản chất Backend & Luồng Web | 🟡 Đang học | [00-basic-backend](./00-basic-backend) |
-| **1** | **Java Core** | Nền tảng cú pháp & quản lý bộ nhớ | ⚪ Chưa bắt đầu | [01-java-core](./01-java-core) |
-| **2** | **OOP + Collections** | Tổ chức code & Cấu trúc dữ liệu | ⚪ Chưa bắt đầu | [02-oop-collections](./02-oop-collections) |
-| **3** | **HTTP + REST API** | Chuẩn thiết kế API & Giao thức Web | ⚪ Chưa bắt đầu | [03-http-rest-api](./03-http-rest-api) |
-| **4** | **Spring Boot Core** | Kiến trúc 3 lớp: Controller - Service - Repo | ⚪ Chưa bắt đầu | [04-spring-boot-core](./04-spring-boot-core) |
-| **5** | **Database + JPA/Hibernate** | Quản trị dữ liệu & Tối ưu truy vấn ORM | ⚪ Chưa bắt đầu | [05-database-jpa-hibernate](./05-database-jpa-hibernate) |
-| **6** | **Security** | Authentication (JWT), Authorization (RBAC) | ⚪ Chưa bắt đầu | [06-security](./06-security) |
-| **7** | **Testing + Architecture** | Unit Test, Clean Architecture & Docker | ⚪ Chưa bắt đầu | [07-testing-architecture](./07-testing-architecture) |
+| **0** | **Backend căn bản** | Hiểu bản chất Backend & Luồng Web |  [00-basic-backend](./00-basic-backend) |
+| **1** | **Java Core** | Nền tảng cú pháp & quản lý bộ nhớ |  [01-java-core](./01-java-core) |
+| **2** | **OOP + Collections** | Tổ chức code & Cấu trúc dữ liệu |  [02-oop-collections](./02-oop-collections) |
+| **3** | **HTTP + REST API** | Chuẩn thiết kế API & Giao thức Web |  [03-http-rest-api](./03-http-rest-api) |
+| **4** | **Spring Boot Core** | Kiến trúc 3 lớp: Controller - Service - Repo |  [04-spring-boot-core](./04-spring-boot-core) |
+| **5** | **Database + JPA/Hibernate** | Quản trị dữ liệu & Tối ưu truy vấn ORM |  [05-database-jpa-hibernate](./05-database-jpa-hibernate) |
+| **6** | **Security** | Authentication (JWT), Authorization (RBAC) |  [06-security](./06-security) |
+| **7** | **Testing + Architecture** | Unit Test, Clean Architecture & Docker |  [07-testing-architecture](./07-testing-architecture) |
 
 ---
 
