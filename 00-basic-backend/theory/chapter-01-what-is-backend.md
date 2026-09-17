@@ -1,56 +1,49 @@
-# Chapter 01: Backend là gì & Vai trò trong hệ thống
+# Chapter 01: Backend là gì? & Vai trò trong hệ thống
 
-## 1. Mục tiêu bài học
-- [ ] Hiểu được sự khác biệt giữa Frontend, Backend và Database.
-- [ ] Nắm được 3 nhiệm vụ cốt lõi của Backend: Xử lý logic nghiệp vụ, Lưu trữ dữ liệu, Bảo mật.
-- [ ] Trả lời được câu hỏi: *"Điều gì xảy ra khi bạn bấm nút 'Thanh toán' trên Shopee?"*
+## 1. Khái niệm cơ bản
+- **Backend** (hay Server‑Side) là phần xử lý *logic nghiệp vụ*, *quản lý dữ liệu* và *cung cấp API* cho Frontend (Client).
+- Nhiệm vụ chính:
+  1. Nhận yêu cầu (Request) từ Client.
+  2. Xác thực/Phân quyền (Security).
+  3. Thực thi nghiệp vụ (Business Logic).
+  4. Tương tác với Database (CRUD).
+  5. Trả kết quả (Response) về Client.
 
----
-
-## 2. Lý thuyết cốt lõi
-
-### 2.1 Backend là gì?
-- **Frontend (Giao diện người dùng):** Những gì người dùng nhìn thấy và tương tác trực tiếp (HTML, CSS, JavaScript, React, Vue, Flutter, iOS/Android UI).
-- **Backend (Phần ngầm - Server Side):** Bộ não xử lý đằng sau, chạy trên máy chủ (Server), tiếp nhận yêu cầu, tính toán, kiểm tra quyền hạn và thao tác với Database.
-- **Database (Cơ sở dữ liệu):** Nơi lưu trữ dữ liệu bền vững (MySQL, PostgreSQL, MongoDB,...).
-
-### 2.2 Ba trụ cột chính của Backend
+## 2. Thành phần chính của một Backend
 ```mermaid
 graph TD
-    Client[Client / Frontend] -->|Gửi Request| API[Backend Server]
-    API -->|1. Xác thực & Phân quyền| Auth[Security Layer]
-    API -->|2. Xử lý nghiệp vụ| Logic[Business Logic Service]
-    API -->|3. Đọc / Ghi dữ liệu| DB[(Database)]
-    DB -->|Trả kết quả| API
-    API -->|Gửi Response| Client
+    Client[Client / Frontend] -->|HTTP Request| API[Backend Server]
+    API -->|1️⃣ Auth & Authorization| Auth[Security Layer]
+    API -->|2️⃣ Business Logic| Logic[Service Layer]
+    API -->|3️⃣ Data Access| DB[(Database)]
+    DB -->|Result Set| API
+    API -->|HTTP Response| Client
 ```
 
-1. **Business Logic (Nghiệp vụ):** Ví dụ: Tính toán mã giảm giá, kiểm tra số lượng hàng trong kho, trừ tiền trong ví.
-2. **Data Persistence (Lưu trữ dữ liệu):** Lưu đơn hàng, thông tin tài khoản an toàn vào CSDL.
-3. **Security & Authorization (Bảo mật):** Đảm bảo user chỉ xem được dữ liệu của chính mình, chống giả mạo token/request.
+- **Security Layer**: Kiểm tra token, quyền hạn.
+- **Service Layer**: Áp dụng quy tắc nghiệp vụ (giảm giá, kiểm kê, tính thuế…).
+- **Database**: Lưu trữ bền vững, giao dịch ACID.
 
----
-
-## 3. Ví dụ thực tế: Luồng mua hàng
-1. Người dùng bấm **"Đặt hàng"** trên Web/App (Frontend).
-2. Frontend gửi một **HTTP POST Request** kèm thông tin giỏ hàng đến **Backend Server**.
-3. Backend Server thực hiện:
-   - Kiểm tra Token xem người dùng đã đăng nhập chưa.
-   - Truy vấn Database xem sản phẩm còn hàng không.
-   - Tính toán tổng tiền (kèm phí ship, voucher).
+## 3. Ví dụ thực tế – Luồng mua hàng
+1. Người dùng nhấn **"Đặt hàng"** trên Frontend.
+2. Frontend gửi **POST /orders** tới Backend.
+3. Backend thực hiện:
+   - Kiểm tra token (đã đăng nhập?).
+   - Kiểm tra tồn kho trong DB.
+   - Tính tổng tiền, áp dụng voucher, phí ship.
    - Gọi cổng thanh toán (VNPAY/Momo/Stripe).
-   - Lưu đơn hàng mới vào Database và gửi email thông báo.
-4. Backend trả về **HTTP 200 OK** kèm mã đơn hàng cho Frontend hiển thị.
+   - Lưu đơn hàng, trả về **orderId** và trạng thái.
+
+## 4. Điểm mạnh của Backend
+- **Bảo mật**: Dữ liệu nhạy cảm luôn ở server, không để lộ trên client.
+- **Quy mô**: Có thể mở rộng bằng cách tăng server, cache, load‑balancer.
+- **Kiểm soát**: Business logic tập trung, dễ duy trì, dễ kiểm thử.
+
+## 5. Câu hỏi phỏng vấn thường gặp
+- Backend và Frontend khác nhau như thế nào?
+- Tại sao chúng ta phải có lớp Service (Business Logic) giữa Controller và Repository?
+- JWT được sử dụng ở đâu trong luồng trên?
+- Khi nào nên dùng **synchronous** vs **asynchronous** request?
 
 ---
-
-## 4. Câu hỏi phỏng vấn trọng tâm
-1. **Tại sao không thể để toàn bộ logic xử lý và tính tiền ở Frontend?**
-   - *Trả lời:* Frontend chạy trên máy người dùng, người dùng có thể can thiệp sửa đổi code JavaScript/Network để thay đổi giá trị tiền hoặc bypass kiểm tra. Mọi logic quan trọng và bảo mật bắt buộc phải kiểm tra ở Backend.
-2. **Stateless Backend nghĩa là gì?**
-   - *Trả lời:* Mỗi request từ Client gửi lên Server phải chứa đầy đủ thông tin để Server hiểu và xử lý, Server không lưu trạng thái phiên làm việc của Client trong bộ nhớ riêng của từng máy.
-
----
-
-## 5. Bài tập tự luận & Thực hành
-- [ ] Viết lại bằng sơ đồ hoặc lời giải thích: Luồng hoạt động khi bạn đăng nhập tài khoản Facebook/Google từ lúc nhập mật khẩu đến khi vào Newsfeed.
+*Hướng dẫn thực hành:* Đọc lại toàn bộ các bước trên, vẽ sơ đồ luồng trên giấy, và trả lời các câu hỏi ở mục 5.
