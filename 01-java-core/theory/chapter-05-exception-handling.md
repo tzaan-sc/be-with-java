@@ -267,15 +267,55 @@ try {
 }
 ```
 
-## 8. Câu hỏi phỏng vấn thường gặp
-1. Phân biệt **Checked** và **Unchecked** Exception? Cho ví dụ mỗi loại.
-2. Phân biệt `Error` và `Exception`?
-3. Khối `finally` có **luôn luôn** chạy không? (Gợi ý: `System.exit()` thì sao?)
-4. `throw` và `throws` khác nhau thế nào?
-5. Tại sao nên tạo **Custom Exception** thay vì dùng `RuntimeException` trực tiếp?
-6. **Try-with-resources** hoạt động thế nào? Điều kiện để resource được tự đóng?
-7. Thứ tự `catch` có quan trọng không? Nếu để `catch (Exception e)` trước `catch (IOException e)` thì sao?
-8. Giải thích nguyên tắc **"Throw early, Catch late"**.
+## 8. Câu hỏi phỏng vấn & Trả lời chi tiết
+
+### 8.1. Phân biệt Checked và Unchecked Exception? Cho ví dụ mỗi loại
+| Tiêu chí | Checked Exception | Unchecked Exception (Runtime) |
+| :--- | :--- | :--- |
+| **Kế thừa từ** | Kế thừa trực tiếp từ `Exception` (trừ `RuntimeException`). | Kế thừa từ `RuntimeException`. |
+| **Thời điểm kiểm tra** | **Compile-time** (Trình biên dịch bắt buộc phải xử lý bằng `try-catch` hoặc khai báo `throws`). | **Runtime** (Trình biên dịch không bắt buộc khai báo hay bắt lỗi). |
+| **Bản chất nguyên nhân** | Lỗi ngoại cảnh nằm ngoài tầm kiểm soát của code (Mạng rớt, file không tồn tại, kết nối DB ngắt). | Lỗi do **bug logic của lập trình viên** (truy cập null, chia cho 0, vượt biên mảng). |
+| **Ví dụ điển hình** | `IOException`, `SQLException`, `FileNotFoundException`, `ClassNotFoundException`. | `NullPointerException`, `ArithmeticException`, `ArrayIndexOutOfBoundsException`, `IllegalArgumentException`. |
+
+### 8.2. Phân biệt `Error` và `Exception`?
+- Cả hai đều kế thừa từ lớp cha `Throwable`:
+  - **`Error`:** Đại diện cho các **sự cố nghiêm trọng ở mức hệ thống / máy ảo JVM** (ví dụ: `OutOfMemoryError`, `StackOverflowError`). Ứng dụng thông thường **không nên và không thể bắt (`catch`) hay phục hồi** khi gặp `Error`. Khi `Error` xảy ra, ứng dụng thường phải dừng lại.
+  - **`Exception`:** Đại diện cho các **tình huống ngoại lệ trong luồng thực thi của ứng dụng** mà lập trình viên có thể lường trước, bắt lại bằng `try-catch` và xử lý khắc phục (graceful degradation) để chương trình tiếp tục chạy ổn định.
+
+### 8.3. Khối `finally` có LUÔN LUÔN chạy không?
+- **Quy tắc chung:** Khối `finally` **gần như luôn luôn chạy**, kể cả khi trong khối `try` hoặc `catch` có lệnh `return`, `continue`, hoặc văng ra exception khác.
+- **Những trường hợp hiếm hoi `finally` KHÔNG chạy:**
+  1. Gọi lệnh tắt JVM cưỡng bức: `System.exit(0);`
+  2. Máy chủ bị sập nguồn điện đột ngột hoặc tiến trình JVM bị hệ điều hành kill (`kill -9`).
+  3. Lỗi phần cứng hoặc JVM bị crash nặng (`Fatal Error`).
+  4. Vòng lặp vô hạn bên trong khối `try` khiến luồng không bao giờ chạm tới được `finally`.
+
+### 8.4. `throw` và `throws` khác nhau thế nào?
+| Tiêu chí | Từ khóa `throw` | Từ khóa `throws` |
+| :--- | :--- | :--- |
+| **Vị trí sử dụng** | Nằm **bên trong thân hàm / phương thức**. | Nằm ở **chữ ký phương thức (Method Signature)**. |
+| **Mục đích** | Chủ động **kích hoạt / ném ra** một đối tượng ngoại lệ cụ thể (`throw new BusinessException("Lỗi");`). | **Cảnh báo / Khai báo** rằng phương thức này CÓ THỂ ném ra các loại ngoại lệ nào để nơi gọi nó chuẩn bị xử lý. |
+| **Cú pháp** | Theo sau là một **đối tượng ngoại lệ (Instance)**: `throw exceptionInstance;` | Theo sau là một hoặc nhiều **tên lớp ngoại lệ (Class Name)**: `throws IOException, SQLException` |
+
+### 8.5. Tại sao nên tạo Custom Exception thay vì dùng `RuntimeException` trực tiếp?
+1. **Phân loại nghiệp vụ rõ ràng:** Tạo `UserNotFoundException`, `InsufficientBalanceException` giúp code mang tính tự diễn giải (Self-documenting), người đọc hiểu ngay lỗi nghiệp vụ là gì.
+2. **Bắt lỗi tập trung (Global Exception Handling):** Trong Spring Boot (`@RestControllerAdvice`), ta có thể viết các hàm `@ExceptionHandler` riêng cho từng Custom Exception để trả về đúng mã HTTP Status (ví dụ: `UserNotFoundException` trả về `404 Not Found`, `InvalidOrderException` trả về `400 Bad Request`).
+3. **Đính kèm dữ liệu bổ sung:** Custom Exception có thể chứa thêm các trường dữ liệu tùy biến (ví dụ: `errorCode`, `timestamp`, `fieldName`) để phục vụ việc debug và trả lỗi chi tiết cho Frontend.
+
+### 8.6. Try-with-resources hoạt động thế nào? Điều kiện để resource được tự đóng?
+- **Cơ chế:** Khối `try (Resource res = new Resource())` đảm bảo hàm `res.close()` sẽ luôn luôn được tự động gọi khi luồng thực thi rời khỏi khối `try`, bất kể có exception xảy ra hay không.
+- **Điều kiện bắt buộc:** Biến tài nguyên được khai báo trong ngoặc tròn của `try` **phải implement interface `java.lang.AutoCloseable`** (hoặc con của nó là `java.io.Closeable`).
+- **Ưu điểm:** Loại bỏ hoàn toàn mã thừa thãi `finally { res.close(); }`, tránh rò rỉ tài nguyên (Resource Leak), và tự động xử lý các trường hợp ngoại lệ bị che lấp (Suppressed Exceptions).
+
+### 8.7. Thứ tự `catch` có quan trọng không? Nếu để `catch (Exception e)` trước `catch (IOException e)` thì sao?
+- **Thứ tự CỰC KỲ QUAN TRỌNG:** Phải luôn bắt các Exception **từ cụ thể đến chung chung (từ lớp con tới lớp cha)**.
+- **Nếu để `catch (Exception e)` trước `catch (IOException e)`:**
+  - Chương trình sẽ **bị lỗi biên dịch (Compilation Error: Unreachable code)**.
+  - *Lý do:* Vì `IOException` là lớp con kế thừa từ `Exception`. Khi có ngoại lệ `IOException` xảy ra, khối `catch (Exception e)` nằm ở trên đã tóm gọn nó trước, khiến cho khối `catch (IOException e)` phía dưới sẽ **vĩnh viễn không bao giờ được chạm tới**.
+
+### 8.8. Giải thích nguyên tắc "Throw early, Catch late"
+- **Throw early (Ném lỗi càng sớm càng tốt):** Ngay khi phát hiện tham số không hợp lệ hoặc điều kiện tiên quyết bị vi phạm ở đầu hàm, ném ngoại lệ ngay lập tức (ví dụ: `if (id == null) throw new IllegalArgumentException();`). Tránh để dữ liệu sai đi sâu vào hệ thống rồi mới phát sinh lỗi khó đoán ở tầng Database.
+- **Catch late (Bắt lỗi càng muộn càng tốt):** Không nên vội vàng đặt `try-catch` ở khắp mọi hàm nhỏ nếu hàm đó không biết cách khắc phục lỗi. Hãy để ngoại lệ nổi lên (bubble up) tới các tầng trên cùng (như Controller hoặc Global Exception Handler) - nơi có bức tranh toàn cảnh và thẩm quyền quyết định: ghi log ra sao, rollback transaction thế nào, và trả thông điệp gì cho người dùng.
 
 ---
 *Thực hành:* Viết code bắt `ArithmeticException` và `ArrayIndexOutOfBoundsException`, tạo `ResourceNotFoundException` kế thừa `RuntimeException`, thử `try-with-resources` đọc file.

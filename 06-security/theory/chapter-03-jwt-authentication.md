@@ -262,3 +262,39 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 ```java
 http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 ```
+
+---
+
+## 4. Câu hỏi phỏng vấn thường gặp & Trả lời chi tiết
+
+### 4.1. Cấu trúc 3 phần của JWT hoạt động thế nào? Ai có thể đọc được Payload?
+Một JWT gồm 3 phần ngăn cách bởi dấu chấm `.` : `header.payload.signature`
+1. **Header:** Chứa thuật toán ký (vd: `HS256`, `RS256`) và kiểu token (`JWT`), được mã hóa bằng Base64Url.
+2. **Payload:** Chứa thông tin dữ liệu (Claims) như `sub` (userId), `email`, `roles`, `iat` (issued at), `exp` (expiration), cũng được mã hóa bằng Base64Url.
+   > ⚠️ **CỰC KỲ QUAN TRỌNG:** Base64Url **KHÔNG PHẢI LÀ MÃ HÓA BẢO MẬT**, nó chỉ là định dạng nén chuỗi! Bất kỳ ai cầm JWT cũng có thể lên trang `jwt.io` giải mã và đọc được 100% nội dung bên trong Payload. Do đó: **TUYỆT ĐỐI KHÔNG BAO GIỜ lưu thông tin nhạy cảm (như mật khẩu, số thẻ tín dụng, số CCCD) vào trong Payload của JWT!**
+3. **Signature (Chữ ký điện tử):** Được tạo ra bằng công thức:
+   $$\text{Signature} = \text{HMACSHA256}(\text{base64(Header)} + "." + \text{base64(Payload)}, \ \text{SecretKey})$$
+   Chữ ký này đảm bảo tính toàn vẹn. Nếu hacker sửa đổi bất kỳ ký tự nào trong Payload (ví dụ sửa role từ `USER` thành `ADMIN`), khi Server dùng SecretKey để tính lại chữ ký sẽ thấy lệch ngay lập tức và từ chối token.
+
+### 4.2. Access Token vs Refresh Token? Vì sao bắt buộc phải dùng cả hai?
+- **Access Token:**
+  - Thời hạn sống **rất ngắn (15 - 30 phút)**.
+  - Gửi kèm trong mọi request gọi API.
+  - Nếu bị hacker nghe lén (sniff) đánh cắp, thiệt hại chỉ tồn tại tối đa trong 15-30 phút là token tự hết hạn.
+- **Refresh Token:**
+  - Thời hạn sống **dài (7 ngày - 30 ngày)**.
+  - Lưu an toàn trong Database hoặc HttpOnly Cookie, **chỉ gửi lên duy nhất endpoint `/auth/refresh-token`** khi Access Token đã hết hạn.
+- **Tại sao cần cả hai:**
+  - Nếu chỉ dùng 1 token sống lâu (30 ngày): Quá nguy hiểm khi bị lộ.
+  - Nếu chỉ dùng 1 token sống ngắn (15 phút): Trải nghiệm người dùng cực tệ vì cứ 15 phút lại bị văng ra bắt đăng nhập lại từ đầu.
+  - **Sự kết hợp:** Người dùng vừa an toàn tối đa (Access Token hết hạn nhanh) mà vừa có trải nghiệm mượt mà không bị ngắt quãng (Refresh Token âm thầm xin cấp Access Token mới ngầm dưới background).
+
+### 4.3. Làm sao để thu hồi (Revoke / Blacklist / Logout) một JWT khi nó chưa hết hạn?
+Vì JWT là Stateless (Server không lưu trạng thái), khi người dùng bấm "Đăng xuất" hoặc "Đổi mật khẩu", token cũ trên máy client vẫn còn hạn và vẫn có thể dùng được. 
+- **3 Giải pháp chuẩn thực tế:**
+  1. **Dùng Redis Token Blacklist:** Khi user Logout, lấy `jti` (JWT ID) hoặc chuỗi token đó lưu vào Redis với thời gian hết hạn đúng bằng thời gian còn lại của token (`TTL = exp - now`). Tại `JwtAuthenticationFilter`, kiểm tra nếu token có trong Redis Blacklist $\rightarrow$ Chặn ngay `401`. Sau khi token hết hạn, Redis tự động giải phóng RAM.
+  2. **Token Rotation với Refresh Token:** Mỗi lần dùng Refresh Token để lấy cặp token mới, Refresh Token cũ sẽ bị vô hiệu hóa ngay lập tức. Nếu phát hiện Refresh Token cũ bị dùng lại $\rightarrow$ Cảnh báo tài khoản bị tấn công và hủy toàn bộ các phiên đăng nhập của user đó.
+  3. **Lưu `token_version` trong Database:** Bảng `users` lưu cột `token_version = 1`. Đưa số `1` vào claims của JWT. Khi user đổi mật khẩu hoặc bấm đăng xuất khỏi mọi thiết bị $\rightarrow$ Tăng `token_version` trong DB lên `2`. Các token cũ mang version `1` sẽ tự động bị coi là không hợp lệ khi kiểm tra.
+
+---
+*Thực hành:* Viết API `POST /auth/refresh-token` nhận Refresh Token, kiểm tra trong DB và cấp lại Access Token mới.

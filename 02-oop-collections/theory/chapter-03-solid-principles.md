@@ -113,11 +113,103 @@ OrderService service = new OrderService(new MongoOrderRepository());
 | **I** | Interface nhỏ, chuyên biệt | "Không ép làm thừa" |
 | **D** | Phụ thuộc Interface, không phụ thuộc class cụ thể | "Tiền đề Spring DI" |
 
-## 7. Câu hỏi phỏng vấn
-1. Giải thích SOLID bằng ví dụ thực tế trong Java Backend.
-2. Nguyên lý nào là nền tảng của Dependency Injection trong Spring?
-3. Cho ví dụ vi phạm SRP và cách refactor.
-4. OCP áp dụng trong Spring Boot thế nào? (Strategy Pattern, Interface + @Service)
+## 7. Câu hỏi phỏng vấn & Trả lời chi tiết
+
+### 7.1. Giải thích SOLID bằng ví dụ thực tế trong Java Backend
+1. **S - Single Responsibility Principle (Đơn trách nhiệm):**
+   - *Vi phạm:* Một class `OrderController` vừa nhận HTTP request, vừa tính toán thuế/kho, vừa gọi câu lệnh SQL `INSERT INTO orders...`, vừa tự bắn email cho khách.
+   - *Chuẩn:* Tách thành `OrderController` (HTTP routing) $\rightarrow$ `OrderService` (nghiệp vụ tính toán) $\rightarrow$ `OrderRepository` (lưu DB) $\rightarrow$ `NotificationService` (gửi mail).
+2. **O - Open/Closed Principle (Đóng để sửa, Mở để thêm):**
+   - *Ví dụ:* Hệ thống thanh toán có `PaymentService`. Khi tích hợp thêm cổng thanh toán mới (như Apple Pay), ta chỉ cần tạo class mới `ApplePayStrategy implements PaymentStrategy` mà không phải vào sửa đổi chuỗi `if-else` trong code cũ.
+3. **L - Liskov Substitution Principle (Thay thế Liskov):**
+   - *Ví dụ:* Class cha `ReadOnlyRepository` có hàm `findById()`. Class con `UserRepository` kế thừa từ nó thì bất kỳ chỗ nào nhận `ReadOnlyRepository` đều có thể truyền `UserRepository` vào thay thế mà chương trình vẫn chạy chính xác, không văng ngoại lệ bất thường `UnsupportedOperationException`.
+4. **I - Interface Segregation Principle (Phân tách Interface):**
+   - *Ví dụ:* Thay vì một `SuperWorkerInterface` có cả `work()`, `eat()`, `sleep()`, ép cả `RobotWorker` phải triển khai `eat()`. Ta tách thành `Workable` và `Eatable`. `RobotWorker` chỉ cần `implements Workable`.
+5. **D - Dependency Inversion Principle (Đảo ngược phụ thuộc):**
+   - *Ví dụ:* `UserService` không được `new MySQLUserRepository()` trực tiếp trong thân class. Thay vào đó, `UserService` phụ thuộc vào interface `UserRepository`. Việc đưa implementation nào vào sẽ do Spring Boot lo thông qua Dependency Injection.
+
+### 7.2. Nguyên lý nào là nền tảng của Dependency Injection trong Spring?
+- **Nguyên lý chữ D: Dependency Inversion Principle (DIP).**
+- **Cơ chế:**
+  - *Module cấp cao (High-level - như Service)* không được phụ thuộc trực tiếp vào *Module cấp thấp (Low-level - như Database Repository, Third-party SDK)*. Cả hai phải cùng phụ thuộc vào **sự trừu tượng (Abstraction / Interface)**.
+  - Spring Framework hiện thực hóa nguyên lý này thông qua cơ chế **Inversion of Control (IoC)** và **Dependency Injection (DI)**: Spring Container sẽ tự động tìm kiếm Bean phù hợp và "tiêm" (inject) vào Service qua Constructor lúc khởi động ứng dụng.
+
+### 7.3. Cho ví dụ vi phạm SRP và cách Refactor trong thực tế
+- **Đoạn code vi phạm:**
+  ```java
+  public class UserService {
+      public void registerUser(User user) {
+          // 1. Validate email, password
+          if (!user.getEmail().contains("@")) throw new RuntimeException("Invalid email");
+          
+          // 2. Lưu vào Database
+          String sql = "INSERT INTO users VALUES (...)";
+          jdbcTemplate.update(sql);
+          
+          // 3. Gửi email kích hoạt
+          JavaMailSender.sendMail(user.getEmail(), "Welcome!");
+      }
+  }
+  ```
+  Class này có tới 3 lý do để bị sửa đổi: khi quy tắc validate đổi, khi câu lệnh SQL đổi, hoặc khi mẫu email đổi.
+- **Refactor chuẩn SRP:**
+  ```java
+  @Service
+  @RequiredArgsConstructor
+  public class UserService {
+      private final UserValidator validator;
+      private final UserRepository repository;
+      private final EmailService emailService;
+
+      public void registerUser(User user) {
+          validator.validate(user);
+          User savedUser = repository.save(user);
+          emailService.sendWelcomeEmail(savedUser.getEmail());
+      }
+  }
+  ```
+
+### 7.4. OCP áp dụng trong Spring Boot thế nào? (Strategy Pattern + @Service)
+Spring Boot hỗ trợ triển khai Open/Closed Principle cực kỳ thanh lịch thông qua **Strategy Pattern** và tính năng **Auto-wiring Map/List Beans**:
+```java
+// 1. Interface chung
+public interface PaymentGateway {
+    String getPaymentType(); // "MOMO", "VNPAY", "ZALOPAY"
+    void process(double amount);
+}
+
+// 2. Các Service triển khai độc lập
+@Service
+public class MomoGateway implements PaymentGateway {
+    public String getPaymentType() { return "MOMO"; }
+    public void process(double amount) { /* Logic Momo */ }
+}
+
+@Service
+public class VnPayGateway implements PaymentGateway {
+    public String getPaymentType() { return "VNPAY"; }
+    public void process(double amount) { /* Logic VNPay */ }
+}
+
+// 3. Quản lý tập trung không cần if-else
+@Service
+public class PaymentFactory {
+    private final Map<String, PaymentGateway> gatewayMap;
+
+    // Spring tự động quét tất cả các bean implements PaymentGateway và nhét vào Map!
+    public PaymentFactory(List<PaymentGateway> gateways) {
+        gatewayMap = gateways.stream()
+            .collect(Collectors.toMap(PaymentGateway::getPaymentType, Function.identity()));
+    }
+
+    public void pay(String type, double amount) {
+        PaymentGateway gateway = gatewayMap.get(type);
+        if (gateway == null) throw new IllegalArgumentException("Cổng không hỗ trợ: " + type);
+        gateway.process(amount);
+    }
+}
+```
+$\rightarrow$ **Khi cần thêm cổng thanh toán ZaloPay:** Ta chỉ cần tạo class mới `ZaloPayGateway implements PaymentGateway`. Class `PaymentFactory` hoàn toàn **đóng để sửa (không cần sửa một dòng code nào)** nhưng hệ thống vẫn **mở rộng thêm tính năng mới thành công**!
 
 ---
 *Thực hành:* Phân tích 1 class vi phạm SRP, refactor lại. Viết code minh hoạ DIP bằng Interface + Constructor Injection.

@@ -136,3 +136,35 @@ networks:
 - **Xem log toàn hệ thống**: `docker compose logs -f`
 - **Dừng và dọn dẹp**: `docker compose down`
 - **Rebuild và chạy lại khi có code mới**: `docker compose up --build -d`
+
+---
+
+## 4. Câu hỏi phỏng vấn thường gặp & Trả lời chi tiết
+
+### 4.1. Docker Container vs Virtual Machine (VM) khác nhau thế nào?
+| Tiêu chí | Docker Container | Virtual Machine (Máy ảo VMware / VirtualBox) |
+| :--- | :--- | :--- |
+| **Kiến trúc phần cứng** | **Chia sẻ chung nhân hệ điều hành (Shared Host OS Kernel)**. | Mỗi máy ảo phải cài riêng một hệ điều hành khách (**Guest OS**) đầy đủ. |
+| **Dung lượng lưu trữ** | Cực nhẹ (vài chục MB tới vài trăm MB). | Rất nặng (vài GB tới vài chục GB). |
+| **Thời gian khởi động** | **Gần như tức thì (vài giây)** vì chỉ là một tiến trình (Process) của OS. | Chậm (vài chục giây tới vài phút) để boot toàn bộ Guest OS. |
+| **Mức độ tiêu tốn tài nguyên** | Tối ưu tuyệt đối: Sử dụng trực tiếp RAM/CPU của máy chủ khi cần. | Lãng phí tài nguyên: Phải cấp phát cứng trước dung lượng RAM và Core CPU. |
+
+### 4.2. Tại sao BẮT BUỘC nên dùng Multi-stage Build khi đóng gói ứng dụng Spring Boot?
+- **Vấn đề của Single-stage thông thường:** Nếu dùng 1 image duy nhất chứa JDK và Maven để vừa build vừa chạy, image cuối cùng sẽ nặng tới **hơn 800MB - 1GB**, chứa đầy mã nguồn gốc, file cache maven rác và các công cụ biên dịch không cần thiết (nguy cơ bảo mật).
+- **Lợi ích vượt trội của Multi-stage Build:**
+  - **Giai đoạn 1 (Builder):** Dùng image `maven:3.9-eclipse-temurin-17` để tải dependencies và biên dịch file `app.jar`.
+  - **Giai đoạn 2 (Runner):** Chỉ dùng image siêu nhẹ `eclipse-temurin:17-jre-alpine` (chỉ có JRE, không có trình biên dịch) và chỉ copy đúng duy nhất 1 file `app.jar` sang.
+  - $\rightarrow$ **Kết quả:** Kích thước Docker Image giảm từ 800MB xuống chỉ còn **khoảng 150MB - 200MB**, kéo/đẩy qua mạng siêu nhanh và bảo mật tuyệt đối trên Production!
+
+### 4.3. Sự khác nhau giữa `CMD` và `ENTRYPOINT` trong Dockerfile?
+- **`ENTRYPOINT`:** Định nghĩa câu lệnh **cố định và bất biến** sẽ luôn luôn được chạy khi Container khởi động (ví dụ: `ENTRYPOINT ["java", "-jar", "app.jar"]`).
+- **`CMD`:** Cung cấp các **tham số mặc định** cho `ENTRYPOINT`. Các tham số này có thể dễ dàng bị **ghi đè (override)** khi người dùng truyền tham số từ dòng lệnh `docker run`.
+- **Thực tiễn tốt nhất cho Spring Boot:**
+  ```dockerfile
+  ENTRYPOINT ["java", "-jar", "app.jar"]
+  CMD ["--spring.profiles.active=prod"]
+  ```
+  Nếu chạy `docker run my-app` $\rightarrow$ Profile sẽ là `prod`. Nếu chạy `docker run my-app --spring.profiles.active=dev` $\rightarrow$ Lệnh mới sẽ ghi đè tham số của `CMD` để chạy profile `dev` linh hoạt.
+
+---
+*Thực hành:* Viết file `Dockerfile` Multi-stage build cho dự án Spring Boot, build image bằng `docker build -t my-app .` và chạy thử bằng `docker run -p 8080:8080 my-app`.

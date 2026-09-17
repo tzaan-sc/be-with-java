@@ -83,10 +83,47 @@ GET /api/v1/products?page=0&size=20&sort=price,desc&category=electronics&keyword
 }
 ```
 
-## 5. Câu hỏi phỏng vấn
-1. RESTful API là gì? Kể 3 ràng buộc quan trọng nhất.
-2. Tại sao URL dùng danh từ số nhiều?
-3. Khi nào dùng Path Variable, khi nào dùng Query Param?
-4. Thiết kế API CRUD cho hệ thống quản lý đơn hàng (orders có order-items).
+## 5. Câu hỏi phỏng vấn & Trả lời chi tiết
+
+### 5.1. RESTful API là gì? Kể 3 ràng buộc kiến trúc quan trọng nhất
+- **RESTful API:** Là API tuân thủ theo phong cách kiến trúc **REST (Representational State Transfer)** do Roy Fielding đề xuất năm 2000, lấy **Tài nguyên (Resources)** làm trung tâm và tận dụng tối đa các chuẩn sẵn có của giao thức HTTP.
+- **3 Ràng buộc kiến trúc quan trọng nhất:**
+  1. **Stateless (Phi trạng thái):** Server không lưu phiên làm việc (Session) của client. Mỗi request phải tự chứa đủ thông tin để server hiểu và xác thực (Token).
+  2. **Client-Server Architecture:** Tách biệt hoàn toàn giữa giao diện người dùng (Client) và logic xử lý/lưu trữ dữ liệu (Server), giúp hai bên phát triển và scale độc lập.
+  3. **Cacheable (Khả năng lưu bộ đệm):** Response phải tự định nghĩa rõ ràng nó có được phép cache hay không (qua header `Cache-Control`, `ETag`) để client hoặc proxy trung gian tái sử dụng, giảm tải cho server.
+
+### 5.2. Tại sao URL trong REST API nên dùng danh từ số nhiều (Plural Nouns)?
+- **Nguyên tắc cốt lõi:** Endpoint URL dùng để **định danh tài nguyên**, còn hành động làm gì với tài nguyên đó được thể hiện bằng **HTTP Method**:
+  - ❌ *Thiết kế xấu (RPC style):* `GET /getUser`, `POST /createUser`, `POST /deleteUser`
+  - ✅ *Thiết kế chuẩn REST:* `GET /users`, `POST /users`, `DELETE /users/1`
+- **Lý do dùng số nhiều (`/users`):**
+  - Đồng nhất và trực quan: `/users` đại diện cho "tập hợp người dùng".
+  - `GET /users`: Lấy danh sách cả tập hợp.
+  - `POST /users`: Thêm 1 phần tử mới vào tập hợp đó.
+  - `GET /users/123`: Lấy 1 phần tử cụ thể có ID 123 ra khỏi tập hợp.
+
+### 5.3. Khi nào dùng Path Variable, khi nào dùng Query Parameter?
+| Tiêu chí | Path Variable (`/users/{id}`) | Query Parameter (`/users?role=ADMIN&page=1`) |
+| :--- | :--- | :--- |
+| **Vị trí** | Nằm trực tiếp trong đường dẫn URL. | Nằm sau dấu chấm hỏi `?` dạng Key=Value. |
+| **Mục đích** | Dùng để **định danh tài nguyên bắt buộc duy nhất** (Identity). Không thể thiếu nó để tìm đúng đối tượng. | Dùng để **lọc (filter), tìm kiếm (search), sắp xếp (sort), hoặc phân trang (pagination)**. |
+| **Ví dụ** | `GET /orders/105` (Xem đơn hàng số 105), `DELETE /products/42`. | `GET /products?category=laptop&sort=price,desc&page=0&size=20`. |
+
+### 5.4. Thiết kế API CRUD chuẩn REST cho hệ thống Quản lý Đơn hàng (Orders & Items)
+```http
+# 1. Quản lý Đơn hàng (Orders)
+GET    /api/v1/orders                 -> Lấy danh sách đơn hàng (hỗ trợ phân trang ?page=0&size=10)
+POST   /api/v1/orders                 -> Tạo đơn hàng mới
+GET    /api/v1/orders/{orderId}       -> Xem chi tiết đơn hàng theo ID
+PUT    /api/v1/orders/{orderId}       -> Cập nhật toàn bộ đơn hàng
+PATCH  /api/v1/orders/{orderId}       -> Cập nhật trạng thái đơn (vd: đổi sang DELIVERED)
+DELETE /api/v1/orders/{orderId}       -> Hủy / Xóa đơn hàng
+
+# 2. Quản lý Sản phẩm con bên trong Đơn hàng (Nested Sub-resources)
+GET    /api/v1/orders/{orderId}/items           -> Lấy danh sách các món hàng trong đơn
+POST   /api/v1/orders/{orderId}/items           -> Thêm 1 món hàng mới vào đơn
+DELETE /api/v1/orders/{orderId}/items/{itemId}  -> Xóa món hàng cụ thể khỏi đơn
+```
 
 ---
+*Thực hành:* Viết danh sách URL cho hệ thống quản lý Blog (posts, comments, tags) tuân thủ 100% chuẩn RESTful.

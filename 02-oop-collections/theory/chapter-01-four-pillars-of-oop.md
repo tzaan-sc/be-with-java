@@ -177,12 +177,53 @@ public class Circle extends Shape {
 - **Không thể** tạo object trực tiếp từ abstract class (`new Shape()` → ❌).
 - Có thể có cả abstract method và method thường.
 
-## 6. Câu hỏi phỏng vấn thường gặp
-1. Giải thích 4 trụ cột OOP bằng ví dụ thực tế.
-2. Tại sao nên để field là `private`? Encapsulation giải quyết vấn đề gì?
-3. Phân biệt Overloading và Overriding.
-4. Java có hỗ trợ đa kế thừa không? Tại sao? Giải pháp thay thế?
-5. Abstract class có thể có constructor không? Mục đích?
+## 6. Câu hỏi phỏng vấn & Trả lời chi tiết
+
+### 6.1. Giải thích 4 trụ cột OOP bằng ví dụ thực tế (Hệ thống Ngân hàng)
+1. **Encapsulation (Đóng gói):**
+   - *Ví dụ:* Lớp `BankAccount` có biến `private double balance;`. Người ngoài không thể tùy tiện gán `account.balance = 999999999;`. Muốn nạp tiền, bắt buộc phải thông qua hàm `public void deposit(double amount)` - nơi code sẽ kiểm tra điều kiện `amount > 0` và ghi lại lịch sử giao dịch.
+2. **Inheritance (Kế thừa):**
+   - *Ví dụ:* Lớp cha `Account` có chung các thuộc tính `accountNumber`, `ownerName`, `balance`. Các lớp con `SavingAccount` (tài khoản tiết kiệm có thêm `interestRate`) và `CreditAccount` (tài khoản tín dụng có thêm `creditLimit`) kế thừa lại code từ cha, tránh trùng lặp.
+3. **Polymorphism (Đa hình):**
+   - *Ví dụ:* Lớp cha `Payment` có hàm `pay(double amount)`. Khi gọi `payment.pay(100)`, nếu đối tượng thực tế là `CreditCardPayment` thì sẽ trừ thẻ tín dụng, nếu là `VnPayPayment` thì sinh mã QR, nếu là `MomoPayment` thì mở app Momo. Cùng một lời gọi hàm nhưng có nhiều cách biểu hiện khác nhau tùy theo đối tượng lúc runtime.
+4. **Abstraction (Trừu tượng hóa):**
+   - *Ví dụ:* Khi bạn rút tiền ở cây ATM, bạn chỉ cần đưa thẻ, bấm số tiền và nhận tiền mặt (`atm.withdraw(500000)`). Bạn hoàn toàn không cần biết bên trong cây ATM kết nối viễn thông ra sao, kiểm tra số dư ở chi nhánh nào, cơ chế đếm tờ tiền cơ học chạy như thế nào. Trừu tượng hóa giúp ẩn đi sự phức tạp bên trong và chỉ lộ ra giao diện sử dụng cần thiết.
+
+### 6.2. Tại sao nên để field là `private`? Encapsulation giải quyết vấn đề gì?
+- **Kiểm soát tính hợp lệ của dữ liệu (Data Validation):** Nếu field là `public`, bất kỳ ai cũng có thể gán `age = -5` hoặc `email = "khong-phai-email"`. Với `private` kết hợp getter/setter, ta có thể chặn dữ liệu rác ngay tại setter.
+- **Tính toàn vẹn và bất biến (Immutability / Read-only):** Ta có thể tạo các trường chỉ đọc (chỉ cung cấp hàm Getter mà không có Setter).
+- **Linh hoạt thay đổi logic nội bộ mà không làm hỏng code bên ngoài:** Ví dụ ban đầu lưu `fullName`, sau này tách thành `firstName` và `lastName`. Nếu code ngoài gọi `getFullName()`, ta chỉ cần sửa code bên trong hàm getter đó mà không làm crash hàng trăm file khác đang dùng.
+
+### 6.3. Phân biệt Overloading (Nạp chồng) và Overriding (Ghi đè)
+| Tiêu chí | Method Overloading | Method Overriding |
+| :--- | :--- | :--- |
+| **Vị trí** | Trong **cùng một class**. | Giữa **class con** và **class cha** (quan hệ kế thừa). |
+| **Tên phương thức** | **Bắt buộc giống nhau**. | **Bắt buộc giống nhau**. |
+| **Danh sách tham số** | **Bắt buộc phải khác nhau** (số lượng, kiểu dữ liệu, hoặc thứ tự). | **Bắt buộc phải giống hệt** class cha. |
+| **Kiểu trả về** | Có thể giống hoặc khác. | Phải giống hoặc là kiểu con (Covariant return type). |
+| **Thời điểm phân giải** | **Compile-time** (Static Polymorphism - dựa vào tham số lúc gọi). | **Runtime** (Dynamic Polymorphism - dựa vào kiểu đối tượng thực tế trên Heap). |
+| **Annotation** | Không dùng. | Dùng `@Override` để nhờ compiler kiểm tra tính chính xác. |
+
+### 6.4. Java có hỗ trợ đa kế thừa (Multiple Inheritance) không? Tại sao? Giải pháp thay thế?
+- **Câu trả lời:** Java **KHÔNG** hỗ trợ đa kế thừa class (`class C extends A, B` $\rightarrow$ ❌ Lỗi biên dịch).
+- **Tại sao Java cấm đa kế thừa class?**
+  - Để tránh bài toán hiểm hóc **Kim Cương (The Diamond Problem)**: Giả sử cả Class `A` và Class `B` đều có hàm `display()`. Class `C` kế thừa cả `A` và `B`. Khi gọi `c.display()`, JVM sẽ không thể biết được nên chạy hàm `display()` của `A` hay của `B`, dẫn tới sự nhập nhằng mơ hồ.
+- **Giải pháp thay thế:**
+  1. **Triển khai nhiều Interface (Multiple Interfaces):** Một class có thể `implements` vô số interface: `class C implements InterfaceA, InterfaceB`.
+  2. **Ưu tiên Thành phần hơn Kế thừa (Composition over Inheritance):** Thay vì kế thừa, ta nhét các object của `A` và `B` làm thuộc tính bên trong `C`:
+     ```java
+     class C {
+         private A a = new A();
+         private B b = new B();
+     }
+     ```
+
+### 6.5. Abstract class có thể có Constructor không? Mục đích?
+- **Câu trả lời:** **CÓ THỂ VÀ HOÀN TOÀN HỢP LỆ.** Mặc dù không thể gọi `new AbstractClass()` trực tiếp.
+- **Mục đích:**
+  1. Khởi tạo các thuộc tính chung mà lớp cha quản lý (ví dụ: `id`, `createdAt`, `color`).
+  2. Khi một class con được khởi tạo (`new Dog()`), constructor của class con **bắt buộc phải gọi `super(...)`** để khởi tạo phần thuộc tính của class cha trước tiên theo đúng thứ tự phân cấp bộ nhớ.
+  3. Áp dụng Design Pattern (ví dụ: Template Method Pattern), ép buộc các giá trị mặc định phải có ngay khi tạo đối tượng con.
 
 ---
 *Thực hành:* Tạo class `Employee` → `Manager` với kế thừa, viết `BankAccount` minh hoạ Encapsulation, tạo `Shape` abstract → `Circle`, `Rectangle`.

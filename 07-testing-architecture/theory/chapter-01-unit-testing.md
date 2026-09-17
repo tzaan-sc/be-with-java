@@ -117,3 +117,41 @@ class StringUtilsTest {
     }
 }
 ```
+
+---
+
+## 6. Câu hỏi phỏng vấn thường gặp & Trả lời chi tiết
+
+### 6.1. Nguyên tắc F.I.R.S.T trong Unit Testing là gì?
+Một bộ Unit Test chất lượng cao bắt buộc phải thỏa mãn 5 tiêu chí **F.I.R.S.T**:
+1. **F - Fast (Nhanh):** Test phải chạy trong vài phần nghìn giây. Nếu cả bộ test mất 30 phút, developer sẽ lười chạy test.
+2. **I - Independent / Isolated (Độc lập):** Các hàm test không được phụ thuộc vào nhau. Thứ tự chạy test không được ảnh hưởng kết quả. Không chia sẻ trạng thái chung (State).
+3. **R - Repeatable (Lặp lại được):** Chạy ở bất kỳ đâu (máy dev, máy tester, hay CI/CD không có mạng) đều phải cho ra cùng một kết quả duy nhất.
+4. **S - Self-validating (Tự kiểm chứng):** Test phải tự động trả về `Pass` hoặc `Fail` thông qua các lệnh Assertion, không bắt con người phải tự nhìn log để đoán đúng sai.
+5. **T - Timely / Thorough (Kịp thời & Toàn diện):** Viết test song song hoặc trước khi viết code nghiệp vụ (TDD), bao phủ cả các trường hợp biên (Edge cases, Null, Negative numbers).
+
+### 6.2. Cấu trúc 3A (Arrange - Act - Assert) tổ chức một ca kiểm thử thế nào?
+Mọi hàm Unit Test chuẩn mực đều được chia thành 3 phần rõ ràng:
+```java
+@Test
+void withdraw_shouldDeductBalance_whenBalanceIsSufficient() {
+    // 1. Arrange (Chuẩn bị): Thiết lập dữ liệu đầu vào và trạng thái ban đầu
+    BankAccount account = new BankAccount(1000.0);
+    double amountToWithdraw = 400.0;
+
+    // 2. Act (Hành động): Kích hoạt phương thức cần kiểm thử
+    account.withdraw(amountToWithdraw);
+
+    // 3. Assert (Khẳng định): So sánh kết quả thực tế với kỳ vọng
+    assertEquals(600.0, account.getBalance());
+}
+```
+
+### 6.3. Test Coverage (Độ phủ kiểm thử) là gì? Có nên cố gắng đạt 100% Code Coverage không?
+- **Code Coverage:** Là tỷ lệ phần trăm số dòng code (Line Coverage) hoặc nhánh rẽ `if-else` (Branch Coverage) được thực thi trong quá trình chạy bộ test.
+- **Có nên chạy theo 100% Coverage?**
+  - **KHÔNG NÊN.** 100% Coverage chỉ chứng minh rằng "mọi dòng code đã được đi qua", chứ **KHÔNG HỀ CHỨNG MINH code không có bug logic** (ví dụ bạn gọi hàm nhưng không viết câu `assertEquals()` nào thì coverage vẫn là 100% nhưng test hoàn toàn vô dụng!).
+  - **Mục tiêu thực tế:** Mức độ phủ lý tưởng của các dự án Backend chất lượng thường là **75% - 85%**, tập trung 100% cho các **Core Business Logic nhạy cảm** (tính tiền, bảo mật, xử lý giao dịch) và bỏ qua các hàm Getter/Setter, DTO, Config boiler-plate.
+
+---
+*Thực hành:* Viết Unit Test bằng JUnit 5 cho hàm tính chiết khấu đơn hàng với `@ParameterizedTest` và `@CsvSource`.

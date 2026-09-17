@@ -108,3 +108,40 @@ public class ProductController {
     }
 }
 ```
+
+---
+
+## 4. Câu hỏi phỏng vấn thường gặp & Trả lời chi tiết
+
+### 4.1. Swagger vs OpenAPI Specification (OAS) khác nhau thế nào?
+- **OpenAPI Specification (OAS):** Là một **Chuẩn đặc tả quốc tế độc lập (Open Standard)** do liên minh các tập đoàn công nghệ (Linux Foundation, Google, Microsoft) quản lý. Nó định nghĩa cấu trúc tài liệu mô tả REST API dưới dạng file JSON hoặc YAML.
+- **Swagger:** Là **Bộ công cụ phần mềm thương mại / mã nguồn mở** (do SmartBear phát triển) dùng để hiện thực hóa chuẩn OpenAPI:
+  - `Swagger UI`: Giao diện web tương tác trực quan cho phép gọi thử API trên trình duyệt.
+  - `Swagger Editor`: Trình soạn thảo file OAS.
+  - `Swagger Codegen`: Công cụ tự sinh code Client/Server từ file spec OAS.
+- $\rightarrow$ **Tóm lại:** OpenAPI là bản thiết kế tiêu chuẩn, còn Swagger là công cụ phần mềm.
+
+### 4.2. Code-First vs Design-First (Contract-First) trong thiết kế API: Nên chọn cái nào?
+| Tiêu chí | Code-First (SpringDoc OpenAPI) | Design-First (Contract-First) |
+| :--- | :--- | :--- |
+| **Quy trình** | Backend viết code Java trước $\rightarrow$ Thư viện tự sinh ra file OpenAPI JSON và Swagger UI. | Viết file thiết kế `openapi.yaml` trước $\rightarrow$ Thống nhất giữa các đội $\rightarrow$ Sinh code Java và TypeScript. |
+| **Ưu điểm** | **Cực nhanh, dễ làm**, tài liệu luôn khớp 100% với code thật, không tốn công cập nhật file spec bằng tay. | Đội Frontend và Backend có thể làm việc song song ngay từ ngày đầu tiên; làm "bản hợp đồng" chuẩn trước khi gõ code. |
+| **Nhược điểm** | Frontend phải chờ Backend viết xong code mới có tài liệu để tích hợp. | Tốn nhiều thời gian ban đầu để viết file YAML/JSON thủ công. |
+| **Khuyên dùng** | Rất phù hợp cho các dự án Startup, Agile/Scrum vừa và nhỏ, làm việc nhanh. | Bắt buộc cho các hệ sinh thái lớn, ngân hàng, viễn thông có hàng chục đội Microservices độc lập. |
+
+### 4.3. Làm sao bảo vệ trang Swagger UI trên môi trường Production?
+Trang Swagger UI phơi bày toàn bộ danh sách endpoint, tham số và cấu trúc Database của bạn cho công chúng. Trên Production, bạn phải bảo vệ bằng 1 trong 3 cách:
+1. **Tắt hoàn toàn Swagger trên Production bằng Profile:**
+   ```yaml
+   # application-prod.yml
+   springdoc:
+     api-docs:
+       enabled: false
+     swagger-ui:
+       enabled: false
+   ```
+2. **Khóa bằng Spring Security:** Chỉ cho phép người dùng có vai trò `ROLE_ADMIN` hoặc tài khoản nội bộ (Internal IP) mới được mở trang `/swagger-ui/**`.
+3. **Đổi đường dẫn mặc định:** Đổi `/swagger-ui.html` thành một URL bí mật nội bộ bằng cấu hình `springdoc.swagger-ui.path=/internal-secret-docs`.
+
+---
+*Thực hành:* Tích hợp dependency `springdoc-openapi-starter-webmvc-ui`, cấu hình nút Authorize nhập Bearer Token và mở `/swagger-ui/index.html` gọi thử API.

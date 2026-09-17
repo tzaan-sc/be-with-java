@@ -162,3 +162,39 @@ class UserServiceImplTest {
     }
 }
 ```
+
+---
+
+## 4. Câu hỏi phỏng vấn thường gặp & Trả lời chi tiết
+
+### 4.1. `@Mock` vs `@Spy` khác nhau thế nào trong Mockito?
+| Tiêu chí | `@Mock` (Giả lập hoàn toàn - Dummy) | `@Spy` (Theo dõi / Giả lập một phần - Partial Mock) |
+| :--- | :--- | :--- |
+| **Bản chất** | Tạo một đối tượng rỗng hoàn toàn bằng bytecode (CGLIB/ByteBuddy). | Bọc bên ngoài một **đối tượng thật sự (Real Object)**. |
+| **Hành vi mặc định** | Mọi phương thức khi gọi đều trả về giá trị mặc định (`null`, `0`, `false`) trừ khi bạn chủ động stubbing bằng `when(...)`. | Mọi phương thức sẽ **chạy mã nguồn thật bên trong**, trừ khi bạn chủ động ghi đè hành vi của phương thức đó. |
+| **Khi nào dùng** | Dùng cho **95% các trường hợp** (Mock Repository, Mock MailSender, Mock PaymentGateway). | Dùng khi kiểm thử một class tiện ích hoặc một Service cũ mà bạn chỉ muốn can thiệp vào đúng 1 hàm phụ bên trong nó. |
+
+### 4.2. `@Mock` vs `@MockBean` khác nhau thế nào?
+- **`@Mock` (Thuần túy Mockito):**
+  - Khởi tạo độc lập cực nhanh (vài mili-giây) thông qua `@ExtendWith(MockitoExtension.class)`.
+  - Hoàn toàn **không khởi động Spring IoC Container**. Dùng cho các bài **Unit Test** thuần túy ở tầng Service.
+- **`@MockBean` (Tích hợp của Spring Boot Test):**
+  - Khởi động một phần hoặc toàn bộ **Spring ApplicationContext**.
+  - Nó tìm Bean thật trong Spring Context và **thay thế (hoán đổi) Bean đó bằng một Mockito mock**.
+  - Dùng trong kiểm thử tích hợp tầng Controller (`@WebMvcTest`) để giả lập Service mà không cần Service thật.
+
+### 4.3. Tại sao nên dùng `ArgumentCaptor`?
+- **Vấn đề:** Đôi khi phương thức của bạn gọi `userRepository.save(entity)`, nhưng `entity` này được tạo ra bên trong thân hàm, bạn không có tham chiếu ở ngoài để `assertEquals()`.
+- **Giải pháp `ArgumentCaptor`:**
+  Cho phép "bắt trộm" chính xác đối tượng đã được truyền vào hàm mock để kiểm tra từng trường dữ liệu:
+  ```java
+  ArgumentCaptor<UserEntity> userCaptor = ArgumentCaptor.forClass(UserEntity.class);
+  verify(userRepository).save(userCaptor.capture());
+
+  UserEntity capturedUser = userCaptor.getValue();
+  assertEquals("hashedPass", capturedUser.getPassword());
+  assertEquals(Role.USER, capturedUser.getRole());
+  ```
+
+---
+*Thực hành:* Viết Unit Test cho `OrderService` dùng `@Mock` cho `OrderRepository` và `@InjectMocks` cho Service, kiểm tra hàm `createOrder`.

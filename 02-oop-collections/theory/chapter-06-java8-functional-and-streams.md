@@ -134,13 +134,71 @@ String email = userOpt
 // ❌ Tránh dùng: opt.isPresent() rồi opt.get() (code cũ)
 ```
 
-## 5. Câu hỏi phỏng vấn
-1. Lambda Expression là gì? Khác Anonymous class thế nào?
-2. Kể tên 4 Functional Interface chính và mục đích.
-3. Stream Intermediate vs Terminal operations? Lazy evaluation nghĩa là gì?
-4. `map()` vs `flatMap()` khác nhau thế nào?
-5. Tại sao nên dùng `Optional` thay vì return `null`?
-6. `orElse()` vs `orElseGet()` khác nhau thế nào? (Eager vs Lazy)
+## 5. Câu hỏi phỏng vấn & Trả lời chi tiết
+
+### 5.1. Lambda Expression là gì? Khác Anonymous Class thế nào?
+- **Khái niệm:** Lambda Expression là một hàm ẩn danh (Anonymous Function) không có tên, không có kiểu trả về khai báo cụ thể, cho phép truyền hành vi (Behavior) dưới dạng tham số một cách cực kỳ ngắn gọn: `(params) -> { body }`.
+- **So sánh Lambda vs Anonymous Class:**
+  | Tiêu chí | Lambda Expression (Java 8+) | Anonymous Class (Lớp ẩn danh cũ) |
+  | :--- | :--- | :--- |
+  | **Cú pháp** | Cực kỳ ngắn gọn: `x -> x * 2`. | Cồng kềnh: Phải `new Interface() { public ... }`. |
+  | **Cơ chế biên dịch** | Dùng chỉ lệnh bytecode **`invokedynamic`** (không tạo file `.class` mới trên ổ đĩa, tiết kiệm Metaspace và khởi động nhanh). | Trình biên dịch sinh ra một file class riêng: `OuterClass$1.class`. |
+  | **Phạm vi từ khóa `this`** | `this` trỏ tới **chính đối tượng của class bao bọc bên ngoài (Enclosing class)**. | `this` trỏ tới **bản thân thể hiện của Anonymous class đó**. |
+  | **Khả năng áp dụng** | **Chỉ áp dụng** cho **Functional Interface** (interface có đúng 1 abstract method). | Áp dụng cho bất kỳ Interface hoặc Abstract class nào (kể cả có nhiều method). |
+
+### 5.2. Kể tên 4 Functional Interface cốt lõi trong Java và mục đích
+1. **`Predicate<T>` (Kiểm tra điều kiện):**
+   - Method: `boolean test(T t)`
+   - Nhận vào 1 đối tượng, trả về `true/false`. Thường dùng trong hàm `.filter()` của Stream (ví dụ: `u -> u.getAge() >= 18`).
+2. **`Function<T, R>` (Biến đổi dữ liệu):**
+   - Method: `R apply(T t)`
+   - Nhận vào đối tượng kiểu `T`, biến đổi và trả về kiểu `R`. Thường dùng trong `.map()` (ví dụ: `User -> UserDTO`, `User::getName`).
+3. **`Consumer<T>` (Tiêu thụ dữ liệu):**
+   - Method: `void accept(T t)`
+   - Nhận vào đối tượng kiểu `T` để xử lý (in ra màn hình, gửi log, lưu DB) và không trả về gì. Thường dùng trong `.forEach()` (ví dụ: `System.out::println`).
+4. **`Supplier<T>` (Cung cấp dữ liệu):**
+   - Method: `T get()`
+   - Không nhận tham số đầu vào, tự sản sinh và trả về một đối tượng kiểu `T`. Thường dùng trong Lazy Evaluation hoặc tạo Factory (ví dụ: `() -> new NotFoundException()`).
+
+### 5.3. Stream Intermediate vs Terminal operations? Lazy Evaluation nghĩa là gì?
+- **Intermediate Operations (Thao tác trung gian):**
+  - Trả về một `Stream` mới (ví dụ: `.filter()`, `.map()`, `.sorted()`, `.distinct()`, `.limit()`).
+  - Có thể xâu chuỗi (chain) liên tiếp nhiều thao tác với nhau.
+- **Terminal Operations (Thao tác kết thúc):**
+  - Trả về một kết quả cụ thể hoặc kiểu void (ví dụ: `.collect()`, `.count()`, `.forEach()`, `.findFirst()`, `.reduce()`).
+  - Khi Terminal operation được gọi, Stream sẽ thực thi và sau đó **bị đóng vĩnh viễn** (không thể tái sử dụng lại Stream đó).
+- **Lazy Evaluation (Thực thi lười biếng / Trì hoãn):**
+  - Các thao tác Intermediate **hoàn toàn KHÔNG chạy ngay** khi được khai báo. Chúng chỉ được kích hoạt khi và chỉ khi gặp một Terminal operation.
+  - *Lợi ích:* Tối ưu hiệu năng vượt trội. Nếu bạn có danh sách 1 triệu phần tử, lọc rồi `.findFirst()`, Java sẽ dừng duyệt ngay tại phần tử đầu tiên thỏa mãn chứ không bao giờ lọc toàn bộ 1 triệu phần tử!
+
+### 5.4. `map()` vs `flatMap()` khác nhau thế nào?
+- **`map()` (Ánh xạ 1 - 1):**
+  - Chuyển đổi mỗi phần tử trong Stream thành một phần tử mới.
+  - Ví dụ: `Stream<String>` biến đổi thành `Stream<Integer>` (lấy độ dài chuỗi).
+- **`flatMap()` (Ánh xạ 1 - Nhiều & Làm phẳng - Flatten):**
+  - Chuyển đổi mỗi phần tử thành một Stream con, sau đó "làm phẳng" (merge) tất cả các Stream con đó thành **một Stream phẳng duy nhất**.
+  - *Ví dụ kinh điển:* Một `Order` có danh sách `List<OrderItem>`.
+    - Dùng `.map(Order::getItems)` $\rightarrow$ Trả về `Stream<List<OrderItem>>` (danh sách lồng nhau).
+    - Dùng `.flatMap(order -> order.getItems().stream())` $\rightarrow$ Trả về `Stream<OrderItem>` phẳng, dễ dàng tính tổng hoặc lọc sản phẩm.
+
+### 5.5. Tại sao nên dùng `Optional` thay vì return `null`?
+1. **Loại bỏ lỗi kinh hoàng `NullPointerException` (NPE):** Ép buộc người gọi hàm phải chủ động kiểm tra và xử lý trường hợp không có dữ liệu ngay tại compile-time.
+2. **Thể hiện rõ ý đồ của API:** Khi một hàm trả về `Optional<User> findById(Long id)`, người đọc hàm hiểu ngay: *"Dữ liệu này có thể có hoặc không tồn tại"*. Nếu trả về `User`, người ta dễ chủ quan gọi ngay `user.getName()` dẫn tới crash ứng dụng.
+3. **Lập trình theo phong cách hàm (Functional Fluent API):** Dễ dàng xâu chuỗi logic với `.map()`, `.filter()`, `.orElseThrow()` mà không cần viết chuỗi `if (x != null)` lồng nhau rối rắm.
+
+### 5.6. `orElse()` vs `orElseGet()` khác nhau thế nào? (Cạm bẫy Eager vs Lazy)
+- **`orElse(defaultValue)` (Eager Evaluation - Đánh giá ngay lập tức):**
+  - Biểu thức bên trong `orElse()` **LUÔN LUÔN ĐƯỢC TÍNH TOÁN / GỌI THỰC THI**, kể cả khi `Optional` **đang có giá trị**!
+- **`orElseGet(() -> defaultValue)` (Lazy Evaluation - Đánh giá trì hoãn):**
+  - Chỉ khi nào `Optional` **thực sự rỗng (`empty`)** thì hàm Supplier bên trong mới được gọi.
+- *Cạm bẫy chết người trong Backend:*
+  ```java
+  // ❌ NGUY HIỂM: Hàm createDefaultUser() sẽ LUÔN ĐƯỢC CHẠY và gọi ghi DB tốn tài nguyên, dù userOpt đã tìm thấy!
+  User user = userOpt.orElse(createDefaultUserInDatabase());
+
+  // ✅ CHUẨN: Hàm chỉ chạy khi userOpt thực sự rỗng!
+  User user = userOpt.orElseGet(() -> createDefaultUserInDatabase());
+  ```
 
 ---
 *Thực hành:* Lọc danh sách user > 18 tuổi bằng Stream, gom nhóm sản phẩm theo category, dùng Optional xử lý findById().

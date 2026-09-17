@@ -219,13 +219,51 @@ for (int s : scores) {
 - Nếu cần co giãn → dùng `ArrayList` (sẽ học ở Phase 2).
 - Mảng là **reference type**, truyền mảng vào hàm → hàm có thể **thay đổi** phần tử gốc.
 
-## 5. Câu hỏi phỏng vấn thường gặp
-1. Sự khác nhau giữa `if-else` và `switch-case`? Khi nào nên dùng cái nào?
-2. Fall-through trong switch là gì? Có thể gây lỗi gì?
-3. `for` và `while` khác nhau thế nào? `do-while` khác `while` chỗ nào?
-4. Khi nào dùng `break`? Khi nào dùng `continue`?
-5. Tại sao kích thước mảng trong Java cố định? Khi cần thêm phần tử thì dùng gì?
-6. `for-each` có thể thay đổi giá trị phần tử mảng gốc không? Tại sao?
+## 5. Câu hỏi phỏng vấn & Trả lời chi tiết
+
+### 5.1. Sự khác nhau giữa `if-else` và `switch-case`? Khi nào nên dùng cái nào?
+- **`if-else`:** Đánh giá biểu thức điều kiện boolean linh hoạt (so sánh lớn hơn `>`, nhỏ hơn `<`, khoảng giá trị `18 <= age && age <= 60`, kết hợp nhiều biến khác nhau). Thực thi tuần tự từ trên xuống dưới.
+- **`switch-case`:** Chỉ so sánh **bằng tuyệt đối (`==`)** của 1 biến đơn lẻ với tập các hằng số (hỗ trợ `byte`, `short`, `int`, `char`, `String`, `enum`).
+- **Khi nào dùng:**
+  - Dùng `switch-case` khi có từ 3 - 4 giá trị rời rạc cố định trở lên (vd: mã trạng thái đơn hàng `PENDING, SHIPPING, DELIVERED`, các ngày trong tuần, các lệnh menu). Trình biên dịch có thể tối ưu `switch` thành bảng nhảy (Jump Table / `tableswitch` bytecode) giúp tốc độ $O(1)$, nhanh hơn chuỗi `if-else if` dài $O(n)$.
+  - Dùng `if-else` khi kiểm tra khoảng số (Range check), điều kiện logic phức tạp hoặc toán tử không phải so sánh bằng.
+
+### 5.2. Fall-through trong switch là gì? Có thể gây lỗi gì?
+- **Fall-through:** Nếu trong một khối `case` mà quên viết lệnh `break;`, chương trình sẽ không dừng lại mà tiếp tục "trôi tuột" xuống thực thi mã của các `case` tiếp theo phía dưới cho tới khi gặp `break` hoặc hết khối `switch`.
+- **Hậu quả:** Gây ra các bug logic cực kỳ nghiêm trọng (ví dụ: User vừa được cấp quyền GUEST lại bị trôi lệnh gán quyền ADMIN).
+- **Giải pháp hiện đại (Java 14+):** Sử dụng cú pháp **Switch Expression mũi tên (`->`)**:
+  ```java
+  // Không bao giờ bị fall-through, không cần từ khóa break
+  switch (day) {
+      case 1 -> System.out.println("Thứ Hai");
+      case 2 -> System.out.println("Thứ Ba");
+      default -> System.out.println("Ngày khác");
+  }
+  ```
+
+### 5.3. `for` và `while` khác nhau thế nào? `do-while` khác `while` chỗ nào?
+- **`for` vs `while`:**
+  - `for`: Dùng khi **biết trước số lần lặp** (vd: lặp từ 1 đến $N$, duyệt qua mảng $N$ phần tử).
+  - `while`: Dùng khi **chưa biết trước số lần lặp**, chỉ biết điều kiện dừng (vd: đọc file cho tới khi hết dòng, chờ tín hiệu phản hồi mạng).
+- **`do-while` vs `while`:**
+  - `while`: Kiểm tra điều kiện *trước*. Nếu điều kiện sai ngay từ đầu, vòng lặp chạy **0 lần**.
+  - `do-while`: Thực thi thân vòng lặp *trước*, kiểm tra điều kiện *sau*. Đảm bảo thân vòng lặp luôn được chạy **ít nhất 1 lần** (thường dùng cho menu nhập liệu Console bắt người dùng nhập lại nếu sai).
+
+### 5.4. Khi nào dùng `break`? Khi nào dùng `continue`?
+- **`break`:** Lập tức **kết thúc và thoát khỏi** toàn bộ vòng lặp hiện tại. Thường dùng khi đã tìm thấy kết quả mong muốn (tìm kiếm phần tử trong mảng).
+- **`continue`:** Lập tức **bỏ qua phần còn lại** của lần lặp hiện tại và nhảy sang lần lặp tiếp theo. Thường dùng để lọc bỏ các phần tử không hợp lệ (bỏ qua số lẻ, bỏ qua user bị khóa).
+
+### 5.5. Tại sao kích thước mảng trong Java cố định? Khi cần thêm phần tử thì dùng gì?
+- **Lý do:** Mảng trong Java được cấp phát một **khối nhớ liên tục (Contiguous Memory Block)** trên Heap ngay tại thời điểm khởi tạo (`new int[10]`). Việc cấp phát liên tục giúp máy tính tính toán vị trí ô nhớ tức thì qua công thức:
+  $$\text{Address}(A[i]) = \text{Base\_Address} + i \times \text{Size\_Of\_Type}$$
+  Do đó truy xuất mảng đạt tốc độ tuyệt đối $O(1)$. Không thể mở rộng mảng vì vùng nhớ liền kề phía sau có thể đã bị đối tượng khác chiếm dụng.
+- **Khi cần thêm/xóa phần tử linh hoạt:** Sử dụng các Collection động như **`ArrayList`** (bản chất `ArrayList` tự động tạo mảng mới lớn gấp 1.5 lần và copy dữ liệu cũ sang khi mảng đầy).
+
+### 5.6. `for-each` có thể thay đổi giá trị phần tử mảng gốc không? Tại sao?
+- **Với mảng kiểu nguyên thuỷ (Primitive như `int[]`):** **KHÔNG THỂ.**
+  - *Tại sao:* Biến lặp trong `for (int x : arr)` chỉ là một biến cục bộ tạm thời chứa **bản sao (copy)** giá trị của từng phần tử. Gán `x = 10` chỉ đổi giá trị của biến tạm `x`, mảng gốc hoàn toàn không bị ảnh hưởng.
+- **Với mảng kiểu đối tượng (Object Reference như `User[]`):**
+  - Không thể trỏ phần tử sang đối tượng mới (`u = new User()`), nhưng **CÓ THỂ** thay đổi trạng thái bên trong đối tượng (`u.setName("Mới")`) vì cả biến tạm và mảng đều trỏ vào cùng một ô nhớ trên Heap.
 
 ---
 *Thực hành:* Viết hàm phân loại học lực (if-else), in ngày trong tuần (switch), tính tổng số chẵn trong mảng (for-each), tìm Max/Min trong mảng (for).

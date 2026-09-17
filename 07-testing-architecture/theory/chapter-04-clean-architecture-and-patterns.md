@@ -170,3 +170,36 @@ public class EmailNotificationListener {
     }
 }
 ```
+
+---
+
+## 4. Câu hỏi phỏng vấn thường gặp & Trả lời chi tiết
+
+### 4.1. Quy tắc phụ thuộc (The Dependency Rule) trong Clean Architecture là gì?
+- **Nguyên lý bất biến:**
+  > *"Chiều của các mũi tên phụ thuộc mã nguồn BẮT BUỘC PHẢI LUÔN HƯỚNG VÀO TRONG (Hướng về trung tâm Domain Entities & Use Cases)."*
+- **Ý nghĩa thực tế:**
+  - Tầng Domain (Nghiệp vụ cốt lõi) nằm ở tâm: Hoàn toàn trong sáng, **không chứa bất kỳ annotation nào của Spring, Hibernate hay cơ sở dữ liệu**.
+  - Tầng ngoài cùng (Frameworks & Drivers: Web Controller, MySQL Database, Redis, REST Client) phải phụ thuộc vào Domain.
+  - Tầng Domain **không bao giờ được biết đến sự tồn tại của Database hay Framework**. Nhờ đó, bạn có thể thay thế Database từ PostgreSQL sang MongoDB, đổi Spring Boot sang Quarkus mà toàn bộ Logic nghiệp vụ trung tâm vẫn nguyên vẹn 100%.
+
+### 4.2. Khác biệt giữa Package-by-Layer và Package-by-Feature? Dự án lớn nên chọn gì?
+- **Package-by-Layer (Chia theo tầng kỹ thuật):**
+  - Cấu trúc: `com.app.controller`, `com.app.service`, `com.app.repository`.
+  - Nhược điểm: Khi dự án có 50 tính năng, thư mục `service/` sẽ có 50 file chen chúc nhau. Muốn sửa tính năng "Đặt hàng", bạn phải nhảy qua 5 package khác nhau.
+- **Package-by-Feature (Chia theo mô-đun nghiệp vụ):**
+  - Cấu trúc: `com.app.order` (chứa `OrderController`, `OrderService`, `OrderRepository`), `com.app.user`, `com.app.payment`.
+  - Ưu điểm: Đóng gói tính năng độc lập, dễ dàng chuyển đổi sang kiến trúc **Microservices** sau này khi dự án phình to.
+  - **Khuyên dùng:** Các dự án lớn trong thực tế **luôn ưu tiên Package-by-Feature**.
+
+### 4.3. Lợi ích của Event-Driven Pattern nội bộ (`ApplicationEventPublisher`) so với việc gọi trực tiếp Service?
+- **Nếu gọi trực tiếp (`OrderService` tự gọi `emailService.sendEmail()`):**
+  - `OrderService` bị dính chặt (Tightly coupled) với `EmailService`.
+  - Nếu gửi email bị chậm 3 giây hoặc sập mạng, toàn bộ API tạo đơn hàng của khách hàng sẽ bị chậm 3 giây hoặc bị lỗi theo!
+- **Khi dùng Event-Driven:**
+  - `OrderService` chỉ việc lưu đơn hàng và bắn ra `OrderPlacedEvent` rồi kết thúc trong 50ms.
+  - `EmailNotificationListener` lắng nghe sự kiện và chạy `@Async` ở background thread độc lập.
+  - Sau này nếu bạn muốn làm thêm tính năng: "Cộng điểm tích lũy" hay "Bắn thông báo qua Telegram", bạn chỉ cần viết thêm `BonusPointsListener` mới mà **hoàn toàn không cần sửa 1 dòng code nào trong `OrderService`** (Tuân thủ chuẩn Open/Closed Principle).
+
+---
+*Thực hành:* Tạo 1 event `UserRegisteredEvent`, viết `@EventListener` có `@Async` để giả lập gửi email chào mừng bất đồng bộ.

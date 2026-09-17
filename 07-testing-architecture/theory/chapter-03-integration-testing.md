@@ -126,3 +126,36 @@ class FullApplicationIntegrationTest {
     }
 }
 ```
+
+---
+
+## 4. Câu hỏi phỏng vấn thường gặp & Trả lời chi tiết
+
+### 4.1. `@WebMvcTest` vs `@SpringBootTest` khác nhau thế nào?
+| Tiêu chí | `@WebMvcTest(UserController.class)` (Slice Test) | `@SpringBootTest` (Full Integration Test) |
+| :--- | :--- | :--- |
+| **Phạm vi khởi động** | **Chỉ khởi động tầng Web** (Controller, ControllerAdvice, Filter, Jackson). Không load Service và Repository. | **Khởi động toàn bộ ApplicationContext** (Toàn bộ Controller, Service, Repository, Database Connection). |
+| **Tốc độ thực thi** | Cực nhanh (1 - 2 giây). | Chậm hơn (10 - 30 giây) do phải nạp toàn bộ bean và kết nối DB. |
+| **Cách xử lý Service** | Phải dùng `@MockBean` để giả lập tầng Service. | Có thể dùng các Service và Repository thật để kiểm thử toàn luồng từ đầu đến cuối. |
+| **Mục đích** | Kiểm tra validation `@Valid`, HTTP status code, format JSON, định tuyến URL của Controller. | Kiểm thử tích hợp toàn diện luồng nghiệp vụ thực tế (End-to-End). |
+
+### 4.2. Tại sao H2 Database ngày nay ít được dùng cho Integration Test? Testcontainers giải quyết gì?
+- **Nhược điểm của H2 Database:** H2 là CSDL trong bộ nhớ (In-Memory). Cú pháp SQL, các hàm xử lý chuỗi/ngày tháng, kiểu dữ liệu JSON, cơ chế khóa dòng (Row-level Locking) và phân biệt hoa/thường của H2 **hoàn toàn khác biệt so với MySQL hay PostgreSQL thật**. Rất nhiều trường hợp: *Code chạy Unit Test với H2 thì xanh rờn (Pass), nhưng khi deploy lên Production chạy MySQL thật thì văng lỗi cú pháp SQL và crash!*
+- **Lợi ích vượt trội của Testcontainers:**
+  - Chạy **Database MySQL/Postgres THẬT 100%** bên trong Docker container cô lập.
+  - Tự động sinh cổng ngẫu nhiên (tránh xung đột port).
+  - Tự động dọn dẹp và tiêu hủy container sau khi test chạy xong.
+  - Đảm bảo môi trường Test và môi trường Production đồng nhất 100%.
+
+### 4.3. Làm sao đảm bảo dữ liệu test không bị "bẩn" (Dirty Data) làm ảnh hưởng tới các ca test khác?
+- Sử dụng annotation **`@Transactional` trên class hoặc hàm test**:
+  ```java
+  @SpringBootTest
+  @Transactional // 👈 Phép màu của Spring Test
+  class OrderServiceIntegrationTest { ... }
+  ```
+  - Khi đặt `@Transactional` trong bài test, Spring sẽ tự động **ROLLBACK toàn bộ dữ liệu về trạng thái ban đầu ngay sau khi hàm test kết thúc**, bất kể bài test đó Pass hay Fail!
+  - Nhờ đó, Database luôn sạch sẽ và các bài test hoàn toàn độc lập, không làm sai lệch số lượng bản ghi của nhau.
+
+---
+*Thực hành:* Viết 1 bài Slice Test dùng `@WebMvcTest` kiểm tra Controller trả về lỗi 400 khi body JSON vi phạm `@NotBlank`.

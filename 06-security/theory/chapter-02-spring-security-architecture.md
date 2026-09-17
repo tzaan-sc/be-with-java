@@ -223,3 +223,37 @@ public class SecurityConfig {
 2. Trong ứng dụng REST API Stateless, ta cấu hình `SessionCreationPolicy.STATELESS` và vô hiệu hóa CSRF.
 3. `UserDetailsService` là cầu nối giữa Database của ứng dụng với cơ chế xác thực của Spring Security.
 4. Thông tin định danh của request hiện tại luôn nằm trong `SecurityContextHolder`.
+
+---
+
+## 5. Câu hỏi phỏng vấn thường gặp & Trả lời chi tiết
+
+### 5.1. `SecurityContextHolder`, `SecurityContext` và `Authentication` liên kết với nhau như thế nào?
+- **Mô hình búp bê Nga lồng nhau:**
+  $$\text{SecurityContextHolder} \longrightarrow \text{SecurityContext} \longrightarrow \text{Authentication}$$
+  1. **`SecurityContextHolder`:** Là lớp ngoài cùng, sử dụng chiến lược lưu trữ mặc định **`ThreadLocal`**. Đảm bảo mỗi luồng (Thread) phục vụ 1 HTTP request sẽ có một không gian lưu trữ bảo mật độc lập, không sợ bị lẫn lộn giữa các người dùng.
+  2. **`SecurityContext`:** Là interface chứa thông tin bảo mật của request hiện tại, lấy qua `SecurityContextHolder.getContext()`.
+  3. **`Authentication`:** Là đối tượng đại diện cho người dùng đã đăng nhập, chứa:
+     - `getPrincipal()`: Thông tin user (thường là instance của `UserDetails`).
+     - `getCredentials()`: Mật khẩu hoặc token (thường được xóa đi sau khi xác thực thành công để bảo mật).
+     - `getAuthorities()`: Danh sách các quyền/vai trò (`GrantedAuthority` - ví dụ `ROLE_ADMIN`).
+     - `isAuthenticated()`: `true` nếu đã xác thực thành công.
+
+### 5.2. Tại sao Spring Security 6.x / Spring Boot 3.x loại bỏ `WebSecurityConfigurerAdapter`?
+- **Lý do:** Trước Spring Boot 3.x, lập trình viên phải kế thừa lớp `WebSecurityConfigurerAdapter` và override hàm `configure(HttpSecurity http)`. Điều này vi phạm nguyên tắc *"Ưu tiên thành phần hơn kế thừa"* (Composition over Inheritance) và biến class cấu hình thành một "God class" cồng kềnh.
+- **Cải tiến trong Spring Security 6.x:**
+  - Chuyển sang mô hình **Component-based configuration**: Khai báo trực tiếp một `@Bean SecurityFilterChain`.
+  - Sử dụng cú pháp **Lambda DSL (`http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(...)`)** giúp code rõ ràng, có cấu trúc phân cấp chặt chẽ, loại bỏ hoàn toàn việc gọi `.and()` nối chuỗi rối rắm của thời kỳ cũ.
+
+### 5.3. `AuthenticationManager` và `AuthenticationProvider` phối hợp xử lý như thế nào?
+- Khi người dùng đăng nhập (`POST /login`):
+  1. Controller gọi `authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password))`.
+  2. `AuthenticationManager` (mặc định là `ProviderManager`) duyệt qua danh sách các `AuthenticationProvider` được đăng ký.
+  3. `DaoAuthenticationProvider` nhận nhiệm vụ:
+     - Gọi `userDetailsService.loadUserByUsername(email)` để kéo thông tin user và mật khẩu băm từ Database lên.
+     - Gọi `passwordEncoder.matches(rawPassword, encodedPasswordFromDb)` để so khớp mật khẩu.
+  4. Nếu khớp: Trả về một đối tượng `Authentication` hoàn chỉnh (đã có cờ `authenticated = true` và danh sách Roles).
+  5. Nếu sai: Ném ra ngoại lệ `BadCredentialsException`.
+
+---
+*Thực hành:* Cấu hình `SecurityFilterChain` với Spring Boot 3.x, tắt form login mặc định và cho phép public các endpoint Swagger `/swagger-ui/**`.

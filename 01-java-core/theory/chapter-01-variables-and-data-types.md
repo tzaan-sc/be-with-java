@@ -160,12 +160,56 @@ final double TAX_RATE = 0.1;   // Không thể thay đổi giá trị sau khi g�
 
 - Quy ước đặt tên hằng số: **UPPER_SNAKE_CASE**
 
-## 7. Câu hỏi phỏng vấn thường gặp
-1. **Primitive** và **Reference** type khác nhau thế nào? Lưu ở đâu trong bộ nhớ?
-2. Toán tử `==` hoạt động khác nhau thế nào khi dùng với `int` và `Integer`?
-3. Giải thích **Autoboxing / Unboxing** và khi nào có thể gây `NullPointerException`?
-4. Kết quả của `5 / 2` khác `5.0 / 2` như thế nào? Tại sao?
-5. Khi ép `(byte) 130`, kết quả là bao nhiêu? Giải thích cơ chế overflow.
+## 7. Câu hỏi phỏng vấn & Trả lời chi tiết
+
+### 7.1. Primitive và Reference type khác nhau thế nào? Lưu ở đâu trong bộ nhớ?
+- **Primitive (Nguyên thuỷ - 8 kiểu):**
+  - Lưu **trực tiếp giá trị nhị phân** trong vùng nhớ **Stack** (hoặc nằm gọn trong object trên Heap nếu là biến instance của class).
+  - Không có phương thức đi kèm, kích thước cố định (1 - 8 bytes), tốc độ truy xuất cực nhanh.
+- **Reference (Tham chiếu):**
+  - Biến chỉ lưu **địa chỉ con trỏ (Memory Address)** trên vùng nhớ **Stack**.
+  - Đối tượng thực sự (Object Data) luôn được cấp phát động trên vùng nhớ **Heap**.
+  - Có các phương thức (`equals()`, `hashCode()`, `toString()`), giá trị mặc định là `null`.
+
+### 7.2. Toán tử `==` hoạt động khác nhau thế nào khi dùng với `int` và `Integer`?
+- **Với `int` (Primitive):** `==` so sánh **giá trị số học**.
+  ```java
+  int a = 10, b = 10;
+  System.out.println(a == b); // true (vì cùng mang giá trị 10)
+  ```
+- **Với `Integer` (Reference Object):** `==` so sánh **địa chỉ ô nhớ** (hai biến có trỏ cùng một object trên Heap hay không), chứ KHÔNG so sánh giá trị nội dung (để so sánh giá trị phải dùng `.equals()`).
+  - *Cạm bẫy Integer Cache (-128 đến 127):*
+    ```java
+    Integer x = 100, y = 100;
+    System.out.println(x == y); // true (do nằm trong Integer Cache từ -128 đến 127, JVM tái sử dụng object)
+
+    Integer a = 200, b = 200;
+    System.out.println(a == b); // false (vượt ngoài cache, tạo 2 object độc lập trên Heap!)
+    System.out.println(a.equals(b)); // true (luôn dùng .equals() để so sánh đối tượng)
+    ```
+
+### 7.3. Giải thích Autoboxing / Unboxing và khi nào có thể gây NullPointerException?
+- **Autoboxing:** Trình biên dịch tự động chuyển kiểu nguyên thuỷ sang Wrapper class (vd: `int` $\rightarrow$ `Integer.valueOf()`).
+- **Unboxing:** Trình biên dịch tự động gọi `.intValue()` để lấy giá trị nguyên thuỷ từ Wrapper class.
+- **Nguy cơ gây `NullPointerException` (NPE):**
+  Xảy ra khi ta thực hiện phép toán hoặc gán một Wrapper object đang mang giá trị `null` về kiểu nguyên thuỷ:
+  ```java
+  Integer count = null;
+  int total = count; // ❌ Ném ra NullPointerException tại runtime vì JVM âm thầm gọi count.intValue()
+  ```
+
+### 7.4. Kết quả của `5 / 2` khác `5.0 / 2` như thế nào? Tại sao?
+- `5 / 2` $\rightarrow$ Kết quả là `2` (kiểu `int`). Vì cả `5` và `2` đều là số nguyên (`int`), phép chia nguyên trong Java sẽ cắt bỏ toàn bộ phần thập phân (không làm tròn).
+- `5.0 / 2` $\rightarrow$ Kết quả là `2.5` (kiểu `double`). Khi một trong hai toán hạng là kiểu số thực (`double`), Java sẽ tự động ép toán hạng còn lại (`2`) thành `2.0` (Widening Casting) rồi thực hiện phép chia số thực.
+
+### 7.5. Khi ép `(byte) 130`, kết quả là bao nhiêu? Giải thích cơ chế overflow
+- **Kết quả:** `-126`
+- **Giải thích cơ chế tràn số (Overflow):**
+  - Kiểu `byte` trong Java có kích thước 8-bit có dấu (Signed 2's Complement), phạm vi từ `-128` đến `127`.
+  - Số nguyên `130` dưới dạng nhị phân 32-bit: `00000000 00000000 00000000 10000010`.
+  - Khi ép kiểu tường minh sang `(byte)`, Java cắt lấy đúng **8 bit cuối**: `10000010`.
+  - Bit đầu tiên là `1` đại diện cho số âm.
+  - Giá trị bù 2 của `10000010` là: $-(2^7) + 2^1 = -128 + 2 = -126$.
 
 ---
 *Thực hành:* Tạo class `Main`, khai báo đầy đủ 8 kiểu primitive, thử ép kiểu ngầm định & tường minh, và chạy các ví dụ chia số nguyên.

@@ -190,14 +190,73 @@ System.out.println("StringBuilder: " + (end - start) + "ms"); // ~3ms
 | So sánh nội dung chuỗi | `.equals()` hoặc `.equalsIgnoreCase()` |
 | So sánh xem có cùng 1 object không | `==` (hiếm khi cần) |
 
-## 7. Câu hỏi phỏng vấn thường gặp
-1. Tại sao String trong Java là **immutable**? Lợi ích?
-2. **String Pool** là gì? Hoạt động thế nào?
-3. `String a = "abc"` và `String b = new String("abc")` tạo bao nhiêu object?
-4. Phân biệt `==` và `.equals()` khi dùng với String?
-5. Tại sao không nên dùng `+=` để nối String trong vòng lặp?
-6. StringBuilder và StringBuffer khác nhau thế nào? Khi nào dùng cái nào?
-7. Phương thức `intern()` dùng để làm gì?
+## 7. Câu hỏi phỏng vấn & Trả lời chi tiết
+
+### 7.1. Tại sao String trong Java là Immutable (Bất biến)? Lợi ích?
+- **Khái niệm:** Một khi đối tượng `String` được tạo ra trên Heap, nội dung chuỗi của nó **không bao giờ có thể bị thay đổi**. Mọi thao tác cắt, nối (`concat`, `replace`, `substring`) thực chất đều sinh ra một đối tượng `String` hoàn toàn mới.
+- **3 Lợi ích sống còn của String Immutability:**
+  1. **Bảo mật (Security):** String được dùng làm tham số kết nối Database URL, Username, Password, cổng mạng, tên file. Nếu String có thể bị sửa đổi (mutable), một luồng mã độc có thể âm thầm đổi địa chỉ Database sau khi đã qua bước kiểm tra xác thực.
+  2. **An toàn đa luồng (Thread-Safety):** Vì dữ liệu không bao giờ thay đổi, nhiều luồng (threads) có thể đồng thời đọc cùng một String mà không bao giờ cần đồng bộ hóa (synchronization), loại bỏ hoàn toàn nguy cơ tranh chấp Race Condition.
+  3. **Tối ưu bộ nhớ với String Constant Pool:** Nhờ bất biến, hàng trăm biến mang cùng giá trị `"ACTIVE"` có thể cùng trỏ về 1 ô nhớ duy nhất trên Heap mà không sợ một biến sửa làm ảnh hưởng tới các biến khác.
+  4. **Caching Hashcode:** Mã hash (`hashCode()`) của String chỉ cần tính toán 1 lần duy nhất lúc khởi tạo và lưu cache lại. Điều này giúp String trở thành Key lý tưởng nhất cho `HashMap` với tốc độ tìm kiếm $O(1)$ siêu nhanh.
+
+### 7.2. String Pool là gì? Hoạt động thế nào?
+- **String Constant Pool (SCP):** Là một vùng nhớ đặc biệt nằm bên trong bộ nhớ **Heap** của JVM.
+- **Cơ chế hoạt động:**
+  - Khi ta khai báo bằng chuỗi literal: `String s = "hello";`
+  - JVM sẽ kiểm tra trong String Pool xem đã có chuỗi `"hello"` nào tồn tại chưa.
+  - Nếu **đã có:** JVM trả về ngay địa chỉ tham chiếu của đối tượng có sẵn trong Pool (không tạo mới).
+  - Nếu **chưa có:** JVM tạo mới một đối tượng `"hello"` đặt vào Pool và trả về địa chỉ.
+
+### 7.3. `String a = "abc"` và `String b = new String("abc")` tạo bao nhiêu object?
+- **Trường hợp 1:** Nếu chuỗi `"abc"` **chưa hề tồn tại** trong String Pool từ trước:
+  - Lệnh `String a = "abc";` $\rightarrow$ Tạo **1 object** nằm trong **String Pool**.
+  - Lệnh `String b = new String("abc");` $\rightarrow$ Tạo thêm **1 object** nằm ở **vùng nhớ Heap thông thường** (ngoài Pool).
+  - $\rightarrow$ Tổng cộng tạo **2 objects**.
+- **Trường hợp 2:** Nếu chuỗi `"abc"` **đã có sẵn** trong String Pool:
+  - Lệnh `new String("abc")` chỉ tạo duy nhất **1 object** trên Heap thông thường.
+
+### 7.4. Phân biệt `==` và `.equals()` khi dùng với String
+- **Toán tử `==`:** So sánh **địa chỉ ô nhớ** (hai biến có cùng trỏ tới 1 object hay không).
+- **Phương thức `.equals()`:** So sánh **nội dung ký tự bên trong chuỗi**.
+- *Ví dụ kinh điển:*
+  ```java
+  String s1 = "Java";
+  String s2 = "Java";
+  String s3 = new String("Java");
+
+  System.out.println(s1 == s2);      // true (cùng trỏ vào 1 object trong String Pool)
+  System.out.println(s1 == s3);      // false (s1 ở trong Pool, s3 là object riêng trên Heap)
+  System.out.println(s1.equals(s3)); // true (nội dung đều là "Java")
+  ```
+  > **Quy tắc bất di bất dịch:** Trong Backend Java, **LUÔN LUÔN dùng `.equals()`** để so sánh chuỗi!
+
+### 7.5. Tại sao không nên dùng `+=` để nối String trong vòng lặp?
+- Vì String là bất biến, mỗi lần gọi `str += "a"` trong vòng lặp $N$ lần, JVM phải tạo ra một đối tượng `StringBuilder` tạm, append, rồi gọi `.toString()` tạo ra một đối tượng `String` mới và vứt bỏ đối tượng cũ làm rác.
+- **Hậu quả:**
+  - Độ phức tạp thời gian: $O(N^2)$ thay vì $O(N)$.
+  - Tạo ra hàng ngàn object rác trên Heap, ép Garbage Collector phải chạy liên tục (gây giật lag hệ thống).
+  - Với vòng lặp 100.000 lần: Nối chuỗi bằng `+=` mất **vài phút**, trong khi dùng `StringBuilder` chỉ mất **chưa tới 10 mili-giây**.
+
+### 7.6. StringBuilder và StringBuffer khác nhau thế nào? Khi nào dùng cái nào?
+| Tiêu chí | `StringBuilder` (Java 5+) | `StringBuffer` (Java 1.0) |
+| :--- | :--- | :--- |
+| **Tính an toàn đa luồng** | **Không Thread-safe** (các phương thức không có `synchronized`). | **Thread-safe** (hầu hết phương thức đều bọc từ khóa `synchronized`). |
+| **Tốc độ thực thi** | **Cực nhanh** (vì không mất chi phí khóa luồng - lock overhead). | Chậm hơn do chi phí đồng bộ luồng. |
+| **Ứng dụng thực tế** | Dùng trong **99% trường hợp thực tế** (nối chuỗi trong một hàm, một luồng duy nhất). | Chỉ dùng khi nhiều Thread cùng lúc chỉnh sửa chung một bộ đệm chuỗi (rất hiếm khi gặp). |
+
+### 7.7. Phương thức `intern()` dùng để làm gì?
+- Khi gọi `s.intern()`, JVM sẽ kiểm tra xem nội dung của `s` đã có trong String Constant Pool chưa:
+  - Nếu đã có: Trả về tham chiếu của đối tượng trong Pool.
+  - Nếu chưa có: Đưa `s` vào String Pool và trả về tham chiếu đó.
+- *Ví dụ:*
+  ```java
+  String s1 = new String("hello"); // Nằm trên Heap
+  String s2 = s1.intern();          // Ép lấy đối tượng trong Pool
+  String s3 = "hello";              // Nằm trong Pool
+  System.out.println(s2 == s3);     // true
+  ```
+- *Ứng dụng:* Dùng khi đọc một lượng cực lớn dữ liệu từ file/database có nhiều chuỗi trùng lặp (ví dụ: tên thành phố, mã quốc gia) để đưa vào Pool giúp tiết kiệm dung lượng RAM.
 
 ---
 *Thực hành:* Code kiểm chứng `==` vs `.equals()` với String literal và `new String()`, đo thời gian nối 100.000 chuỗi bằng String vs StringBuilder.

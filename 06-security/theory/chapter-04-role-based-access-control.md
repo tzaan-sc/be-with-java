@@ -150,3 +150,36 @@ http.exceptionHandling(ex -> ex
     .accessDeniedHandler(customAccessDeniedHandler)
 );
 ```
+
+---
+
+## 6. Câu hỏi phỏng vấn thường gặp & Trả lời chi tiết
+
+### 6.1. Phân biệt `Role` và `Privilege` (Permission) trong thực tế
+- **Role (Vai trò / Chức danh):**
+  - Là nhóm định danh cấp cao, mang tính bao quát (ví dụ: `ROLE_ADMIN`, `ROLE_MANAGER`, `ROLE_CUSTOMER`).
+  - Trong Spring Security: Luôn được gắn tiền tố `ROLE_` ngầm định khi dùng hàm `hasRole("ADMIN")`.
+- **Privilege / Permission (Quyền hạn chi tiết - Granular Permission):**
+  - Là quyền thực hiện một hành động cụ thể trên một tài nguyên (ví dụ: `user:read`, `user:create`, `order:delete`, `report:export`).
+  - Được kiểm tra qua: `hasAuthority("user:delete")`.
+- **Mô hình chuẩn thực tế doanh nghiệp:**
+  Một `User` có thể có nhiều `Role`, và mỗi `Role` sẽ chứa một danh sách tập hợp các `Privilege`. Khi phân quyền ở mức method, nên kiểm tra theo **`hasAuthority()`** để hệ thống linh hoạt thay đổi quyền cho từng vai trò mà không cần sửa lại code Java.
+
+### 6.2. Phân biệt `AuthenticationEntryPoint` và `AccessDeniedHandler`
+| Tiêu chí | `AuthenticationEntryPoint` | `AccessDeniedHandler` |
+| :--- | :--- | :--- |
+| **Mã lỗi HTTP** | **`401 Unauthorized`** | **`403 Forbidden`** |
+| **Khi nào kích hoạt** | Khi người dùng **CHƯA ĐĂNG NHẬP** (thiếu token, token sai hoặc hết hạn) mà cố tình truy cập vào tài nguyên bảo vệ. | Khi người dùng **ĐÃ ĐĂNG NHẬP THÀNH CÔNG** (token chuẩn), nhưng **KHÔNG CÓ QUYỀN** tương ứng để truy cập tài nguyên đó. |
+| **Cách xử lý** | Trả về JSON thông báo chưa đăng nhập, nhắc client redirect về trang Login. | Trả về JSON thông báo bị từ chối truy cập do thiếu quyền hạn. |
+
+### 6.3. `@PreAuthorize` vs `@Secured` vs `@RolesAllowed` nên dùng cái nào?
+- **`@Secured` (Spring cũ):** Chỉ nhận chuỗi String vai trò đơn giản (ví dụ `@Secured("ROLE_ADMIN")`), không hỗ trợ biểu thức logic, cú pháp hạn chế.
+- **`@RolesAllowed` (Chuẩn Java EE/Jakarta JSR-250):** Tương tự `@Secured`, độc lập framework nhưng không có biểu thức logic.
+- **`@PreAuthorize` (Chuẩn hiện đại - KHUYÊN DÙNG TUYỆT ĐỐI):**
+  - Hỗ trợ đầy đủ ngôn ngữ biểu thức **SpEL (Spring Expression Language)**.
+  - Cho phép kết hợp logic phức tạp: `@PreAuthorize("hasRole('ADMIN') or hasAuthority('order:write')")`.
+  - Cho phép kiểm tra quyền sở hữu dữ liệu dựa trên tham số hàm:
+    `@PreAuthorize("#userId == authentication.principal.id")` (chỉ cho phép user tự sửa thông tin của chính mình).
+
+---
+*Thực hành:* Viết API có `@PreAuthorize("hasRole('ADMIN')")`, dùng token của User thường gọi để xem có trả về đúng mã 403 từ `CustomAccessDeniedHandler` không.

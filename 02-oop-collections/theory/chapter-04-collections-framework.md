@@ -137,12 +137,63 @@ deque.push("B");
 deque.pop();        // "B" (LIFO)
 ```
 
-## 6. Câu hỏi phỏng vấn
-1. ArrayList vs LinkedList: khi nào dùng cái nào?
-2. HashMap hoạt động bên dưới như thế nào? (Bucket, hashCode, collision)
-3. Tại sao override `equals()` thì phải override `hashCode()`?
-4. HashSet vs TreeSet vs LinkedHashSet?
-5. ConcurrentHashMap khác HashMap thế nào?
+## 6. Câu hỏi phỏng vấn & Trả lời chi tiết
+
+### 6.1. ArrayList vs LinkedList: Khi nào dùng cái nào?
+| Tiêu chí | `ArrayList` | `LinkedList` |
+| :--- | :--- | :--- |
+| **Cấu trúc dữ liệu** | Mảng động (Dynamic Resizable Array). | Danh sách liên kết đôi (Doubly Linked List). |
+| **Truy xuất ngẫu nhiên (`get(i)`)** | **$O(1)$ - Cực nhanh** nhờ tính toán offset chỉ mục. | **$O(n)$ - Chậm** vì phải duyệt tuần tự từ đầu hoặc đuôi danh sách đến vị trí `i`. |
+| **Thêm/Xóa ở cuối danh sách** | **$O(1)$ amortized**. | **$O(1)$**. |
+| **Thêm/Xóa ở đầu hoặc giữa danh sách** | **$O(n)$ - Chậm** vì phải dịch chuyển (shift) toàn bộ các phần tử phía sau. | **$O(1)$** (khi đã có con trỏ Node tại vị trí đó, chỉ cần đổi liên kết `prev` và `next`). |
+| **Chi phí bộ nhớ** | Nhẹ (chỉ tốn dung lượng mảng). | Tốn nhiều RAM hơn vì mỗi Node phải lưu thêm 2 con trỏ `prev` và `next`. |
+| **Thực tế:** Trong hầu hết các bài toán Backend (đọc danh sách từ DB, phân trang, duyệt dữ liệu), **`ArrayList` là sự lựa chọn mặc định** vì CPU cache locality cực kỳ tốt. Chỉ dùng `LinkedList` khi ứng dụng liên tục thêm/xóa ở đầu danh sách (như cấu trúc Queue/FIFO).
+
+### 6.2. HashMap hoạt động bên dưới như thế nào? (Bucket, hashCode, Collision)
+Mô hình cấu trúc nội bộ của `HashMap` trong Java 8+:
+```
+Table Array (Buckets):
+Index 0: [ null ]
+Index 1: [ Node: Key1=V1 ] -> [ Node: Key2=V2 ] (Linked List khi bucket <= 8 phần tử)
+...
+Index 7: [ TreeNode: Red-Black Tree (Khi collision > 8 phần tử -> O(log n)) ]
+```
+1. **Lưu dữ liệu (`put(K, V)`):**
+   - JVM gọi `key.hashCode()`, sau đó áp dụng hàm hash phân tán (`hash(key)`) để tính ra vị trí **Bucket Index**:
+     $$\text{index} = (n - 1) \ \& \ \text{hash}$$
+   - Nếu Bucket đó đang trống: Tạo `Node(hash, key, value, null)` đặt vào bucket $\rightarrow$ Tốc độ $O(1)$.
+   - Nếu Bucket đã có phần tử (**Xung đột băm - Hash Collision**):
+     - Duyệt qua các Node trong bucket đó, dùng `equals()` so sánh `key`:
+       + Nếu `equals() == true`: Ghi đè (update) value mới.
+       + Nếu `equals() == false`: Chèn Node mới vào cuối danh sách liên kết.
+2. **Cải tiến từ Java 8 (Treeification):**
+   - Khi số phần tử trong 1 bucket vượt quá **`TREEIFY_THRESHOLD = 8`** (và dung lượng mảng $\ge 64$), danh sách liên kết sẽ được tự động chuyển đổi thành **Cây đỏ-đen (Red-Black Tree)**.
+   - Giúp cải thiện độ phức tạp trong trường hợp va chạm tồi tệ nhất từ $O(n)$ xuống còn **$O(\log n)$**, ngăn chặn hoàn toàn tấn công HashDoS.
+
+### 6.3. Tại sao Override `equals()` thì BẮT BUỘC phải Override `hashCode()`?
+- **Quy tắc bất biến trong hợp đồng Java (Contract between equals and hashCode):**
+  > *"Nếu hai đối tượng bằng nhau theo `equals()` (`a.equals(b) == true`), thì `hashCode()` của chúng BẮT BUỘC PHẢI TRẢ VỀ GIÁ TRỊ GIỐNG HỆT NHAU (`a.hashCode() == b.hashCode()`)."*
+- **Hậu quả nếu vi phạm khi dùng `HashMap` / `HashSet`:**
+  - Giả sử bạn tạo class `Student(id, name)`, bạn override `equals()` so sánh theo `id`, nhưng **quên override `hashCode()`**.
+  - `Student s1 = new Student(1, "An");` và `Student s2 = new Student(1, "An");`
+  - `s1.equals(s2)` trả về `true`.
+  - Nhưng vì không override `hashCode()`, JVM dùng `hashCode()` mặc định của `Object` (dựa trên địa chỉ bộ nhớ), khiến `s1.hashCode() != s2.hashCode()`.
+  - Kết quả: Khi gọi `map.put(s1, "Gioi")` rồi gọi `map.get(s2)` $\rightarrow$ **Trả về `null`!** Vì `s2` có hash khác nên `HashMap` tìm nhầm bucket khác, dẫn tới thất lạc dữ liệu.
+
+### 6.4. So sánh HashSet vs TreeSet vs LinkedHashSet
+| Tiêu chí | `HashSet` | `LinkedHashSet` | `TreeSet` |
+| :--- | :--- | :--- | :--- |
+| **Cấu trúc nền tảng** | Bọc bên ngoài một `HashMap`. | `HashMap` + Danh sách liên kết kép. | Cây đỏ-đen (Red-Black Tree - `TreeMap`). |
+| **Thứ tự phần tử** | **Hỗn loạn**, không có bất kỳ thứ tự nào. | **Bảo toàn đúng thứ tự chèn (Insertion Order)**. | **Tự động sắp xếp tăng dần** (Natural order hoặc qua `Comparator`). |
+| **Cho phép phần tử `null`** | Cho phép 1 phần tử `null`. | Cho phép 1 phần tử `null`. | **Không cho phép `null`** (ném `NullPointerException` vì cần gọi `compareTo()`). |
+| **Độ phức tạp** | **$O(1)$** (thêm, xóa, tìm kiếm). | **$O(1)$** (chậm hơn HashSet một chút do cập nhật link list). | **$O(\log n)$**. |
+
+### 6.5. `ConcurrentHashMap` khác `HashMap` thế nào trong môi trường đa luồng?
+- **`HashMap`:** Hoàn toàn **không Thread-safe**. Nếu nhiều thread cùng `put()` đồng thời, có thể gây mất mát dữ liệu, ghi đè sai lệch, hoặc thậm chí gây vòng lặp vô hạn (Infinite Loop làm CPU 100% trong Java cũ).
+- **`Collections.synchronizedMap(map)` hoặc `Hashtable` (Cách cũ):** Khóa toàn bộ Map (`synchronized` trên toàn bộ bảng). Bất kỳ ai đọc hay ghi đều phải xếp hàng, khiến hiệu năng cực kỳ nghèo nàn khi tải cao.
+- **`ConcurrentHashMap` (Chuẩn hiện đại):**
+  - **Khóa theo từng phân đoạn (Lock Striping / CAS + synchronized trên từng Node đầu bucket):** Khi một thread ghi vào Bucket số 1, các thread khác vẫn có thể đọc và ghi vào Bucket số 2, 3 hoàn toàn song song mà không bị chặn.
+  - Các thao tác đọc (`get()`) diễn ra hoàn toàn không cần lock (**Lock-free**) nhờ dùng biến `volatile`, đem lại tốc độ siêu cao trong môi trường Backend đa luồng.
 
 ---
 *Thực hành:* Dùng ArrayList, HashSet, HashMap thao tác CRUD. Test trùng lặp trong Set. Duyệt Map bằng entrySet().
