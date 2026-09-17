@@ -2,6 +2,8 @@
 
 Chào mừng bạn đến với kho lưu trữ học tập Backend với Java từ con số 0 đến nâng cao. Repository này được chia theo 8 giai đoạn tương ứng với lộ trình chuẩn thực tế của một Java Backend Developer.
 
+> 📝 **Checklist theo ngày:** Bạn có thể theo dõi và tích tiến độ học mỗi ngày tại file **[LO_TRINH_THEO_NGAY_CHECKLIST.txt](./LO_TRINH_THEO_NGAY_CHECKLIST.txt)** ở thư mục gốc.
+
 ---
 
 ## 📌 Bảng Theo Dõi Tiến Độ Học Tập

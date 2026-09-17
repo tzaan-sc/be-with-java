@@ -1,0 +1,642 @@
+================================================================================
+    LỘ TRÌNH JAVA BACKEND MICRO-LEARNING (20 - 30 PHÚT MỖI NGÀY)
+================================================================================
+* Nguyên tắc học 20-30 phút/ngày:
+  - Học đều đặn mỗi ngày quan trọng hơn học dồn dập rồi bỏ dở.
+  - Mỗi ngày chỉ tập trung đúng 1 khái niệm cốt lõi (Bite-sized).
+  - Khung thời gian gợi ý cho mỗi ngày:
+    + 10 phút: Đọc hiểu 1 mục lý thuyết trọng tâm.
+    + 10-15 phút: Mở IDE gõ thử 1 đoạn code nhỏ hoặc gõ lệnh terminal.
+    + 5 phút: Tự trả lời 1 câu hỏi chốt kiến thức & tích checklist.
+
+* Ký hiệu đánh dấu:
+  [ ] : Chưa học
+  [-] : Đang học
+  [x] : Đã hoàn thành
+
+================================================================================
+PHASE 0: BACKEND CĂN BẢN (NGÀY 01 - NGÀY 08)
+Thư mục: 00-basic-backend/
+================================================================================
+[ ] NGÀY 01: Backend là gì & Vai trò trong hệ thống (~25p)
+    - [ ] 10p: Đọc `00-basic-backend/theory/chapter-01-what-is-backend.md` (Mục 1 & 2).
+    - [ ] 10p: Phân biệt rõ sự khác nhau giữa Frontend, Backend và Database.
+    - [ ] 5p: Tự trả lời: "Khi bấm nút Mua Hàng trên Shopee, Backend xử lý những việc gì?"
+
+[ ] NGÀY 02: Các thành phần cốt lõi của Backend (~20p)
+    - [ ] 10p: Đọc tiếp Chapter 01 (Mục Server, API, Middleware, Database).
+    - [ ] 10p: Vẽ sơ đồ nháp tay: Client -> API Gateway/Server -> Database.
+    - [ ] 5p: Tự giải thích: Middleware đóng vai trò người gác cổng như thế nào?
+
+[ ] NGÀY 03: Mô hình Client - Server & Luồng Web (~25p)
+    - [ ] 10p: Đọc `00-basic-backend/theory/chapter-02-client-server-architecture.md`.
+    - [ ] 10p: Mở Chrome DevTools (F12) -> tab Network, bấm F5 một trang web để xem các Request/Response gửi đi.
+    - [ ] 5p: Ghi nhớ 3 thành phần chính của 1 HTTP Request (Method, URL, Headers/Body).
+
+[ ] NGÀY 04: Giao thức TCP/IP & Bắt tay 3 bước (3-way Handshake) (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 02 phần kết nối TCP (SYN, SYN-ACK, ACK).
+    - [ ] 10p: Tìm hiểu vì sao HTTP/HTTPS lại cần chạy trên nền TCP (đảm bảo tin cậy, không mất gói tin).
+    - [ ] 5p: Phân biệt nhanh TCP (chính xác) vs UDP (tốc độ cao - streaming/gaming).
+
+[ ] NGÀY 05: Địa chỉ IP, Port & DNS (~25p)
+    - [ ] 10p: Đọc `00-basic-backend/theory/chapter-03-networking-and-dns.md`.
+    - [ ] 10p: Mở Terminal gõ thử các lệnh: `ping google.com`, `nslookup google.com`.
+    - [ ] 5p: Tự trả lời: DNS hoạt động giống cuốn danh bạ điện thoại như thế nào?
+
+[ ] NGÀY 06: Các Port chuẩn & Giao thức mạng (~20p)
+    - [ ] 10p: Ghi nhớ các Port mặc định: 80 (HTTP), 443 (HTTPS), 3306 (MySQL), 5432 (Postgres), 8080 (Tomcat/Spring).
+    - [ ] 10p: Mở Terminal chạy thử `curl -I https://google.com` để xem status code và headers trả về.
+    - [ ] 5p: Tự giải thích vì sao cùng 1 máy tính có thể chạy đồng thời Web, Game và Database (nhờ Port).
+
+[ ] NGÀY 07: Web Server vs App Server vs Database (~25p)
+    - [ ] 10p: Đọc `00-basic-backend/theory/chapter-04-web-servers-and-databases.md`.
+    - [ ] 10p: Phân biệt vai trò: Nginx (Web server/Reverse proxy) vs Tomcat (App Server chạy Java).
+    - [ ] 5p: Phân biệt nhanh Cơ sở dữ liệu SQL (quan hệ) vs NoSQL (phi quan hệ).
+
+[ ] NGÀY 08: Ôn tập & Quiz tổng kết Phase 0 (~20p)
+    - [ ] 15p: Đọc lại tóm tắt 4 Chapter và trả lời các câu hỏi phỏng vấn cuối mỗi chapter.
+    - [ ] 5p: Tích hoàn thành Phase 0 và chuẩn bị môi trường JDK/IDE cho Phase 1.
+
+================================================================================
+PHASE 1: JAVA CORE - NỀN TẢNG NGÔN NGỮ (NGÀY 09 - NGÀY 22)
+Thư mục: 01-java-core/
+================================================================================
+[ ] NGÀY 09: Cài đặt môi trường & Cú pháp biến căn bản (~25p)
+    - [ ] 10p: Đọc `01-java-core/theory/chapter-01-variables-and-data-types.md`.
+    - [ ] 10p: Mở IDE tạo class `Main`, khai báo các biến kiểu: int, long, double, boolean, char, String.
+    - [ ] 5p: Phân biệt Kiểu nguyên thuỷ (Primitive) vs Kiểu tham chiếu (Reference).
+
+[ ] NGÀY 10: Ép kiểu (Type Casting) & Toán tử (~20p)
+    - [ ] 10p: Đọc tiếp Chapter 01 phần Ép kiểu ngầm định (Widening) và Ép kiểu tường minh (Narrowing).
+    - [ ] 10p: Code thử ví dụ chia 2 số nguyên bị mất phần thập phân (`int a=5, b=2; double c = (double)a/b;`).
+    - [ ] 5p: Lưu ý lỗi tràn số (Overflow) khi ép từ kiểu lớn về kiểu nhỏ.
+
+[ ] NGÀY 11: Cấu trúc rẽ nhánh (if-else & switch-case) (~25p)
+    - [ ] 10p: Đọc `01-java-core/theory/chapter-02-control-flow.md`.
+    - [ ] 10p: Viết hàm phân loại học lực sinh viên dựa vào điểm (if-else) và hàm in thứ trong tuần (switch-case).
+    - [ ] 5p: Tìm hiểu tính năng switch-case kiểu mới (Arrow syntax `->`) trong Java hiện đại.
+
+[ ] NGÀY 12: Vòng lặp (for, while, do-while, for-each) (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 02 phần vòng lặp và lệnh `break`, `continue`.
+    - [ ] 10p: Viết bài toán tính tổng các số chẵn trong mảng dùng `for-each` và dùng `while`.
+    - [ ] 5p: Phân biệt khi nào nên dùng `for` và khi nào nên dùng `while` / `do-while`.
+
+[ ] NGÀY 13: Mảng 1 chiều (Array) căn bản (~20p)
+    - [ ] 10p: Khai báo mảng, khởi tạo kích thước cố định, truy xuất phần tử theo index.
+    - [ ] 10p: Viết code tìm giá trị lớn nhất (Max) và nhỏ nhất (Min) trong mảng số nguyên.
+    - [ ] 5p: Tự nhớ: Tại sao độ dài mảng trong Java là cố định sau khi khởi tạo?
+
+[ ] NGÀY 14: Quản lý bộ nhớ Java: Stack vs Heap (~25p)
+    - [ ] 10p: Đọc `01-java-core/theory/chapter-03-memory-management.md` (Stack vs Heap).
+    - [ ] 10p: Vẽ sơ đồ bộ nhớ khi gọi 1 hàm có biến nguyên thuỷ và biến đối tượng.
+    - [ ] 5p: Stack lưu cái gì (biến cục bộ, call stack) và Heap lưu cái gì (đối tượng tạo bởi `new`)?
+
+[ ] NGÀY 15: Cơ chế truyền tham trị (Pass-by-value) trong Java (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 03 phần Pass-by-value.
+    - [ ] 10p: Viết code thử truyền 1 biến `int` vào hàm đổi giá trị (không đổi) vs truyền 1 `Object` đổi thuộc tính (bị đổi).
+    - [ ] 5p: Giải thích chuẩn phỏng vấn: Vì sao Java 100% là Pass-by-Value?
+
+[ ] NGÀY 16: Garbage Collection (GC) căn bản (~20p)
+    - [ ] 10p: Đọc tiếp Chapter 03 phần Garbage Collector & các vùng nhớ (Young Gen, Old Gen, Metaspace).
+    - [ ] 10p: Tìm hiểu khi nào 1 object trở thành "rác" (không còn biến nào tham chiếu tới).
+    - [ ] 5p: Lỗi phổ biến: `OutOfMemoryError: Java heap space` xảy ra khi nào?
+
+[ ] NGÀY 17: Bản chất String & Tính bất biến (Immutability) (~25p)
+    - [ ] 10p: Đọc `01-java-core/theory/chapter-04-strings-and-immutability.md`.
+    - [ ] 10p: Code thử: `String s = "Hello"; s.concat(" World"); System.out.println(s);` để thấy giá trị không đổi.
+    - [ ] 5p: Vì sao String trong Java được thiết kế là immutable (bất biến)? (Security, Thread-safe, HashCode).
+
+[ ] NGÀY 18: String Pool & Phân biệt `==` vs `.equals()` (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 04 phần String Constant Pool.
+    - [ ] 10p: Code kiểm chứng: `String a = "java"; String b = "java"; String c = new String("java");` so sánh `a==b` vs `a==c` vs `a.equals(c)`.
+    - [ ] 5p: Rút ra quy tắc vàng: Luôn dùng `.equals()` khi so sánh nội dung chuỗi.
+
+[ ] NGÀY 19: StringBuilder vs StringBuffer (~20p)
+    - [ ] 10p: Đọc phần cuối Chapter 04: Khi nối chuỗi trong vòng lặp nhiều lần.
+    - [ ] 10p: Viết code nối 10.000 ký tự bằng `String` vs `StringBuilder` và đo thời gian thực thi bằng `System.currentTimeMillis()`.
+    - [ ] 5p: Phân biệt `StringBuilder` (nhanh, non-thread-safe) vs `StringBuffer` (thread-safe).
+
+[ ] NGÀY 20: Ngoại lệ (Exception Handling): Phân loại & try-catch (~25p)
+    - [ ] 10p: Đọc `01-java-core/theory/chapter-05-exception-handling.md`.
+    - [ ] 10p: Viết code bắt lỗi chia cho 0 (`ArithmeticException`) và lỗi truy cập index mảng (`ArrayIndexOutOfBoundsException`).
+    - [ ] 5p: Nắm rõ luồng chạy của khối: `try -> catch -> finally`.
+
+[ ] NGÀY 21: Checked vs Unchecked Exception & Custom Exception (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 05: Phân biệt Checked (`IOException`, `SQLException`) vs Unchecked (`NullPointerException`, `IllegalArgumentException`).
+    - [ ] 10p: Tạo class `ResourceNotFoundException extends RuntimeException` và `throw new ResourceNotFoundException("User not found");`.
+    - [ ] 5p: Tìm hiểu cú pháp `try-with-resources` tự động đóng kết nối (AutoCloseable).
+
+[ ] NGÀY 22: Ôn tập & Phỏng vấn Java Core (~20p)
+    - [ ] 15p: Tự ôn lại 5 câu hỏi phỏng vấn trọng tâm: String Pool, Stack vs Heap, Pass-by-value, Checked vs Unchecked Exception, equals vs ==.
+    - [ ] 5p: Tích hoàn thành Phase 1.
+
+================================================================================
+PHASE 2: OOP & COLLECTIONS FRAMEWORK (NGÀY 23 - NGÀY 42)
+Thư mục: 02-oop-collections/
+================================================================================
+[ ] NGÀY 23: Class, Object & Trụ cột Đóng gói (Encapsulation) (~25p)
+    - [ ] 10p: Đọc `02-oop-collections/theory/chapter-01-four-pillars-of-oop.md` (Class, Object, Encapsulation).
+    - [ ] 10p: Viết class `User` với các thuộc tính `private`, tạo Constructor, Getter/Setter và validate dữ liệu trong Setter.
+    - [ ] 5p: 4 loại Access Modifiers trong Java: `public`, `protected`, `default`, `private`.
+
+[ ] NGÀY 24: Kế thừa (Inheritance) & Từ khoá `super`, `this` (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 01 phần Kế thừa.
+    - [ ] 10p: Tạo class cha `Employee` và class con `Manager extends Employee`, dùng `super(...)` gọi constructor cha.
+    - [ ] 5p: Nhớ: Java chỉ hỗ trợ đơn kế thừa với Class (Single Inheritance).
+
+[ ] NGÀY 25: Đa hình (Polymorphism: Overloading vs Overriding) (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 01 phần Đa hình.
+    - [ ] 10p: Phân biệt rõ: Overloading (Nạp chồng - Compile-time) vs Overriding (Ghi đè - Runtime, dùng `@Override`).
+    - [ ] 5p: Viết code ví dụ minh hoạ cả 2 trường hợp.
+
+[ ] NGÀY 26: Trừu tượng (Abstraction) & Abstract Class (~20p)
+    - [ ] 10p: Đọc tiếp Chapter 01 phần Abstraction & `abstract class`.
+    - [ ] 10p: Tạo `abstract class Shape` có method trừu tượng `calculateArea()`, tạo `Circle` và `Rectangle` kế thừa.
+    - [ ] 5p: Nhớ: Abstract class không thể khởi tạo trực tiếp bằng từ khóa `new`.
+
+[ ] NGÀY 27: Interface & So sánh với Abstract Class (~25p)
+    - [ ] 10p: Đọc `02-oop-collections/theory/chapter-02-interface-vs-abstract-class.md`.
+    - [ ] 10p: Tạo `interface PaymentService` có method `pay(double amount)`, tạo `VnPayService` và `MomoService` implements.
+    - [ ] 5p: Bảng so sánh 3 điểm khác nhau lớn nhất giữa Abstract Class và Interface.
+
+[ ] NGÀY 28: Default method & Static method trong Interface (~20p)
+    - [ ] 10p: Đọc tiếp Chapter 02 phần tính năng Interface từ Java 8.
+    - [ ] 10p: Viết 1 `default method` trong Interface để bổ sung logic mà không làm hỏng code các class cũ.
+    - [ ] 5p: Hiểu xung đột kim cương (Diamond problem) khi kế thừa 2 interface có trùng default method.
+
+[ ] NGÀY 29: SOLID - Single Responsibility & Open/Closed Principle (~25p)
+    - [ ] 10p: Đọc `02-oop-collections/theory/chapter-03-solid-principles.md` (Chữ S và chữ O).
+    - [ ] 10p: S: Một class chỉ làm một nhiệm vụ duy nhất. O: Dễ dàng mở rộng tính năng mới mà không sửa code cũ.
+    - [ ] 5p: Xem 1 ví dụ code vi phạm chữ S (Class vừa xử lý User vừa gửi Email vừa ghi log) và cách tách ra.
+
+[ ] NGÀY 30: SOLID - Liskov Substitution, Interface Segregation & Dependency Inversion (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 03 (Chữ L, I, D).
+    - [ ] 10p: D: Module cấp cao không phụ thuộc module cấp thấp, cả 2 phụ thuộc Interface (tiền đề của Spring DI).
+    - [ ] 5p: Tự giải thích nguyên lý Dependency Inversion bằng lời của mình.
+
+[ ] NGÀY 31: Tổng quan Collections Framework & List Interface (~25p)
+    - [ ] 10p: Đọc `02-oop-collections/theory/chapter-04-collections-framework.md` (Sơ đồ Collection & List).
+    - [ ] 10p: Tạo `List<String> list = new ArrayList<>()`, thực hành các method: `add`, `get`, `remove`, `contains`, `size`.
+    - [ ] 5p: Phân biệt List vs Array (List co giãn kích thước linh hoạt).
+
+[ ] NGÀY 32: So sánh ArrayList vs LinkedList (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 04 phần cơ chế mảng động (ArrayList) vs danh sách liên kết đôi (LinkedList).
+    - [ ] 10p: So sánh độ phức tạp Big-O: Truy xuất ngẫu nhiên `get(i)` và Chèn/Xóa ở đầu/giữa danh sách.
+    - [ ] 5p: Khi nào dùng ArrayList (đọc nhiều) và khi nào dùng LinkedList (thêm/xóa nhiều ở 2 đầu)?
+
+[ ] NGÀY 33: Set Interface (HashSet, LinkedHashSet, TreeSet) (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 04 phần Set (tính chất không chứa phần tử trùng lặp).
+    - [ ] 10p: Thử add các phần tử trùng vào `HashSet`, `LinkedHashSet` (giữ thứ tự chèn) và `TreeSet` (tự động sắp xếp).
+    - [ ] 5p: Set kiểm tra trùng lặp bằng 2 phương thức nào? (`hashCode()` và `equals()`).
+
+[ ] NGÀY 34: Map Interface & Cơ chế hoạt động của HashMap (~30p)
+    - [ ] 10p: Đọc tiếp Chapter 04 phần Map & cơ chế lưu trữ Key-Value trong `HashMap`.
+    - [ ] 15p: Hiểu cơ chế bên dưới HashMap: Mảng Bucket, hàm băm Hash Function, Xử lý va chạm (Collision) bằng LinkedList & Red-Black Tree.
+    - [ ] 5p: Độ phức tạp tìm kiếm trong HashMap ở trường hợp lý tưởng là bao nhiêu? ($O(1)$).
+
+[ ] NGÀY 35: So sánh HashMap, LinkedHashMap, TreeMap & ConcurrentHashMap (~20p)
+    - [ ] 10p: Đọc phần cuối Chapter 04 về các biến thể của Map.
+    - [ ] 10p: Viết code test duyệt qua các entry của HashMap vs LinkedHashMap vs TreeMap.
+    - [ ] 5p: Vì sao nên dùng `ConcurrentHashMap` trong môi trường đa luồng (Multi-threading)?
+
+[ ] NGÀY 36: Generics căn bản trong Java (~25p)
+    - [ ] 10p: Đọc `02-oop-collections/theory/chapter-05-generics.md`.
+    - [ ] 10p: Tạo 1 class generic `ApiResponse<T>` có các trường: `int statusCode`, `String message`, `T data`.
+    - [ ] 5p: Generics giúp code an toàn kiểu dữ liệu tại thời điểm Compile (Type-safety) như thế nào?
+
+[ ] NGÀY 37: Bounded Type & Wildcards trong Generics (~20p)
+    - [ ] 10p: Đọc tiếp Chapter 05: `<T extends Number>`, Wildcard `<?>`, `<? extends T>`, `<? super T>`.
+    - [ ] 10p: Viết hàm tính tổng các số `sumOfList(List<? extends Number> list)`.
+    - [ ] 5p: Ghi nhớ nguyên tắc PECS: Producer Extends, Consumer Super.
+
+[ ] NGÀY 38: Java 8 Lambda Expression & Functional Interface (~25p)
+    - [ ] 10p: Đọc `02-oop-collections/theory/chapter-06-java8-functional-and-streams.md` (Lambda & Functional Interface).
+    - [ ] 10p: Chuyển đổi một Anonymous Comparator sang cú pháp Lambda `(a, b) -> a.compareTo(b)`.
+    - [ ] 5p: Nắm 4 Functional Interface cốt lõi: `Predicate<T>` (kiểm tra boolean), `Function<T, R>` (biến đổi kiểu), `Consumer<T>` (nhận và xử lý), `Supplier<T>` (cung cấp dữ liệu).
+
+[ ] NGÀY 39: Java 8 Stream API - Filter, Map, Sorted (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 06 phần Stream API (Intermediate operations).
+    - [ ] 10p: Viết code lọc danh sách người dùng trên 18 tuổi, lấy ra danh sách tên in hoa và sắp xếp: `list.stream().filter(...).map(...).sorted().toList()`.
+    - [ ] 5p: Hiểu tính chất Lazy Evaluation (Lười tính toán) của Stream.
+
+[ ] NGÀY 40: Java 8 Stream API - Collect, GroupBy, Reduce (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 06 phần Terminal operations và `Collectors`.
+    - [ ] 10p: Thực hành gom nhóm danh sách sản phẩm theo danh mục bằng `Collectors.groupingBy()`.
+    - [ ] 5p: Phân biệt `map()` (1-to-1) vs `flatMap()` (1-to-many / làm phẳng mảng).
+
+[ ] NGÀY 41: Xử lý Null an toàn với `Optional<T>` (~25p)
+    - [ ] 10p: Đọc phần cuối Chapter 06 về `Optional`.
+    - [ ] 10p: Viết code tìm user theo ID trả về `Optional<User>`, dùng `.map()`, `.orElseThrow(() -> new RuntimeException("Not found"))`.
+    - [ ] 5p: Tại sao nên tránh dùng trực tiếp `opt.get()` mà nên dùng `orElse` / `orElseThrow`?
+
+[ ] NGÀY 42: Mini-Project OOP & Tích hoàn thành Phase 2 (~30p)
+    - [ ] 20p: Viết 1 chương trình nhỏ áp dụng: `ApiResponse<T>`, Generic Service, List/Map và Stream API để lọc/sắp xếp dữ liệu.
+    - [ ] 10p: Tự trả lời các câu hỏi phỏng vấn về OOP, SOLID, HashMap, Lambda/Stream.
+
+================================================================================
+PHASE 3: HTTP & REST API (NGÀY 43 - NGÀY 54)
+Thư mục: 03-http-rest-api/
+================================================================================
+[ ] NGÀY 43: Cấu trúc HTTP Request & Headers (~25p)
+    - [ ] 10p: Đọc `03-http-rest-api/theory/chapter-01-http-fundamentals.md`.
+    - [ ] 10p: Phân tích các thành phần trong HTTP Request: Request Line, Request Headers (`Content-Type`, `Authorization`, `Accept`), Request Body.
+    - [ ] 5p: Phân biệt `application/json` vs `application/x-www-form-urlencoded` vs `multipart/form-data`.
+
+[ ] NGÀY 44: Cấu trúc HTTP Response, Cookie & Session (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 01 phần Response structure, Cookie & Session.
+    - [ ] 10p: Tìm hiểu cơ chế `Set-Cookie` header và cách trình duyệt tự động gửi kèm cookie trong các request sau.
+    - [ ] 5p: Phân biệt Stateful (dùng Session trên Server) vs Stateless (dùng Token như JWT).
+
+[ ] NGÀY 45: HTTP Methods căn bản (GET, POST, PUT, PATCH, DELETE) (~25p)
+    - [ ] 10p: Đọc `03-http-rest-api/theory/chapter-02-http-methods-and-status-codes.md`.
+    - [ ] 10p: Phân tích đúng mục đích từng method: GET (đọc), POST (tạo mới), PUT (thay thế toàn bộ), PATCH (cập nhật 1 phần), DELETE (xoá).
+    - [ ] 5p: Khái niệm Idempotency: Gọi 1 lần hay gọi 10 lần kết quả hệ thống vẫn như nhau (GET, PUT, DELETE là idempotent; POST không phải).
+
+[ ] NGÀY 46: Bảng mã trạng thái HTTP Status Codes (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 02 phần Status Codes.
+    - [ ] 10p: Học thuộc các mã thông dụng nhất: 200 (OK), 201 (Created), 204 (No Content), 400 (Bad Request), 401 (Unauthorized), 403 (Forbidden), 404 (Not Found), 409 (Conflict), 500 (Internal Server Error).
+    - [ ] 5p: Phân biệt rõ sự khác nhau giữa 401 (Chưa xác thực danh tính) và 403 (Đã biết là ai nhưng không có quyền).
+
+[ ] NGÀY 47: Quy chuẩn thiết kế URL RESTful API (Resource Naming) (~25p)
+    - [ ] 10p: Đọc `03-http-rest-api/theory/chapter-03-restful-api-design.md`.
+    - [ ] 10p: Nắm quy tắc vàng: URL dùng danh từ số nhiều, chữ thường, gạch nối kebab-case. Ví dụ đúng: `GET /api/v1/users`, `POST /api/v1/users`. Sai: `GET /api/v1/getUserById?id=1`.
+    - [ ] 5p: Thiết kế URL cho quan hệ cha-con: `GET /api/v1/users/{userId}/orders/{orderId}`.
+
+[ ] NGÀY 48: Phân trang, Tìm kiếm & Lọc trên URL REST API (~20p)
+    - [ ] 10p: Đọc tiếp Chapter 03 phần Query Parameters.
+    - [ ] 10p: Chuẩn hoá URL query: `/api/v1/products?page=1&size=20&sort=price,desc&category=electronics`.
+    - [ ] 5p: Phân biệt khi nào dùng Path Variable (`/users/{id}`) và khi nào dùng Query Param (`/users?status=active`).
+
+[ ] NGÀY 49: Định dạng chuẩn của API Response Payload (~20p)
+    - [ ] 10p: Đọc tiếp Chapter 03 phần Response Payload Design.
+    - [ ] 10p: Viết mẫu JSON phản hồi chuẩn cho hệ thống (bao gồm: `status`, `message`, `data`, `errors`, `timestamp`).
+    - [ ] 5p: Lợi ích của việc chuẩn hoá format phản hồi cho đội Frontend / Mobile.
+
+[ ] NGÀY 50: Căn bản định dạng JSON & Jackson ObjectMapper (~25p)
+    - [ ] 10p: Đọc `03-http-rest-api/theory/chapter-04-json-and-serialization.md`.
+    - [ ] 10p: Khái niệm Serialization (Java Object -> JSON String) và Deserialization (JSON String -> Java Object).
+    - [ ] 5p: Thử dùng thư viện Jackson `ObjectMapper` gọi `writeValueAsString()` và `readValue()`.
+
+[ ] NGÀY 51: Các Annotation Jackson thông dụng (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 04 các Annotation: `@JsonProperty`, `@JsonIgnore`, `@JsonFormat`, `@JsonInclude`.
+    - [ ] 10p: Viết class `UserDto` dùng `@JsonIgnore` trên trường `password` và `@JsonFormat` định dạng ngày `createdAt`.
+    - [ ] 5p: Ý nghĩa của `@JsonInclude(JsonInclude.Include.NON_NULL)` để ẩn các trường null trong response.
+
+[ ] NGÀY 52: Làm quen & Cài đặt Postman (~25p)
+    - [ ] 10p: Đọc `03-http-rest-api/theory/chapter-05-api-testing-tools.md`.
+    - [ ] 10p: Cài Postman / Mở Postman web, tạo 1 Workspace và 1 Collection "Learn-API".
+    - [ ] 5p: Tạo request GET thử nghiệm gọi API công khai (ví dụ `https://jsonplaceholder.typicode.com/posts`).
+
+[ ] NGÀY 53: Postman Environment, Variables & Test Script (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 05 phần Postman Variables.
+    - [ ] 10p: Tạo biến môi trường `{{base_url}}`, viết test script nhỏ trong tab Tests: `pm.response.to.have.status(200);`.
+    - [ ] 5p: Lưu và xuất (Export) Collection ra file JSON.
+
+[ ] NGÀY 54: Lệnh cURL & Tổng kết Phase 3 (~20p)
+    - [ ] 10p: Mở terminal gõ thử lệnh cURL gửi GET, POST có header: `curl -X POST https://... -H "Content-Type: application/json" -d "{\"name\":\"test\"}"`.
+    - [ ] 10p: Tự review lại các chuẩn RESTful API và tích hoàn thành Phase 3.
+
+================================================================================
+PHASE 4: SPRING BOOT CORE (NGÀY 55 - NGÀY 72)
+Thư mục: 04-spring-boot-core/
+================================================================================
+[ ] NGÀY 55: Khởi tạo dự án Spring Boot đầu tiên (~25p)
+    - [ ] 10p: Đọc `04-spring-boot-core/theory/chapter-02-spring-boot-overview.md`.
+    - [ ] 10p: Truy cập `start.spring.io`, tạo dự án Maven/Gradle, Java 17/21, Spring Boot 3.x với dependency `Spring Web`, `Lombok`.
+    - [ ] 5p: Mở dự án trong IntelliJ/VS Code, chạy hàm `main()` có annotation `@SpringBootApplication`.
+
+[ ] NGÀY 56: Spring IoC Container & Khái niệm Bean (~25p)
+    - [ ] 10p: Đọc `04-spring-boot-core/theory/chapter-01-spring-core-concepts.md` (IoC Container & Bean).
+    - [ ] 10p: Hiểu cách Spring quét (Component Scanning) và tự động quản lý vòng đời các Bean trong `ApplicationContext`.
+    - [ ] 5p: Phân biệt Bean do Spring quản lý vs Object tự tạo bằng từ khóa `new`.
+
+[ ] NGÀY 57: Dependency Injection: 3 cách Inject Bean (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 01 phần Dependency Injection.
+    - [ ] 10p: So sánh: Field Injection (`@Autowired`), Setter Injection và Constructor Injection (khuyên dùng, hỗ trợ tốt bởi Lombok `@RequiredArgsConstructor`).
+    - [ ] 5p: Tại sao Spring khuyên dùng Constructor Injection? (Dễ viết Unit Test, tính bất biến `final`, tránh NPE).
+
+[ ] NGÀY 58: Stereotype Annotations (@Component, @Service, @Repository, @Controller) (~20p)
+    - [ ] 10p: Đọc tiếp Chapter 01 phần Stereotype Annotations.
+    - [ ] 10p: Nắm rõ ngữ nghĩa của từng annotation: `@Service` cho business logic, `@Repository` cho tầng database (tự dịch Exception), `@RestController` cho API.
+    - [ ] 5p: Khi nào dùng `@Configuration` & `@Bean`? (Khai báo các thư viện bên ngoài không thể gắn @Component).
+
+[ ] NGÀY 59: Giải quyết xung đột Bean (@Primary vs @Qualifier) & Bean Scope (~25p)
+    - [ ] 10p: Đọc phần cuối Chapter 01: Khi có 2 class cùng implement 1 interface.
+    - [ ] 10p: Code thử ví dụ dùng `@Qualifier("vnpayService")` để chọn chính xác bean mong muốn.
+    - [ ] 5p: Hiểu Bean Scope mặc định: `Singleton` (1 instance duy nhất) vs `Prototype` (tạo mới mỗi lần gọi).
+
+[ ] NGÀY 60: File cấu hình `application.yml` / `properties` & `@Value` (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 02 phần Configuration.
+    - [ ] 10p: Viết cấu hình cổng server `server.port=8081` trong `application.properties`, đọc giá trị bằng `@Value("${server.port}")`.
+    - [ ] 5p: Tìm hiểu `@ConfigurationProperties` để map cả 1 nhóm cấu hình vào 1 Java class có type-safety.
+
+[ ] NGÀY 61: Xây dựng REST Controller đầu tiên (@RestController, @GetMapping) (~25p)
+    - [ ] 10p: Đọc `04-spring-boot-core/theory/chapter-03-spring-mvc-3-tier-architecture.md`.
+    - [ ] 10p: Tạo `HelloController`, viết API `GET /api/v1/hello` trả về chuỗi "Hello Spring Boot".
+    - [ ] 5p: Mở trình duyệt hoặc Postman gọi thử API và xem kết quả.
+
+[ ] NGÀY 62: Nhận tham số URL (@PathVariable & @RequestParam) (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 03 phần nhận tham số.
+    - [ ] 10p: Viết API `GET /api/v1/users/{id}` dùng `@PathVariable Long id` và `GET /api/v1/users?name=abc` dùng `@RequestParam(required = false) String name`.
+    - [ ] 5p: Phân biệt rõ cách dùng của 2 annotation trên.
+
+[ ] NGÀY 63: Nhận dữ liệu Body với @RequestBody & Trả về `ResponseEntity<T>` (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 03 phần `@RequestBody` và `ResponseEntity`.
+    - [ ] 10p: Viết API `POST /api/v1/users` nhận JSON từ body, trả về `ResponseEntity.status(HttpStatus.CREATED).body(newUser)`.
+    - [ ] 5p: Lợi ích của `ResponseEntity`: Tuỳ biến status code, headers và response body linh hoạt.
+
+[ ] NGÀY 64: Kiến trúc 3 tầng: Tách Controller ↔ Service ↔ Repository (~30p)
+    - [ ] 10p: Đọc kỹ luồng kiến trúc 3 tầng trong Chapter 03.
+    - [ ] 15p: Tổ chức package: `com.example.app.controller`, `service`, `service.impl`, `repository`, `model`.
+    - [ ] 5p: Viết code gọi: `UserController` -> inject `UserService` -> inject `UserRepository`.
+
+[ ] NGÀY 65: DTO Pattern & Ánh xạ DTO ↔ Entity (~25p)
+    - [ ] 10p: Đọc `04-spring-boot-core/theory/chapter-04-dto-and-request-validation.md` (DTO Pattern).
+    - [ ] 10p: Tạo `UserRequestDto` (nhận dữ liệu tạo mới) và `UserResponseDto` (trả về cho client, không lộ password).
+    - [ ] 5p: Viết hàm helper hoặc constructor chuyển đổi giữa Entity và DTO.
+
+[ ] NGÀY 66: Validation dữ liệu đầu vào với Jakarta Bean Validation (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 04 phần Validation Annotations.
+    - [ ] 10p: Thêm `@NotBlank`, `@Size(min = 3, max = 50)`, `@Email`, `@Min(18)` vào các trường trong `UserRequestDto`.
+    - [ ] 5p: Thêm annotation `@Valid` trước `@RequestBody UserRequestDto dto` trong Controller.
+
+[ ] NGÀY 67: Xử lý ngoại lệ toàn cục (@RestControllerAdvice & @ExceptionHandler) (~25p)
+    - [ ] 10p: Đọc `04-spring-boot-core/theory/chapter-05-global-exception-handling.md`.
+    - [ ] 10p: Tạo class `GlobalExceptionHandler` với `@RestControllerAdvice`, viết hàm bắt `ResourceNotFoundException`.
+    - [ ] 5p: Tạo class `ErrorResponse` (timestamp, status, message, path) để trả về format JSON lỗi đồng nhất.
+
+[ ] NGÀY 68: Bắt lỗi Validation và format lại thông báo lỗi (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 05 phần bắt lỗi validation.
+    - [ ] 10p: Viết method bắt `@ExceptionHandler(MethodArgumentNotValidException.class)`, trích xuất tên trường bị lỗi và message trả về cho client.
+    - [ ] 5p: Test thử trên Postman gửi dữ liệu email sai định dạng để xem response lỗi đẹp mắt.
+
+[ ] NGÀY 69: Thực hành CRUD hoàn chỉnh - Phần 1: Create & Read (~30p)
+    - [ ] 10p: Chuẩn bị danh sách `List<User>` lưu tạm trong `UserRepository` (In-Memory).
+    - [ ] 15p: Viết hoàn chỉnh API: `POST /api/v1/users` (Tạo mới) và `GET /api/v1/users`, `GET /api/v1/users/{id}` (Lấy danh sách / chi tiết).
+    - [ ] 5p: Test bằng Postman và kiểm tra validation.
+
+[ ] NGÀY 70: Thực hành CRUD hoàn chỉnh - Phần 2: Update & Delete (~30p)
+    - [ ] 10p: Viết API `PUT /api/v1/users/{id}` (Cập nhật thông tin) và `DELETE /api/v1/users/{id}` (Xoá user).
+    - [ ] 15p: Xử lý ngoại lệ nếu không tìm thấy `id` thì quăng `ResourceNotFoundException` trả về 404 Not Found.
+    - [ ] 5p: Test lại đầy đủ 5 endpoints CRUD trên Postman.
+
+[ ] NGÀY 71: Cấu hình CORS (Cross-Origin Resource Sharing) trong Spring Boot (~20p)
+    - [ ] 10p: Tìm hiểu lỗi CORS khi Frontend (port 3000) gọi Backend (port 8080).
+    - [ ] 10p: Cấu hình `@CrossOrigin(origins = "*")` hoặc tạo cấu hình toàn cục `WebMvcConfigurer`.
+    - [ ] 5p: Tự giải thích cơ chế Preflight Request (OPTIONS method) của trình duyệt.
+
+[ ] NGÀY 72: Review & Phỏng vấn Spring Boot Core (~25p)
+    - [ ] 20p: Tự trả lời các câu hỏi: IoC/DI là gì? Vì sao dùng 3-Tier Architecture? DTO giải quyết vấn đề gì? Cách bắt lỗi toàn cục?
+    - [ ] 5p: Tích hoàn thành Phase 4.
+
+================================================================================
+PHASE 5: DATABASE & JPA / HIBERNATE (NGÀY 73 - NGÀY 92)
+Thư mục: 05-database-jpa-hibernate/
+================================================================================
+[ ] NGÀY 73: Cài đặt Database & Kết nối Spring Boot (~25p)
+    - [ ] 10p: Đọc `05-database-jpa-hibernate/theory/chapter-01-rdbms-and-sql-refresher.md`.
+    - [ ] 10p: Thêm dependency `spring-boot-starter-data-jpa` và `mysql-connector-j` (hoặc `postgresql`).
+    - [ ] 5p: Khai báo cấu hình `spring.datasource.url`, `username`, `password`, `spring.jpa.hibernate.ddl-auto=update` trong `application.yml`.
+
+[ ] NGÀY 74: Khái niệm ORM & Entity căn bản (@Entity, @Table, @Id) (~25p)
+    - [ ] 10p: Đọc `05-database-jpa-hibernate/theory/chapter-02-jpa-and-hibernate-basics.md`.
+    - [ ] 10p: Tạo class `UserEntity` với các annotation: `@Entity`, `@Table(name = "users")`, `@Id`, `@GeneratedValue(strategy = GenerationType.IDENTITY)`.
+    - [ ] 5p: Chạy ứng dụng Spring Boot và mở MySQL Workbench/DBeaver xem bảng `users` được tự động tạo.
+
+[ ] NGÀY 75: Các JPA Annotation thuộc tính (@Column, @Enumerated, @Temporal) (~20p)
+    - [ ] 10p: Đọc tiếp Chapter 02 phần Column mapping.
+    - [ ] 10p: Thêm `@Column(name = "email", nullable = false, unique = true, length = 100)`, `@Enumerated(EnumType.STRING)` cho trường Role.
+    - [ ] 5p: Thêm `createdAt` dùng `@CreationTimestamp` và `updatedAt` dùng `@UpdateTimestamp`.
+
+[ ] NGÀY 76: Spring Data JPA Repository căn bản (~25p)
+    - [ ] 10p: Đọc `05-database-jpa-hibernate/theory/chapter-04-spring-data-jpa.md`.
+    - [ ] 10p: Tạo interface `UserRepository extends JpaRepository<UserEntity, Long>`.
+    - [ ] 5p: Tìm hiểu các phương thức có sẵn: `save()`, `findById()`, `findAll()`, `deleteById()`, `existsById()`.
+
+[ ] NGÀY 77: Derived Query Methods (Tự sinh câu truy vấn qua tên hàm) (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 04 phần Derived Query.
+    - [ ] 10p: Viết các method trong repo: `Optional<UserEntity> findByEmail(String email);`, `List<UserEntity> findByNameContainingIgnoreCase(String keyword);`, `boolean existsByEmail(String email);`.
+    - [ ] 5p: Chạy test thử gọi các hàm này và xem Spring Data JPA tự sinh câu lệnh SQL tương ứng.
+
+[ ] NGÀY 78: JPQL (Java Persistence Query Language) & @Query (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 04 phần JPQL.
+    - [ ] 10p: Viết `@Query("SELECT u FROM UserEntity u WHERE u.email = :email AND u.active = true")`.
+    - [ ] 5p: Phân biệt JPQL (truy vấn trên tên Entity và thuộc tính Java) vs Native SQL (truy vấn trên tên bảng và cột database).
+
+[ ] NGÀY 79: Quan hệ 1-N (@OneToMany & @ManyToOne) - Phần 1: Khái niệm (~25p)
+    - [ ] 10p: Đọc `05-database-jpa-hibernate/theory/chapter-03-entity-relationships.md`.
+    - [ ] 10p: Phân tích ví dụ 1 Category có nhiều Product (`@OneToMany`), 1 Product thuộc 1 Category (`@ManyToOne`).
+    - [ ] 5p: Khái niệm khoá ngoại (Foreign Key) nằm ở bảng nào? (Bảng Product chứa `category_id`).
+
+[ ] NGÀY 80: Quan hệ 1-N - Phần 2: Cài đặt code Entity & `mappedBy` (~30p)
+    - [ ] 10p: Đọc tiếp Chapter 03 phần `mappedBy` và `JoinColumn`.
+    - [ ] 15p: Viết class `CategoryEntity` và `ProductEntity`. Trong Category để `mappedBy = "category"`, trong Product để `@JoinColumn(name = "category_id")`.
+    - [ ] 5p: Hiểu rõ: Bên nào chứa `@JoinColumn` bên đó là chủ sở hữu quan hệ (Owning side).
+
+[ ] NGÀY 81: CascadeType & OrphanRemoval (~20p)
+    - [ ] 10p: Đọc tiếp Chapter 03 phần Cascade.
+    - [ ] 10p: Phân tích `CascadeType.ALL`, `CascadeType.PERSIST`, `CascadeType.REMOVE` và `orphanRemoval = true`.
+    - [ ] 5p: Cảnh báo: Khi nào KHÔNG nên dùng Cascade Remove (tránh xoá nhầm dữ liệu liên quan).
+
+[ ] NGÀY 82: FetchType: Lazy Loading vs Eager Loading (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 03 phần FetchType.
+    - [ ] 10p: Phân biệt: `FetchType.EAGER` (luôn JOIN lấy toàn bộ ngay lập tức) vs `FetchType.LAZY` (chỉ load khi thực sự gọi `.get...()`).
+    - [ ] 5p: Quy tắc vàng phỏng vấn: Luôn đặt `FetchType.LAZY` cho tất cả các quan hệ `@OneToMany`, `@ManyToOne`, `@ManyToMany`.
+
+[ ] NGÀY 83: Vấn nạn N+1 Query Problem trong Hibernate (~30p)
+    - [ ] 10p: Đọc lại Chapter 04 phần N+1 Problem.
+    - [ ] 15p: Code ví dụ lấy 10 danh mục và duyệt lấy sản phẩm của từng danh mục -> sinh ra 1 query lấy category + 10 query con lấy product.
+    - [ ] 5p: Vì sao N+1 là nguyên nhân hàng đầu gây sập database khi lượng user tăng cao?
+
+[ ] NGÀY 84: Giải quyết N+1 Query với `JOIN FETCH` & `@EntityGraph` (~25p)
+    - [ ] 10p: Đọc giải pháp xử lý N+1 trong Chapter 04.
+    - [ ] 10p: Viết câu query tối ưu: `@Query("SELECT c FROM CategoryEntity c LEFT JOIN FETCH c.products")`.
+    - [ ] 5p: Bật `spring.jpa.show-sql=true` để kiểm chứng chỉ có duy nhất 1 câu SQL JOIN được thực thi.
+
+[ ] NGÀY 85: Quản lý giao dịch: ACID & Annotation `@Transactional` (~25p)
+    - [ ] 10p: Đọc `05-database-jpa-hibernate/theory/chapter-05-transaction-management.md`.
+    - [ ] 10p: Tính chất ACID (Atomicity, Consistency, Isolation, Durability).
+    - [ ] 5p: Gắn `@Transactional` trên phương thức Service để đảm bảo nếu có lỗi ở bước 2 thì bước 1 tự động Rollback.
+
+[ ] NGÀY 86: Transaction Propagation & Rollback Rules (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 05 phần Propagation.
+    - [ ] 10p: Tìm hiểu `Propagation.REQUIRED` (mặc định - dùng chung transaction) và `Propagation.REQUIRES_NEW` (tạo transaction độc lập mới).
+    - [ ] 5p: Lưu ý quan trọng: Mặc định `@Transactional` chỉ rollback với `RuntimeException`, để rollback mọi Exception phải khai báo: `@Transactional(rollbackFor = Exception.class)`.
+
+[ ] NGÀY 87: Phân trang (Pagination) với Spring Data JPA (~25p)
+    - [ ] 10p: Đọc `05-database-jpa-hibernate/theory/chapter-06-pagination-and-sorting.md`.
+    - [ ] 10p: Tạo `Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());`.
+    - [ ] 5p: Gọi `Page<ProductEntity> productPage = productRepository.findAll(pageable);`.
+
+[ ] NGÀY 88: Phân biệt `Page<T>` vs `Slice<T>` & Tối ưu Pagination (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 06 phần so sánh Page và Slice.
+    - [ ] 10p: `Page<T>` chạy thêm 1 câu `SELECT count(*)` để lấy tổng số trang; `Slice<T>` chỉ kiểm tra xem còn trang tiếp theo không (phù hợp cho chức năng Infinite Scroll).
+    - [ ] 5p: Viết `PageResponseDto<T>` đóng gói dữ liệu trả về cho client: `content`, `pageNo`, `pageSize`, `totalElements`, `totalPages`, `isLast`.
+
+[ ] NGÀY 89: Database Indexing căn bản & Tối ưu câu lệnh truy vấn (~25p)
+    - [ ] 10p: Đọc lại Chapter 01 phần Indexing.
+    - [ ] 10p: Hiểu cơ chế B-Tree Index: Tăng tốc độ `SELECT WHERE / ORDER BY` nhưng làm chậm thao tác `INSERT / UPDATE`.
+    - [ ] 5p: Khai báo Index trực tiếp trong Entity: `@Table(name = "users", indexes = {@Index(name = "idx_user_email", columnList = "email")})`.
+
+[ ] NGÀY 90: Nâng cấp dự án CRUD kết nối Database thật (~30p)
+    - [ ] 10p: Thay thế hoàn toàn In-Memory List bằng Spring Data JPA Repository.
+    - [ ] 15p: Chạy thử toàn bộ các API thêm, sửa, xoá, tìm kiếm, phân trang trên Postman và kiểm tra dữ liệu trong Database.
+    - [ ] 5p: Kiểm tra tính toàn vẹn dữ liệu và các ràng buộc Foreign Key.
+
+[ ] NGÀY 91: Tích hợp Database Migration với Flyway / Liquibase căn bản (~25p)
+    - [ ] 10p: Tìm hiểu vì sao trong môi trường Production không dùng `ddl-auto=update` mà dùng công cụ Migration.
+    - [ ] 10p: Cài đặt Flyway, tạo file script `V1__init_schema.sql` trong `src/main/resources/db/migration/`.
+    - [ ] 5p: Chạy ứng dụng và quan sát Flyway tự động migrate bảng.
+
+[ ] NGÀY 92: Review & Phỏng vấn Database / JPA (~25p)
+    - [ ] 20p: Tự ôn lại: N+1 problem là gì? Lazy vs Eager? @Transactional hoạt động thế nào? Khi nào dùng Page vs Slice?
+    - [ ] 5p: Tích hoàn thành Phase 5.
+
+================================================================================
+PHASE 6: SPRING SECURITY & BẢO MẬT HỆ THỐNG (NGÀY 93 - NGÀY 106)
+Thư mục: 06-security/
+================================================================================
+[ ] NGÀY 93: Khái niệm Authentication vs Authorization & Hash BCrypt (~25p)
+    - [ ] 10p: Đọc `06-security/theory/chapter-01-security-fundamentals.md`.
+    - [ ] 10p: Phân biệt: Authentication (Xác minh Bạn là ai?) vs Authorization (Bạn có quyền làm gì?).
+    - [ ] 5p: Khởi tạo bean `PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();`, thử mã hoá chuỗi "123456" và kiểm tra tính năng sinh muối (Salt) tự động.
+
+[ ] NGÀY 94: Kiến trúc Spring Security & SecurityFilterChain (~25p)
+    - [ ] 10p: Đọc `06-security/theory/chapter-02-spring-security-architecture.md`.
+    - [ ] 10p: Hiểu luồng đi của request qua chuỗi các Filter (`SecurityFilterChain`).
+    - [ ] 5p: Tạo class `SecurityConfig` với `@Configuration` và `@EnableWebSecurity`.
+
+[ ] NGÀY 95: Cấu hình phân quyền URL cơ bản với HttpSecurity (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 02 phần HttpSecurity DSL.
+    - [ ] 10p: Cấu hình: `requestMatchers("/api/v1/auth/**").permitAll()` (cho phép không cần đăng nhập) và `.anyRequest().authenticated()`.
+    - [ ] 5p: Vô hiệu hoá CSRF cho Stateless REST API: `.csrf(csrf -> csrf.disable())`.
+
+[ ] NGÀY 96: Triển khai `UserDetails` & `UserDetailsService` (~30p)
+    - [ ] 10p: Đọc tiếp Chapter 02 phần UserDetails interface.
+    - [ ] 15p: Viết class `CustomUserDetails implements UserDetails` và `CustomUserDetailsService implements UserDetailsService`.
+    - [ ] 5p: Viết hàm `loadUserByUsername(String email)` tìm user trong database để nạp vào Spring Security Context.
+
+[ ] NGÀY 97: Cấu hình `AuthenticationManager` & `DaoAuthenticationProvider` (~25p)
+    - [ ] 10p: Đọc phần cuối Chapter 02 về Authentication Provider.
+    - [ ] 10p: Khai báo Bean `AuthenticationProvider` kết hợp `CustomUserDetailsService` và `BCryptPasswordEncoder`.
+    - [ ] 5p: Khai báo Bean `AuthenticationManager` từ `AuthenticationConfiguration`.
+
+[ ] NGÀY 98: Bản chất của JSON Web Token (JWT) (~25p)
+    - [ ] 10p: Đọc `06-security/theory/chapter-03-jwt-authentication.md`.
+    - [ ] 10p: Phân tích 3 phần của JWT: Header (thuật toán), Payload (Claims: username, roles, exp), Signature (chữ ký bí mật).
+    - [ ] 5p: Truy cập `jwt.io` dán thử 1 chuỗi token mẫu để giải mã xem nội dung Payload.
+
+[ ] NGÀY 99: Viết JwtService (Tạo & Giải mã Token) (~30p)
+    - [ ] 10p: Thêm thư viện `jjwt-api`, `jjwt-impl`, `jjwt-jackson`.
+    - [ ] 15p: Viết `JwtService` có các hàm: `generateToken(UserDetails user)`, `extractUsername(String token)`, `isTokenValid(String token, UserDetails user)`.
+    - [ ] 5p: Cấu hình `secret-key` và `expiration-time` trong file `application.yml`.
+
+[ ] NGÀY 100: Viết `JwtAuthenticationFilter` (Chặn và kiểm tra Token) (~30p)
+    - [ ] 10p: Đọc tiếp Chapter 03 phần Filter.
+    - [ ] 15p: Tạo class `JwtAuthenticationFilter extends OncePerRequestFilter`.
+    - [ ] 5p: Đọc header `Authorization: Bearer <token>`, trích xuất token, validate và nạp `UsernamePasswordAuthenticationToken` vào `SecurityContextHolder.getContext().setAuthentication(...)`.
+
+[ ] NGÀY 101: Đăng ký Filter & Cấu hình Session Stateless (~25p)
+    - [ ] 10p: Đọc phần cuối Chapter 03.
+    - [ ] 10p: Thêm `.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))` trong `SecurityConfig`.
+    - [ ] 5p: Thêm `http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)`.
+
+[ ] NGÀY 102: Xây dựng API Đăng ký (Register) & Đăng nhập (Login) (~30p)
+    - [ ] 10p: Tạo `AuthService`, viết hàm `register(RegisterRequest request)` mã hoá pass bằng BCrypt và lưu DB.
+    - [ ] 15p: Viết hàm `login(LoginRequest request)` gọi `authenticationManager.authenticate(...)`, nếu thành công thì tạo JWT trả về qua `AuthResponse(token)`.
+    - [ ] 5p: Tạo `AuthController` với 2 endpoint: `POST /api/v1/auth/register` và `POST /api/v1/auth/login`.
+
+[ ] NGÀY 103: Cơ chế Refresh Token Flow (~30p)
+    - [ ] 10p: Hiểu vì sao Access Token nên để thời gian sống ngắn (15-60 phút) và cần Refresh Token (7-30 ngày).
+    - [ ] 15p: Tạo bảng `RefreshToken` lưu trong database, viết API `POST /api/v1/auth/refresh-token` nhận refresh token để sinh ra access token mới.
+    - [ ] 5p: Xử lý thu hồi (Revoke) Refresh Token khi người dùng Logout.
+
+[ ] NGÀY 104: Phân quyền theo vai trò (RBAC - Role-Based Access Control) (~25p)
+    - [ ] 10p: Đọc `06-security/theory/chapter-04-role-based-access-control.md`.
+    - [ ] 10p: Bật `@EnableMethodSecurity` trong `SecurityConfig`.
+    - [ ] 5p: Gắn `@PreAuthorize("hasRole('ADMIN')")` trên các endpoint quản trị hoặc `@PreAuthorize("hasAuthority('product:delete')")`.
+
+[ ] NGÀY 105: Cấu hình CORS chi tiết & Bắt lỗi 401/403 (~25p)
+    - [ ] 10p: Đọc `06-security/theory/chapter-05-cors-and-csrf.md`.
+    - [ ] 10p: Tạo Bean `CorsConfigurationSource` cho phép đúng domain frontend, methods (GET, POST, PUT, DELETE), headers (`Authorization`, `Content-Type`).
+    - [ ] 5p: Tạo `CustomAuthenticationEntryPoint` (trả về JSON 401 Unauthorized khi chưa đăng nhập) và `CustomAccessDeniedHandler` (trả về JSON 403 Forbidden).
+
+[ ] NGÀY 106: Test toàn diện hệ thống Security & Tích hoàn thành Phase 6 (~30p)
+    - [ ] 20p: Dùng Postman test trọn vẹn: Đăng ký -> Đăng nhập lấy Token -> Gắn Bearer Token gọi API bảo mật -> Thử gọi API admin bằng tài khoản user thường -> Test token hết hạn.
+    - [ ] 10p: Tích hoàn thành Phase 6.
+
+================================================================================
+PHASE 7: TESTING, ARCHITECTURE & PRODUCTION (NGÀY 107 - NGÀY 120)
+Thư mục: 07-testing-architecture/
+================================================================================
+[ ] NGÀY 107: Căn bản Unit Test với JUnit 5 (~25p)
+    - [ ] 10p: Đọc `07-testing-architecture/theory/chapter-01-unit-testing.md`.
+    - [ ] 10p: Viết test case đầu tiên cho 1 hàm tính toán logic theo mô hình AAA (Arrange - Act - Assert).
+    - [ ] 5p: Các Annotation: `@Test`, `@BeforeEach`, `@DisplayName` và Assertions: `assertEquals()`, `assertThrows()`.
+
+[ ] NGÀY 108: Mocking trong Unit Test với Mockito (~25p)
+    - [ ] 10p: Đọc `07-testing-architecture/theory/chapter-02-mocking-with-mockito.md`.
+    - [ ] 10p: Phân biệt `@Mock` (giả lập dependency) và `@InjectMocks` (đối tượng cần test).
+    - [ ] 5p: Cú pháp tạo hành vi giả lập: `Mockito.when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));`.
+
+[ ] NGÀY 109: Viết Unit Test cho tầng Service (~30p)
+    - [ ] 10p: Đọc tiếp Chapter 02 phần Service Testing.
+    - [ ] 15p: Viết test case kiểm tra hàm `UserService.getUserById(id)`: 1 case thành công và 1 case ném ra ngoại lệ `ResourceNotFoundException`.
+    - [ ] 5p: Dùng `Mockito.verify(userRepository, times(1)).findById(id)` để xác nhận repo đã được gọi đúng 1 lần.
+
+[ ] NGÀY 110: Integration Testing tầng Controller với `@WebMvcTest` & `MockMvc` (~30p)
+    - [ ] 10p: Đọc `07-testing-architecture/theory/chapter-03-integration-testing.md`.
+    - [ ] 15p: Viết test cho `UserController` dùng `@WebMvcTest(UserController.class)` và `@MockBean UserService`.
+    - [ ] 5p: Gửi request giả lập: `mockMvc.perform(get("/api/v1/users/1")).andExpect(status().isOk()).andExpect(jsonPath("$.data.email").value("test@gmail.com"));`.
+
+[ ] NGÀY 111: Clean Architecture & Tổ chức cấu trúc dự án chuẩn (~25p)
+    - [ ] 10p: Đọc `07-testing-architecture/theory/chapter-04-clean-architecture-and-patterns.md`.
+    - [ ] 10p: Tìm hiểu quy tắc phân lớp: Tách biệt Domain Model (không dính JPA), Use Cases (Services) và Frameworks/Drivers (Web Controller, Database).
+    - [ ] 5p: Tìm hiểu các Design Pattern thường gặp: Builder Pattern (Lombok `@Builder`), Factory Pattern, Strategy Pattern.
+
+[ ] NGÀY 112: Tích hợp Swagger / OpenAPI 3 tài liệu hoá API (~25p)
+    - [ ] 10p: Đọc `07-testing-architecture/theory/chapter-05-api-documentation.md`.
+    - [ ] 10p: Thêm thư viện `springdoc-openapi-starter-webmvc-ui`.
+    - [ ] 5p: Truy cập đường dẫn `http://localhost:8080/swagger-ui.html` trên trình duyệt để xem giao diện tương tác API tự động sinh ra.
+
+[ ] NGÀY 113: Tuỳ biến tài liệu Swagger & Cấu hình Authorize JWT (~25p)
+    - [ ] 10p: Đọc tiếp Chapter 05 phần OpenApi Customizer.
+    - [ ] 10p: Thêm `@Operation(summary = "Lấy danh sách người dùng")`, `@ApiResponse(responseCode = "200")` vào Controller.
+    - [ ] 5p: Cấu hình `SecurityScheme` dạng `BearerAuth` để xuất hiện nút "Authorize" nhập JWT test trực tiếp trên Swagger UI.
+
+[ ] NGÀY 114: Căn bản Docker & Viết Dockerfile cho Java Spring Boot (~30p)
+    - [ ] 10p: Đọc `07-testing-architecture/theory/chapter-06-containerization-docker.md`.
+    - [ ] 15p: Viết `Dockerfile` dạng Multi-stage build (Stage 1: Build file JAR với maven/gradle, Stage 2: Chạy với base image `eclipse-temurin:17-jre-alpine` siêu nhẹ).
+    - [ ] 5p: Chạy lệnh `docker build -t my-spring-app .` tạo image.
+
+[ ] NGÀY 115: Khởi chạy và quản lý Docker Container (~20p)
+    - [ ] 10p: Chạy container: `docker run -p 8080:8080 --name spring-container my-spring-app`.
+    - [ ] 10p: Thực hành các lệnh: `docker ps`, `docker logs -f spring-container`, `docker stop`, `docker rm`.
+    - [ ] 5p: Mở trình duyệt truy cập `localhost:8080` để kiểm tra app chạy bên trong Docker.
+
+[ ] NGÀY 116: Đóng gói toàn bộ hệ thống với Docker Compose (~30p)
+    - [ ] 10p: Đọc tiếp Chapter 06 phần Docker Compose.
+    - [ ] 15p: Viết file `docker-compose.yml` gồm 2 service: `app` (Spring Boot) và `db` (Postgres/MySQL) kèm biến môi trường kết nối.
+    - [ ] 5p: Thêm cấu hình `depends_on` và `volumes` để persist dữ liệu database.
+
+[ ] NGÀY 117: Chạy thử nghiệm hệ sinh thái Docker Compose (~25p)
+    - [ ] 10p: Mở terminal chạy `docker compose up -d`.
+    - [ ] 10p: Kiểm tra cả 2 container đều Healthy và app tự động kết nối được database trong mạng nội bộ docker network.
+    - [ ] 5p: Tắt hệ thống bằng `docker compose down`.
+
+[ ] NGÀY 118: CI/CD Pipeline căn bản với GitHub Actions (~25p)
+    - [ ] 10p: Tìm hiểu khái niệm Continuous Integration (CI) và Continuous Deployment (CD).
+    - [ ] 10p: Tạo file `.github/workflows/maven-test.yml` tự động chạy `mvn clean test` mỗi khi có commit mới push lên GitHub.
+    - [ ] 5p: Quan sát tab Actions trên GitHub báo tick xanh pass toàn bộ test case.
+
+[ ] NGÀY 119: Chuẩn bị Dự án Cuối Khóa (Capstone Project) (~30p)
+    - [ ] 15p: Chọn đề tài dự án thực tế: Website Bán Hàng (E-Commerce), Đặt Lịch (Booking System) hoặc Mạng Xã Hội thu nhỏ.
+    - [ ] 10p: Thiết kế sơ đồ quan hệ cơ sở dữ liệu (ERD) và danh sách các API cần xây dựng.
+    - [ ] 5p: Khởi tạo repository GitHub mới cho dự án.
+
+[ ] NGÀY 120: Hoàn thiện Portfolio & Sẵn sàng phỏng vấn (~30p)
+    - [ ] 15p: Viết file `README.md` chuyên nghiệp cho dự án: Giới thiệu, Tech-stack, Hướng dẫn chạy bằng Docker Compose, Ảnh chụp Swagger UI.
+    - [ ] 10p: Tự ôn lại toàn bộ lộ trình và tự tin ứng tuyển vị trí Java Backend Developer / Fresher / Junior.
+    - [ ] 5p: 🎉 CHÚC MỪNG BẠN ĐÃ HOÀN THÀNH TOÀN BỘ LỘ TRÌNH JAVA BACKEND!
+
+================================================================================
