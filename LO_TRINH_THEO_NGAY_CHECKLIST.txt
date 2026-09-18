@@ -18,15 +18,15 @@
 PHASE 0: BACKEND CĂN BẢN (NGÀY 01 - NGÀY 08)
 Thư mục: 00-basic-backend/
 ================================================================================
-[ ] NGÀY 01: Backend là gì & Vai trò trong hệ thống (~25p)
-    - [ ] 10p: Đọc `00-basic-backend/theory/chapter-01-what-is-backend.md` (Mục 1 & 2).
-    - [ ] 10p: Phân biệt rõ sự khác nhau giữa Frontend, Backend và Database.
-    - [ ] 5p: Tự trả lời: "Khi bấm nút Mua Hàng trên Shopee, Backend xử lý những việc gì?"
+[x] NGÀY 01: Backend là gì & Vai trò trong hệ thống (~25p)
+    - [x] 10p: Đọc `00-basic-backend/theory/chapter-01-what-is-backend.md` (Mục 1 & 2).
+    - [x] 10p: Phân biệt rõ sự khác nhau giữa Frontend, Backend và Database.
+    - [x] 5p: Tự trả lời: "Khi bấm nút Mua Hàng trên Shopee, Backend xử lý những việc gì?"
 
-[ ] NGÀY 02: Các thành phần cốt lõi của Backend (~20p)
-    - [ ] 10p: Đọc tiếp Chapter 01 (Mục Server, API, Middleware, Database).
-    - [ ] 10p: Vẽ sơ đồ nháp tay: Client -> API Gateway/Server -> Database.
-    - [ ] 5p: Tự giải thích: Middleware đóng vai trò người gác cổng như thế nào?
+[x] NGÀY 02: Các thành phần cốt lõi của Backend (~20p)
+    - [x] 10p: Đọc tiếp Chapter 01 (Mục Server, API, Middleware, Database).
+    - [x] 10p: Vẽ sơ đồ nháp tay: Client -> API Gateway/Server -> Database.
+    - [x] 5p: Tự giải thích: Middleware đóng vai trò người gác cổng như thế nào?
 
 [ ] NGÀY 03: Mô hình Client - Server & Luồng Web (~25p)
     - [ ] 10p: Đọc `00-basic-backend/theory/chapter-02-client-server-architecture.md`.

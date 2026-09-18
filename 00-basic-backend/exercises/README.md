@@ -10,7 +10,7 @@
 *(Tương ứng Chapter 01)*
 
 ### Bài 1.1 – Phân biệt Frontend vs Backend *(~5 phút)*
-[ ] Điền vào bảng bên dưới:
+[x] Điền vào bảng bên dưới:
 
 | Tiêu chí | Frontend | Backend |
 |----------|----------|---------|
@@ -20,7 +20,7 @@
 | Ví dụ công việc chính? | *hiển thị giao diện, trải nghiệm ng dùng* | *logic nghiệp vụ, tương tác DB, nhận request, trả response* |
 
 ### Bài 1.2 – Vẽ sơ đồ kiến trúc hệ thống *(~10 phút)*
-[ ] Vẽ sơ đồ (trên giấy hoặc tool bất kỳ) mô tả luồng đi khi người dùng **đăng nhập** vào một ứng dụng web:
+[x] Vẽ sơ đồ (trên giấy hoặc tool bất kỳ) mô tả luồng đi khi người dùng **đăng nhập** vào một ứng dụng web:
 
 **Yêu cầu sơ đồ phải thể hiện được:**
 1. Client (Browser) gửi Request tới đâu?
@@ -111,7 +111,7 @@ Database
 ```
 
 ### Bài 1.3 – Phân tích luồng mua hàng *(~10 phút)*
-[ ] Mô tả **bằng lời của bạn** (viết ra giấy hoặc ghi vào đây) toàn bộ các bước Backend xử lý khi người dùng nhấn nút **"Thêm vào giỏ hàng"** trên Shopee:
+[x] Mô tả **bằng lời của bạn** (viết ra giấy hoặc ghi vào đây) toàn bộ các bước Backend xử lý khi người dùng nhấn nút **"Thêm vào giỏ hàng"** trên Shopee:
 
 ```
 Bước 1: User click nút "Thêm vào giỏ hàng"
@@ -128,7 +128,7 @@ Bước 8: Frontend hiển thị kết quả cho User
 **Gợi ý:** Nghĩ về kiểm tra đăng nhập, kiểm tra sản phẩm tồn tại, kiểm tra tồn kho, lưu vào giỏ hàng trong DB, trả kết quả.
 
 ### Bài 1.4 – Câu hỏi trắc nghiệm nhanh *(~5 phút)*
-[ ] Trả lời các câu hỏi sau (ghi đáp án A/B/C/D):
+[x] Trả lời các câu hỏi sau (ghi đáp án A/B/C/D):
 
 **Câu 1:** Middleware trong Backend đóng vai trò gì?
 - A. Hiển thị giao diện người dùng
