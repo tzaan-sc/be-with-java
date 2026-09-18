@@ -210,34 +210,132 @@ Việc tách riêng lớp **Service** tuân theo nguyên lý **Separation of Con
 
 ### 5.3. JWT được sử dụng ở đâu trong luồng trên?
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor Client as Frontend / Mobile
-    participant Filter as Security Filter (Auth Layer)
-    participant Ctrl as Controller
-    participant Svc as Service Layer
-    participant DB as Database
+```
+┌──────────────────────┐
+│  Frontend / Mobile   │
+│       (Client)       │
+└──────────┬───────────┘
+           │
+           │ Giai đoạn 1: Đăng nhập lấy Token
+           │
+           │ POST /auth/login
+           │ (username, password)
+           ▼
+┌──────────────────────┐
+│ Security Filter      │
+│    (Auth Layer)      │
+└──────────────────────┘
+           │
+           │
+           ▼
+┌──────────────────────┐
+│     Controller       │
+└──────────┬───────────┘
+           │
+           │ Xác thực tài khoản
+           ▼
+┌──────────────────────┐
+│    Service Layer     │
+└──────────┬───────────┘
+           │
+           │ Kiểm tra mật khẩu (hash)
+           ▼
+┌──────────────────────┐
+│      Database        │
+└──────────┬───────────┘
+           │
+           │ Kết quả xác thực
+           ▼
+┌──────────────────────┐
+│    Service Layer     │
+│                      │
+│ Ký & tạo JWT         │
+│ payload:             │
+│ - userId             │
+│ - roles              │
+│ - exp                 │
+└──────────┬───────────┘
+           │
+           │ Trả JWT
+           ▼
+┌──────────────────────┐
+│     Controller       │
+└──────────┬───────────┘
+           │
+           │ Token (JWT)
+           ▼
+┌──────────────────────┐
+│  Frontend / Mobile   │
+│       (Client)       │
+└──────────────────────┘
 
-    Note over Client, DB: Giai đoạn 1: Đăng nhập lấy Token
-    Client->>Ctrl: POST /auth/login (username, password)
-    Ctrl->>Svc: Xác thực tài khoản
-    Svc->>DB: Kiểm tra mật khẩu (hash)
-    Svc-->>Ctrl: Đúng -> Ký tạo JWT (payload: userId, roles, exp)
-    Ctrl-->>Client: Trả về Token (JWT)
 
-    Note over Client, DB: Giai đoạn 2: Gọi API nghiệp vụ (vd: POST /orders)
-    Client->>Filter: Gửi Request + Header [Authorization: Bearer <JWT>]
-    Filter->>Filter: Giải mã & Kiểm tra chữ ký + Hạn dùng (exp)
-    alt Token không hợp lệ / Hết hạn
-        Filter-->>Client: 401 Unauthorized (Chặn ngay tại cửa)
-    else Token hợp lệ
-        Filter->>Filter: Đưa UserInfo/Roles vào SecurityContext
-        Filter->>Ctrl: Cho phép đi tiếp vào Controller
-        Ctrl->>Svc: Xử lý tạo đơn hàng
-        Svc->>DB: Lưu đơn hàng
-        Ctrl-->>Client: 200 OK (Thành công)
-    end
+══════════════════════════════════════════════════════════════
+       GIAI ĐOẠN 2: GỌI API NGHIỆP VỤ (POST /orders)
+══════════════════════════════════════════════════════════════
+
+┌──────────────────────┐
+│  Frontend / Mobile   │
+│       (Client)       │
+└──────────┬───────────┘
+           │
+           │ POST /orders
+           │ Authorization:
+           │ Bearer <JWT>
+           ▼
+┌──────────────────────┐
+│ Security Filter      │
+│    (Auth Layer)      │
+└──────────┬───────────┘
+           │
+           │ Giải mã JWT
+           │ Kiểm tra:
+           │ ✓ Chữ ký
+           │ ✓ Hạn dùng (exp)
+           ▼
+        ┌─────────────────────┐
+        │ Token hợp lệ ?      │
+        └─────────┬───────────┘
+             ┌────┴────┐
+             │         │
+           KHÔNG       CÓ
+             │         │
+             ▼         ▼
+   ┌────────────────┐  ┌──────────────────────────┐
+   │ 401 Unauthorized│  │ Đưa UserInfo / Roles    │
+   │ Chặn ngay       │  │ vào SecurityContext     │
+   │ tại Filter      │  └────────────┬─────────────┘
+   └───────┬────────┘               │
+           │                        │ Cho phép đi tiếp
+           ▼                        ▼
+      ┌───────────┐       ┌──────────────────────┐
+      │  Client   │       │     Controller       │
+      │ nhận 401  │       └──────────┬───────────┘
+      └───────────┘                  │
+                                     │ Xử lý tạo đơn hàng
+                                     ▼
+                           ┌──────────────────────┐
+                           │    Service Layer     │
+                           └──────────┬───────────┘
+                                      │
+                                      │ Lưu đơn hàng
+                                      ▼
+                           ┌──────────────────────┐
+                           │      Database        │
+                           └──────────┬───────────┘
+                                      │
+                                      │ Thành công
+                                      ▼
+                           ┌──────────────────────┐
+                           │     Controller       │
+                           └──────────┬───────────┘
+                                      │
+                                      │ 200 OK
+                                      ▼
+                           ┌──────────────────────┐
+                           │  Frontend / Mobile   │
+                           │       (Client)       │
+                           └──────────────────────┘
 ```
 
 - **Vị trí trong kiến trúc:** JWT nằm ở **Security Filter / Interceptor** (tầng bảo mật ngay cổng vào của Backend, trước khi request chạm tới `Controller`).

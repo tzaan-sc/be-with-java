@@ -14,10 +14,10 @@
 
 | Tiêu chí | Frontend | Backend |
 |----------|----------|---------|
-| Chạy ở đâu? | *(điền)* | *(điền)* |
-| Ngôn ngữ phổ biến? | *(điền)* | *(điền)* |
-| Ai tương tác trực tiếp? | *(điền)* | *(điền)* |
-| Ví dụ công việc chính? | *(điền)* | *(điền)* |
+| Chạy ở đâu? | *client (trình duyệt, ứng dụng mobile)* | *server (máy chủ)* |
+| Ngôn ngữ phổ biến? | *Html,css,javascript* | *java, go, python, nodejs,...* |
+| Ai tương tác trực tiếp? | *user* | *developer, admin, hệ thống khác qua API* |
+| Ví dụ công việc chính? | *hiển thị giao diện, trải nghiệm ng dùng* | *logic nghiệp vụ, tương tác DB, nhận request, trả response* |
 
 ### Bài 1.2 – Vẽ sơ đồ kiến trúc hệ thống *(~10 phút)*
 [ ] Vẽ sơ đồ (trên giấy hoặc tool bất kỳ) mô tả luồng đi khi người dùng **đăng nhập** vào một ứng dụng web:
@@ -27,15 +27,102 @@
 2. Backend Server xử lý qua những lớp nào? (Security → Service → Database)
 3. Database trả kết quả về theo chiều nào?
 4. Response cuối cùng trả về cho Client chứa gì?
+#### Đáp án:
+```
+┌──────────────────┐
+│  Client / Browser│
+└────────┬─────────┘
+         │
+         │ 1. POST /login
+         │    username + password
+         ▼
+┌──────────────────┐
+│ Backend Server   │
+│                  │
+│ ┌──────────────┐ │
+│ │   Security   │ │
+│ │ Xác thực     │ │
+│ │ username +   │ │
+│ │ password     │ │
+│ └──────┬───────┘ │
+│        │         │
+│        ▼         │
+│ ┌──────────────┐ │
+│ │   Service    │ │
+│ │ Xử lý        │ │
+│ │ đăng nhập    │ │
+│ └──────┬───────┘ │
+└─────────┼────────┘
+          │
+          │ 2. Truy vấn thông tin
+          ▼
+┌──────────────────┐
+│    Database      │
+│                  │
+│ users            │
+│ username         │
+│ password_hash    │
+│ roles            │
+└────────┬─────────┘
+         │
+         │ 3. Trả kết quả
+         │    user information
+         ▼
+┌──────────────────┐
+│     Service      │
+└────────┬─────────┘
+         │
+         │ 4. Kết quả xác thực
+         │    + tạo Token/Session
+         ▼
+┌──────────────────┐
+│    Security      │
+└────────┬─────────┘
+         │
+         │ 5. Authentication Result
+         ▼
+┌──────────────────┐
+│ Backend Server   │
+└────────┬─────────┘
+         │
+         │ 6. HTTP Response
+         │    200 OK + Token/Session
+         ▼
+┌──────────────────┐
+│  Client / Browser│
+│                  │
+│ Đăng nhập thành  │
+│ công              │
+└──────────────────┘
+```
+
+```
+Browser
+   ↓
+Security Filter
+   ↓
+Controller
+   ↓
+Service
+   ↓
+Repository
+   ↓
+Database
+```
 
 ### Bài 1.3 – Phân tích luồng mua hàng *(~10 phút)*
 [ ] Mô tả **bằng lời của bạn** (viết ra giấy hoặc ghi vào đây) toàn bộ các bước Backend xử lý khi người dùng nhấn nút **"Thêm vào giỏ hàng"** trên Shopee:
 
 ```
-Bước 1: ...
-Bước 2: ...
-Bước 3: ...
-...
+Bước 1: User click nút "Thêm vào giỏ hàng"
+Bước 2: Frontend gửi Request "Add to cart"
+Bước 3: Middleware kiểm tra 
+Bước 3: Controller nhận Request và gọi Service
+Bước 4: Service truy vấn Database kiểm tra sản phẩm có tồn tại và còn hàng hay không
+Bước 5: Service kiểm tra sản phẩm có thuộc giỏ hàng của user chưa, nếu có thì cập nhật số lượng, nếu chưa thì thêm mới
+Bước 6: Service trả kết quả về cho Controller
+Bước 7: Controller trả kết quả về cho Frontend
+Bước 8: Frontend hiển thị kết quả cho User
 ```
 
 **Gợi ý:** Nghĩ về kiểm tra đăng nhập, kiểm tra sản phẩm tồn tại, kiểm tra tồn kho, lưu vào giỏ hàng trong DB, trả kết quả.
@@ -45,24 +132,24 @@ Bước 3: ...
 
 **Câu 1:** Middleware trong Backend đóng vai trò gì?
 - A. Hiển thị giao diện người dùng
-- B. Xử lý trung gian giữa Request và Business Logic (logging, auth, validation)
+- **B. Xử lý trung gian giữa Request và Business Logic (logging, auth, validation)**
 - C. Lưu trữ dữ liệu vào ổ cứng
 - D. Thiết kế CSS cho trang web
 
 **Câu 2:** API là viết tắt của gì và dùng để làm gì?
-- A. Application Programming Interface – giao tiếp giữa các phần mềm
+- **A. Application Programming Interface – giao tiếp giữa các phần mềm**
 - B. Advanced Protocol Integration – mã hoá dữ liệu
 - C. Automated Process Installer – cài đặt phần mềm tự động
 - D. Application Page Interface – hiển thị trang web
 
 **Câu 3:** Trong kiến trúc Backend, tầng nào chịu trách nhiệm chính cho logic nghiệp vụ (tính giá, kiểm kho, áp voucher)?
 - A. Controller Layer
-- B. Service Layer
+- **B. Service Layer**
 - C. Repository Layer
 - D. Database Layer
 
 ```
-Đáp án: Câu 1: ___ | Câu 2: ___ | Câu 3: ___
+Đáp án: Câu 1: B | Câu 2: A | Câu 3: B
 ```
 
 ---
