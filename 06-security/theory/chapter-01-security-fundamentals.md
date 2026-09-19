@@ -6,12 +6,38 @@
 
 Trong phát triển hệ thống Backend, đây là 2 khái niệm nền tảng luôn đi kèm nhưng có mục đích hoàn toàn riêng biệt:
 
-```mermaid
-graph LR
-    User["Client / User"] -->|1. Cung cấp thông tin đăng nhập (Credentials)| Auth["Authentication (Xác thực)"]
-    Auth -->|"Bạn là ai? (Hợp lệ)"| Token["Cấp Danh Tính / Token"]
-    Token -->|2. Gửi request kèm Token| Author["Authorization (Phân quyền)"]
-    Author -->|"Bạn có quyền làm gì?"| Resource["Tài nguyên / API"]
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                           Client / Người dùng                           │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     │ 1. Cung cấp thông tin đăng nhập (Credentials)
+                                     ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      AUTHENTICATION (XÁC THỰC)                          │
+│                      Câu hỏi: "BẠN LÀ AI?"                              │
+│  → So khớp mật khẩu đã hash, kiểm tra tài khoản có tồn tại/bị khóa?     │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     │ Xác thực thành công → Cấp Danh tính (Token / Session)
+                                     ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                   Cấp Danh Tính / Access Token (JWT)                    │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     │ 2. Gửi request nghiệp vụ kèm Token (Authorization: Bearer)
+                                     ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      AUTHORIZATION (PHÂN QUYỀN)                         │
+│                      Câu hỏi: "BẠN ĐƯỢC PHÉP LÀM GÌ?"                   │
+│  → Đọc Roles/Permissions trong Token, kiểm tra quyền truy cập Endpoint  │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     │ Hợp lệ (Đủ quyền hạn)
+                                     ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│               Tài nguyên bảo vệ / API Endpoint (@PreAuthorize)          │
+└─────────────────────────────────────────────────────────────────────────┘
 ```
 
 | Tiêu chí | Authentication (Xác thực - 401 Unauthorized) | Authorization (Phân quyền - 403 Forbidden) |

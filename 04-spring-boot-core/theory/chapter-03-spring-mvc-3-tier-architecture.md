@@ -1,13 +1,38 @@
 # Chapter 03: Kiến trúc 3 tầng Spring MVC – Controller, Service, Repository
 
 ## 1. Kiến trúc 3 tầng
-```mermaid
-graph LR
-    Client -->|HTTP Request| C["@RestController"]
-    C -->|Gọi| S["@Service"]
-    S -->|Gọi| R["@Repository"]
-    R -->|JDBC/JPA| DB[(Database)]
-    DB --> R --> S --> C -->|HTTP Response| Client
+```
+┌──────────────────┐
+│ Client / Browser │
+└────────┬─────────┘
+         │ ▲
+  HTTP   │ │ HTTP
+ Request │ │ Response
+         ▼ │
+┌──────────────────┐
+│ @RestController  │ ──► Nhận HTTP Request, validate dữ liệu (DTO), điều hướng
+└────────┬─────────┘
+         │ ▲
+    Gọi  │ │ Trả DTO/
+  Service│ │ Domain model
+         ▼ │
+┌──────────────────┐
+│     @Service     │ ──► Xử lý Business Logic, tính toán, phân quyền, Transaction
+└────────┬─────────┘
+         │ ▲
+    Gọi  │ │ Trả
+    Repo │ │ Entity
+         ▼ │
+┌──────────────────┐
+│   @Repository    │ ──► Tương tác CSDL (Spring Data JPA / Hibernate / JDBC)
+└────────┬─────────┘
+         │ ▲
+   Query │ │ Result
+  SQL/JPA│ │ Set
+         ▼ │
+┌──────────────────┐
+│     Database     │ ──► Lưu trữ dữ liệu bền vững (MySQL, PostgreSQL...)
+└──────────────────┘
 ```
 
 | Tầng | Annotation | Nhiệm vụ |

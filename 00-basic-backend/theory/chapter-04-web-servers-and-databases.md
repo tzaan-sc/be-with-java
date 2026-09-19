@@ -13,15 +13,36 @@
   - **NoSQL** (MongoDB, Redis, Cassandra) – phi quan hệ, linh hoạt, tốc độ cao.
 
 ## 2. Kiến trúc thường gặp
-```mermaid
-graph LR
-    C[Client / Browser] -->|HTTPS| LB[Load‑Balancer (Nginx)]
-    LB -->|Reverse Proxy| WS[Web Server (Nginx/Apache)]
-    WS -->|Static files / Proxy| AS[App Server (Tomcat/Spring Boot)]
-    AS -->|JDBC / JPA| DB[(Database)]
-    DB -->|Result Set| AS
-    AS -->|JSON / HTML| WS
-    WS -->|Response| C
+```
+┌────────────────────────────────────────────────────────┐
+│ Client / Browser (Web / Mobile App)                    │
+└───────────────────────────┬────────────────────────────┘
+                            │ ▲
+               1. Gửi HTTPS │ │ 6. Trả Response
+                            ▼ │
+┌────────────────────────────────────────────────────────┐
+│ Load Balancer (Nginx / HAProxy)                        │
+└───────────────────────────┬────────────────────────────┘
+                            │ ▲
+           2. Reverse Proxy │ │ 5. Trả JSON / HTML
+                            ▼ │
+┌────────────────────────────────────────────────────────┐
+│ Web Server (Nginx / Apache)                            │
+│ → Phục vụ static file, SSL termination                 │
+└───────────────────────────┬────────────────────────────┘
+                            │ ▲
+           3. Proxy Request │ │ 4. Trả kết quả xử lý
+                            ▼ │
+┌────────────────────────────────────────────────────────┐
+│ Application Server (Tomcat / Spring Boot)              │
+│ → Xử lý Business Logic, Transaction, Security          │
+└───────────────────────────┬────────────────────────────┘
+                            │ ▲
+          JDBC / JPA Query  │ │ Result Set
+                            ▼ │
+┌────────────────────────────────────────────────────────┐
+│ Database (MySQL / PostgreSQL / Redis)                  │
+└────────────────────────────────────────────────────────┘
 ```
 - **Load Balancer** (Nginx, HAProxy) phân phối request tới nhiều Web Server.
 - **Web Server** có thể **serve static** và **proxy** tới App Server (đại diện cho các micro‑service).

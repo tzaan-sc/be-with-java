@@ -1,23 +1,33 @@
 # Chapter 04: Java Collections Framework – List, Set, Map, Queue
 
 ## 1. Tổng quan Collections Framework
-```mermaid
-graph TD
-    Iterable --> Collection
-    Collection --> List
-    Collection --> Set
-    Collection --> Queue
-    List --> AL["ArrayList"]
-    List --> LL["LinkedList"]
-    Set --> HS["HashSet"]
-    Set --> LHS["LinkedHashSet"]
-    Set --> TS["TreeSet"]
-    Queue --> PQ["PriorityQueue"]
-    Queue --> AD["ArrayDeque"]
-    Map --> HM["HashMap"]
-    Map --> LHM["LinkedHashMap"]
-    Map --> TM["TreeMap"]
-    Map --> CHM["ConcurrentHashMap"]
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                              JAVA COLLECTIONS FRAMEWORK                                │
+├────────────────────────────────────────────────────────────┬───────────────────────────┤
+│                    COLLECTION HIERARCHY                    │       MAP HIERARCHY       │
+│                                                            │ (Không kế thừa Collection)│
+│                        ┌──────────┐                        │                           │
+│                        │ Iterable │                        │                           │
+│                        └────┬─────┘                        │                           │
+│                             ▼                              │                           │
+│                       ┌────────────┐                       │                           │
+│                       │ Collection │                       │                           │
+│                       └─────┬──────┘                       │                           │
+│         ┌───────────────────┼───────────────────┐          │                           │
+│         ▼                   ▼                   ▼          │             ▼             │
+│   ┌───────────┐       ┌───────────┐       ┌───────────┐    │       ┌───────────┐       │
+│   │   List    │       │    Set    │       │   Queue   │    │       │    Map    │       │
+│   │(Có thứ tự,│       │(Không trùng│      │  (FIFO /  │    │       │(Key-Value)│       │
+│   │ cho trùng)│       │ lặp phần tử│      │ Ưu tiên)  │    │       │           │       │
+│   └─────┬─────┘       └─────┬─────┘       └─────┬─────┘    │       └─────┬─────┘       │
+│         │                   │                   │          │             │             │
+│   ├── ArrayList       ├── HashSet         ├── Priority     │       ├── HashMap         │
+│   │                   │                   │   Queue        │       ├── LinkedHashMap   │
+│   └── LinkedList      ├── LinkedHashSet   │                │       ├── TreeMap         │
+│                       │                   └── ArrayDeque   │       └── Concurrent      │
+│                       └── TreeSet                          │           HashMap         │
+└────────────────────────────────────────────────────────────┴───────────────────────────┘
 ```
 
 ## 2. List Interface – Danh sách có thứ tự, cho phép trùng

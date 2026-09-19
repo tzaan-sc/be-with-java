@@ -7,14 +7,17 @@
 **Unit Test (Kiểm thử đơn vị)** là việc kiểm tra các thành phần nhỏ nhất có thể kiểm thử được của phần mềm (thường là một method hoặc một class) một cách độc lập và cô lập.
 
 ### Kim tự tháp kiểm thử (Testing Pyramid):
-```mermaid
-graph TD
-    E2E["End-to-End Tests (UI / Toàn hệ thống) - Ít nhất, Chậm nhất, Tốn kém nhất"]
-    IT["Integration Tests (Kiểm thử tích hợp DB / API) - Vừa phải"]
-    UT["Unit Tests (Kiểm thử đơn vị) - Nhiều nhất, Nhanh nhất, Đáng tin cậy nhất"]
-    
-    E2E --- IT
-    IT --- UT
+```
+                          ┌───────────────────────────┐
+                          │     End-to-End Tests      │  ▲ ÍT NHẤT, CHẬM NHẤT, CHI PHÍ CAO
+                          │ (UI / Toàn bộ hệ thống)   │  │ Chạy: vài chục giây - vài phút
+                     ┌────┴───────────────────────────┴────┐
+                     │          Integration Tests          │  │ TRUNG BÌNH
+                     │  (Kiểm thử tích hợp API / DB / Web) │  │ Chạy: vài giây
+                ┌────┴─────────────────────────────────────┴────┐
+                │                  Unit Tests                   │  │ NHIỀU NHẤT, NHANH NHẤT, CHI PHÍ THẤP
+                │ (Kiểm thử cô lập từng Method / Service Logic) │  ▼ Chạy: vài mili-giây
+                └───────────────────────────────────────────────┘
 ```
 
 ---

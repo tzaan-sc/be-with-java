@@ -7,18 +7,50 @@
 Trong ứng dụng Spring Boot Web, mọi HTTP Request gửi tới server **không đi thẳng vào Controller ngay**.
 Thay vào đó, nó phải đi qua một chuỗi các bộ lọc an ninh gọi là **Servlet Filter Chain**, trong đó Spring Security cắm vào một mắt xích tối quan trọng: **`DelegatingFilterProxy`** và **`FilterChainProxy`**.
 
-```mermaid
-graph TD
-    Request["Client HTTP Request"] --> DFP["DelegatingFilterProxy"]
-    DFP --> FCP["FilterChainProxy (SecurityFilterChain)"]
-    subgraph SecurityFilterChain ["SecurityFilterChain (Chuỗi các Security Filter)"]
-        F1["CorsFilter"] --> F2["CsrfFilter"]
-        F2 --> F3["JwtAuthenticationFilter (Custom)"]
-        F3 --> F4["UsernamePasswordAuthenticationFilter"]
-        F4 --> F5["AuthorizationFilter / FilterSecurityInterceptor"]
-    end
-    FCP --> SecurityFilterChain
-    SecurityFilterChain --> DispatcherServlet["DispatcherServlet -> @RestController"]
+```
+┌────────────────────────────────────────────────────────┐
+│                  Client HTTP Request                   │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│   DelegatingFilterProxy (Cầu nối giữa Servlet & Spring)│
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│        FilterChainProxy (Quản lý SecurityFilterChain)  │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│        SecurityFilterChain (Chuỗi các Security Filter) │
+│                                                        │
+│   ┌────────────────────────────────────────────────┐   │
+│   │ 1. CorsFilter (Kiểm tra nguồn truy cập CORS)   │   │
+│   └───────────────────────┬────────────────────────┘   │
+│                           ▼                            │
+│   ┌────────────────────────────────────────────────┐   │
+│   │ 2. CsrfFilter (Bảo vệ chống tấn công CSRF)     │   │
+│   └───────────────────────┬────────────────────────┘   │
+│                           ▼                            │
+│   ┌────────────────────────────────────────────────┐   │
+│   │ 3. JwtAuthenticationFilter (Custom Token Parse)│   │
+│   └───────────────────────┬────────────────────────┘   │
+│                           ▼                            │
+│   ┌────────────────────────────────────────────────┐   │
+│   │ 4. UsernamePasswordAuthenticationFilter        │   │
+│   └───────────────────────┬────────────────────────┘   │
+│                           ▼                            │
+│   ┌────────────────────────────────────────────────┐   │
+│   │ 5. AuthorizationFilter (Kiểm tra quyền Role)   │   │
+│   └────────────────────────────────────────────────┘   │
+└───────────────────────────┬────────────────────────────┘
+                            │ (Vượt qua mọi Filter an toàn)
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│       DispatcherServlet ──► @RestController            │
+└────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -27,16 +59,44 @@ graph TD
 
 Khi một user gửi yêu cầu đăng nhập (username + password), hệ thống Spring Security điều phối các thành phần theo mô hình sau:
 
-```mermaid
-graph TD
-    Req["Request Đăng nhập"] --> Filter["UsernamePasswordAuthenticationFilter / AuthController"]
-    Filter --> AuthMgr["AuthenticationManager (Interface quản lý xác thực)"]
-    AuthMgr --> DaoAuth["DaoAuthenticationProvider"]
-    DaoAuth --> UDS["UserDetailsService (Load thông tin từ DB)"]
-    UDS --> DB[(Database)]
-    DaoAuth --> PwdEnc["PasswordEncoder (BCrypt kiểm tra mật khẩu)"]
-    DaoAuth -->|Khớp thông tin| Token["Authentication (Authenticated = true)"]
-    Token --> SCH["SecurityContextHolder (Lưu phiên người dùng)"]
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                 Request Đăng nhập (username, password)                 │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│      UsernamePasswordAuthenticationFilter / Custom AuthController      │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Tạo UsernamePasswordAuthenticationToken (unauthenticated)
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│       AuthenticationManager (Interface trung tâm điều phối xác thực)   │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Giao việc cho Provider thích hợp
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                      DaoAuthenticationProvider                         │
+│                                                                        │
+│   ┌────────────────────────────────────────────────────────────────┐   │
+│   │ 1. UserDetailsService: Tìm User theo username từ Database     │   │
+│   │    └─► Database (Truy vấn User, Password hash, Roles)          │   │
+│   └───────────────────────────────┬────────────────────────────────┘   │
+│                                   ▼                                    │
+│   ┌────────────────────────────────────────────────────────────────┐   │
+│   │ 2. PasswordEncoder: BCrypt so khớp mật khẩu gửi lên vs DB hash │   │
+│   └────────────────────────────────────────────────────────────────┘   │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Trùng khớp thông tin (Credentials Valid)
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│          Authentication Object (Trạng thái: Authenticated = true)      │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Lưu trữ thông tin người dùng vào luồng hiện tại
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│           SecurityContextHolder ──► SecurityContext                    │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Các thành phần cốt lõi:

@@ -45,16 +45,16 @@ User user = new User();      // user chứa địa chỉ trỏ tới object User
 
 ### 2.3 So sánh nhanh
 
-```mermaid
-graph LR
-    subgraph Stack
-        age["age = 25 (int)"]
-        ref["greeting = 0x7A3F (địa chỉ)"]
-    end
-    subgraph Heap
-        obj["\"Hello\" (String object)"]
-    end
-    ref -->|trỏ tới| obj
+```
+┌──────────────────────────────────────┐          ┌──────────────────────────────────────┐
+│             STACK MEMORY             │          │             HEAP MEMORY              │
+├──────────────────────────────────────┤          ├──────────────────────────────────────┤
+│                                      │          │                                      │
+│  age = 25  (Primitive type)          │          │                                      │
+│                                      │          │                                      │
+│  greeting = 0x7A3F (Reference type) ─┼──────────┼──► "Hello" (String Object tại 0x7A3F)│
+│                                      │          │                                      │
+└──────────────────────────────────────┘          └──────────────────────────────────────┘
 ```
 
 | Tiêu chí | Primitive | Reference |

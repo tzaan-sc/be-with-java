@@ -11,11 +11,28 @@ Sự khác biệt về phiên bản Java, cấu hình hệ điều hành (Window
 **Docker** đóng gói toàn bộ mã nguồn ứng dụng, môi trường chạy (JRE), các thư viện phụ thuộc và biến cấu hình vào một đơn vị độc lập gọi là **Docker Container**.
 - Chạy giống hệt nhau trên máy Mac, Windows, Linux server hay Cloud (AWS, GCP).
 
-```mermaid
-graph LR
-    Code["Source Code (Java Spring Boot)"] --> Dockerfile["Dockerfile"]
-    Dockerfile -->|docker build| Image["Docker Image (Bản thiết kế đóng gói)"]
-    Image -->|docker run| Container["Docker Container (Ứng dụng đang chạy độc lập)"]
+```
+┌────────────────────────────────────────────────────────┐
+│     Source Code (Mã nguồn Java Spring Boot + pom.xml)  │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            │ Cung cấp chỉ dẫn nạp & đóng gói
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│       Dockerfile (Tập lệnh build JAR & thiết lập JRE)  │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            │ docker build -t my-app .
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│     Docker Image (Bản thiết kế đóng gói độc lập)       │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            │ docker run -p 8080:8080 my-app
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│    Docker Container (Tiến trình đang chạy cô lập)      │
+└────────────────────────────────────────────────────────┘
 ```
 
 ---

@@ -2,23 +2,27 @@
 
 ## 1. Tổng quan kiến trúc bộ nhớ JVM
 
-```mermaid
-graph TD
-    subgraph JVM Memory
-        subgraph Stack["Stack (mỗi Thread 1 stack)"]
-            F1["Frame: main()  →  int x = 5, User ref = 0xA1"]
-            F2["Frame: calculate()  →  int result = 10"]
-        end
-        subgraph Heap["Heap (dùng chung tất cả Thread)"]
-            O1["User object {name='Minh', age=25}  tại 0xA1"]
-            O2["String 'Hello'  tại 0xB2"]
-            O3["int[] {1,2,3}  tại 0xC3"]
-        end
-        subgraph Metaspace["Metaspace (Java 8+)"]
-            M1["Class metadata, method bytecode, static variables"]
-        end
-    end
-    F1 -->|tham chiếu| O1
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                                       JVM MEMORY                                       │
+│                                                                                        │
+│  ┌────────────────────────────────────────┐  ┌──────────────────────────────────────┐  │
+│  │      STACK (Mỗi Thread 1 Stack)        │  │   HEAP (Dùng chung tất cả Thread)    │  │
+│  ├────────────────────────────────────────┤  ├──────────────────────────────────────┤  │
+│  │ Frame: calculate()                     │  │ • User object {name='Minh', age=25}  │  │
+│  │   └─ int result = 10                   │  │   (tại địa chỉ 0xA1) ◄────────────┐  │  │
+│  │                                        │  │                                   │  │  │
+│  │ Frame: main()                          │  │ • String 'Hello' (tại 0xB2)       │  │  │
+│  │   ├─ int x = 5                         │  │ • int[] {1, 2, 3} (tại 0xC3)      │  │  │
+│  │   └─ User ref = 0xA1 ──────────────────┼──┼───────────────────────────────────┘  │  │
+│  └────────────────────────────────────────┘  └──────────────────────────────────────┘  │
+│                                                                                        │
+│  ┌──────────────────────────────────────────────────────────────────────────────────┐  │
+│  │                             METASPACE (Java 8+)                                  │  │
+│  ├──────────────────────────────────────────────────────────────────────────────────┤  │
+│  │ Class metadata, Method bytecode, Static variables, Constant Pool                 │  │
+│  └──────────────────────────────────────────────────────────────────────────────────┘  │
+└────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## 2. Stack Memory
@@ -76,20 +80,22 @@ public class Demo {
 - Lỗi: `OutOfMemoryError: Java heap space` khi Heap đầy.
 
 ### 3.2 Cấu trúc Heap (Generational)
-```mermaid
-graph LR
-    subgraph Heap
-        subgraph Young["Young Generation"]
-            E["Eden Space (Object mới tạo)"]
-            S0["Survivor 0"]
-            S1["Survivor 1"]
-        end
-        subgraph Old["Old Generation (Tenured)"]
-            T["Object sống lâu"]
-        end
-    end
-    E -->|Minor GC sống sót| S0
-    S0 -->|Sống sót nhiều lần| Old
+```
+┌──────────────────────────────────────────────────────────────────────────────────────────┐
+│                                       HEAP MEMORY                                        │
+│                                                                                          │
+│  ┌─────────────────────────────────────────────────────────┐  ┌───────────────────────┐  │
+│  │               YOUNG GENERATION                          │  │    OLD GENERATION     │  │
+│  │                                                         │  │       (Tenured)       │  │
+│  │  ┌──────────────────┐    ┌────────────┐  ┌───────────┐  │  │                       │  │
+│  │  │    Eden Space    │    │ Survivor 0 │  │Survivor 1 │  │  │ ┌───────────────────┐ │  │
+│  │  │ (Object mới tạo) │    │    (S0)    │  │   (S1)    │  │  │ │  Object sống lâu  │ │  │
+│  │  └────────┬─────────┘    └─────┬──────┘  └───────────┘  │  │ │ (vượt ngưỡng tuổi)│ │  │
+│  │           │ Minor GC           │                        │  │ └─────────▲─────────┘ │  │
+│  │           │ sống sót           │ Sống sót nhiều lần     │  │           │           │  │
+│  │           └───────────────────►│ (Age > Threshold) ─────┼──┼───────────┘           │  │
+│  └─────────────────────────────────────────────────────────┘  └───────────────────────┘  │
+└──────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 | Vùng | Chứa gì | GC |

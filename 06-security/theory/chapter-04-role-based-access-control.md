@@ -6,11 +6,38 @@
 
 **RBAC** là mô hình quản lý quyền truy cập hệ thống dựa trên vai trò (Role) của người dùng. Thay vì cấp quyền trực tiếp cho từng cá nhân, quyền hạn (Permission/Privilege) được gán vào Vai trò, và Người dùng được gán một hoặc nhiều vai trò.
 
-```mermaid
-graph LR
-    User["Người dùng (User)"] -->|Được gán| Role["Vai trò (Role: ADMIN, STAFF, USER)"]
-    Role -->|Bao gồm| Perm["Quyền hạn (Authorities: read, write, delete)"]
-    Perm -->|Bảo vệ| API["Endpoint / Nghiệp vụ"]
+```
+┌───────────────────────────────────────┐
+│           Người dùng (User)           │
+│   (Ví dụ: account 'nguyenvana')       │
+└───────────────────┬───────────────────┘
+                    │
+                    │ Được gán (Assigned to)
+                    ▼
+┌───────────────────────────────────────┐
+│        Vai trò (Roles: ROLE_*)        │
+│   • ROLE_ADMIN                        │
+│   • ROLE_STAFF                        │
+│   • ROLE_USER                         │
+└───────────────────┬───────────────────┘
+                    │
+                    │ Bao gồm một tập hợp (Contains)
+                    ▼
+┌───────────────────────────────────────┐
+│  Quyền hạn chi tiết (Authorities)     │
+│   • product:read                      │
+│   • product:create                    │
+│   • product:delete                    │
+└───────────────────┬───────────────────┘
+                    │
+                    │ Dùng để bảo vệ (Secures)
+                    ▼
+┌───────────────────────────────────────┐
+│    Endpoint / Nghiệp vụ (@PreAuth)    │
+│   • GET /api/v1/products              │
+│   • POST /api/v1/products             │
+│   • DELETE /api/v1/products/{id}      │
+└───────────────────────────────────────┘
 ```
 
 ---

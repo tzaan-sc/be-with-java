@@ -19,30 +19,39 @@
 - **Bản chất:** Con người dễ nhớ tên chữ (`google.com`, `shopee.vn`), nhưng máy tính chỉ hiểu địa chỉ số IP (`142.250.190.46`). DNS đóng vai trò như **cuốn danh bạ điện thoại**, tra cứu từ "Tên người" sang "Số điện thoại".
 - **Quy trình phân giải DNS (DNS Resolution Flow):**
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor User as Trình duyệt (Browser)
-    participant OS as OS / Local Cache
-    participant Resolver as DNS Resolver (ISP / 8.8.8.8)
-    participant Root as Root DNS Server (.)
-    participant TLD as TLD DNS Server (.com)
-    participant Auth as Authoritative Server (example.com)
-
-    User->>OS: 1. Truy cập https://api.example.com (Có IP chưa?)
-    alt Có sẵn trong Cache (Browser/OS)
-        OS-->>User: Trả về IP ngay (0 ms)
-    else Không có trong Cache
-        OS->>Resolver: 2. Nhờ máy chủ đệ quy phân giải hộ
-        Resolver->>Root: 3. Hỏi Root Server: "Ai quản lý đuôi .com?"
-        Root-->>Resolver: "Hỏi TLD Server của .com tại IP này nè"
-        Resolver->>TLD: 4. Hỏi TLD Server: "Ai quản lý domain example.com?"
-        TLD-->>Resolver: "Hỏi Authoritative Server của example.com tại IP này nè"
-        Resolver->>Auth: 5. Hỏi Auth Server: "IP chính xác của api.example.com là gì?"
-        Auth-->>Resolver: "IP là 203.0.113.12 (A Record, TTL=300s)"
-        Resolver-->>OS: 6. Trả kết quả + Lưu cache
-        OS-->>User: 7. Trả IP 203.0.113.12 để mở kết nối
-    end
+```
+┌───────────────┐     ┌───────────────┐     ┌───────────────┐     ┌───────────────┐     ┌───────────────┐     ┌───────────────┐
+│  Trình duyệt  │     │  OS / Cache   │     │ DNS Resolver  │     │  Root Server  │     │  TLD Server   │     │  Auth Server  │
+│   (Browser)   │     │ (Local Cache) │     │ (ISP/8.8.8.8) │     │      (.)      │     │    (.com)     │     │ (example.com) │
+└───────┬───────┘     └───────┬───────┘     └───────┬───────┘     └───────┬───────┘     └───────┬───────┘     └───────┬───────┘
+        │                     │                     │                     │                     │                     │
+        │ 1. https://api.example.com                │                     │                     │                     │
+        │ ──────────────────► │                     │                     │                     │                     │
+        │                     │                     │                     │                     │                     │
+        │ [Trường hợp 1: Có sẵn trong Cache]        │                     │                     │                     │
+        │ ◄- Trả IP ngay (0ms)│                     │                     │                     │                     │
+        │                     │                     │                     │                     │                     │
+        │ [Trường hợp 2: Chưa có trong Cache]       │                     │                     │                     │
+        │                     │ 2. Nhờ phân giải hộ │                     │                     │                     │
+        │                     │ ──────────────────► │                     │                     │                     │
+        │                     │                     │                     │                     │                     │
+        │                     │                     │ 3. Hỏi: Quản lý .com?                     │                     │
+        │                     │                     │ ──────────────────► │                     │                     │
+        │                     │                     │ ◄- IP của TLD .com ─│                     │                     │
+        │                     │                     │                     │                     │                     │
+        │                     │                     │ 4. Hỏi: Ai giữ example.com?               │                     │
+        │                     │                     │ ────────────────────────────────────────► │                     │
+        │                     │                     │ ◄- IP của Auth Server (example.com) ──────│                     │
+        │                     │                     │                     │                     │                     │
+        │                     │                     │ 5. Hỏi: IP của api.example.com là gì?                           │
+        │                     │                     │ ──────────────────────────────────────────────────────────────► │
+        │                     │                     │ ◄- IP: 203.0.113.12 (A Record, TTL=300s) ───────────────────────│
+        │                     │                     │                     │                     │                     │
+        │                     │ 6. Trả IP + Lưu cache                     │                     │                     │
+        │                     │ ◄────────────────── │                     │                     │                     │
+        │ 7. Trả IP: 203.0.113.12                   │                     │                     │                     │
+        │ ◄────────────────── │                     │                     │                     │                     │
+        ▼                     ▼                     ▼                     ▼                     ▼                     ▼
 ```
 
 - **Các Record DNS phổ biến:**

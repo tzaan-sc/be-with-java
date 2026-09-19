@@ -5,16 +5,61 @@
 - Server chịu trách nhiệm **xử lý nghiệp vụ**, **truy cập dữ liệu**, **bảo mật** và **trả kết quả**.
 
 ## 2. Thành phần chính
-```mermaid
-sequenceDiagram
-    participant C as Client (Browser/App)
-    participant LB as Load‑Balancer (Optional)
-    participant S as Backend Server
-    C->>LB: HTTP Request (GET/POST …)
-    LB->>S: Forward request
-    S->>S: Auth → Business Logic → DB
-    S->>LB: HTTP Response
-    LB->>C: Response (JSON/HTML)
+
+```
+┌────────────────────────────────────────────────────────┐
+│ Client: Web / Mobile (Browser / App)                   │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            │ 1. Gửi HTTP Request (GET, POST...)
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ Load Balancer (Nginx / HAProxy - Tùy chọn)             │
+│ → Cân bằng tải & phân phối request                     │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            │ 2. Forward Request tới Server rảnh
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ Backend Server (Web Server / App Server)               │
+│                                                        │
+│   ┌────────────────────────────────────────────────┐   │
+│   │ 1. Xác thực & Phân quyền (Auth Filter)         │   │
+│   └───────────────────────┬────────────────────────┘   │
+│                           ▼                            │
+│   ┌────────────────────────────────────────────────┐   │
+│   │ 2. Xử lý nghiệp vụ (Business Logic - Service)  │   │
+│   └───────────────────────┬────────────────────────┘   │
+│                           ▼                            │
+│   ┌────────────────────────────────────────────────┐   │
+│   │ 3. Đọc / Ghi dữ liệu (Repository → Database)   │   │
+│   └────────────────────────────────────────────────┘   │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            │ 3. Trả về HTTP Response
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ Load Balancer                                          │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            │ 4. Chuyển tiếp Response (JSON / HTML)
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ Client: Web / Mobile                                   │
+└────────────────────────────────────────────────────────┘
+```
+
+```
+Client                      Load Balancer                   Backend Server
+  │                               │                               │
+  │─── 1. HTTP Request (GET/POST)─►                               │
+  │                               │─── 2. Forward Request ────────►
+  │                               │                               │ ──┐
+  │                               │                               │   │ Auth → Logic → DB
+  │                               │                               │ ◄─┘
+  │                               │◄── 3. HTTP Response ──────────│
+  │◄── 4. Response (JSON/HTML) ───│                               │
+  │                               │                               │
 ```
 - **Load Balancer** (Nginx, HAProxy) – phân phối tải tới nhiều server.
 - **Web Server** – nhận request, trả file tĩnh, chuyển tiếp tới **App Server**.
@@ -54,23 +99,52 @@ Khi xử lý xong, Server trả về gồm:
 
 Trước khi Client có thể gửi được bất kỳ HTTP Request nào, tầng Giao vận (Transport Layer) phải thiết lập một kết nối tin cậy giữa Client và Server thông qua **TCP 3-way Handshake**:
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor Client as Client (Trình duyệt / App)
-    participant Server as Backend Server (Port 80/443)
-
-    Note over Client, Server: Bắt đầu bắt tay 3 bước (TCP 3-way Handshake)
-    Client->>Server: 1. Gói tin SYN (Synchronize): "Tôi muốn kết nối, số seq của tôi là X"
-    Server->>Client: 2. Gói tin SYN-ACK: "Tôi đồng ý kết nối (ACK X+1), số seq của tôi là Y"
-    Client->>Server: 3. Gói tin ACK (Acknowledge): "Tôi đã nhận được phản hồi (ACK Y+1). Kết nối đã sẵn sàng!"
-    
-    Note over Client, Server: KẾT NỐI TCP THÀNH CÔNG -> Bắt đầu truyền HTTP Data
-    Client->>Server: 4. Gửi HTTP Request (GET /api/v1/products)
-    Server->>Client: 5. Gửi HTTP Response (200 OK + JSON)
-    
-    Note over Client, Server: Đóng kết nối (TCP 4-way Handshake)
-    Client->>Server: FIN -> Server trả ACK -> Server gửi FIN -> Client trả ACK (Đóng cổng)
+```
+┌──────────────────────────────┐                ┌──────────────────────────────┐
+│  Client (Trình duyệt / App)  │                │ Backend Server (Port 80/443) │
+└──────────────┬───────────────┘                └──────────────┬───────────────┘
+               │                                               │
+═══════════════╪═══════════════════════════════════════════════╪═══════════════
+               │   GIAI ĐOẠN 1: BẮT TAY 3 BƯỚC (TCP 3-WAY HANDSHAKE)
+═══════════════╪═══════════════════════════════════════════════╪═══════════════
+               │                                               │
+               │ 1. Gói SYN (seq = X)                          │
+               │ ────────────────────────────────────────────► │ "Tôi muốn kết nối,
+               │                                               │  seq của tôi là X"
+               │                                               │
+               │ 2. Gói SYN-ACK (seq = Y, ack = X+1)           │
+               │ ◄──────────────────────────────────────────── │ "Tôi đồng ý (ACK X+1),
+               │                                               │  seq của tôi là Y"
+               │                                               │
+               │ 3. Gói ACK (ack = Y+1)                        │
+               │ ────────────────────────────────────────────► │ "Đã nhận (ACK Y+1).
+               │                                               │  Kết nối sẵn sàng!"
+               │                                               │
+═══════════════╪═══════════════════════════════════════════════╪═══════════════
+               │   GIAI ĐOẠN 2: TRUYỀN DỮ LIỆU HTTP (DATA TRANSFER)
+═══════════════╪═══════════════════════════════════════════════╪═══════════════
+               │                                               │
+               │ 4. Gửi HTTP Request (GET /api/v1/products)    │
+               │ ────────────────────────────────────────────► │ Xử lý nghiệp vụ...
+               │                                               │
+               │ 5. Gửi HTTP Response (200 OK + JSON)          │
+               │ ◄──────────────────────────────────────────── │ Trả kết quả JSON
+               │                                               │
+═══════════════╪═══════════════════════════════════════════════╪═══════════════
+               │   GIAI ĐOẠN 3: ĐÓNG KẾT NỐI (TCP 4-WAY HANDSHAKE)
+═══════════════╪═══════════════════════════════════════════════╪═══════════════
+               │                                               │
+               │ 1. Gói FIN (Client muốn đóng kết nối)         │
+               │ ────────────────────────────────────────────► │
+               │ 2. Gói ACK (Server xác nhận yêu cầu đóng)     │
+               │ ◄──────────────────────────────────────────── │
+               │ 3. Gói FIN (Server cũng đóng kết nối)         │
+               │ ◄──────────────────────────────────────────── │
+               │ 4. Gói ACK (Client xác nhận -> Đóng hoàn toàn)│
+               │ ────────────────────────────────────────────► │
+               │                                               │
+               ▼                                               ▼
+         [Đóng kết nối]                                  [Đóng kết nối]
 ```
 
 ### Tại sao HTTP/HTTPS bắt buộc phải chạy trên nền TCP thay vì UDP?

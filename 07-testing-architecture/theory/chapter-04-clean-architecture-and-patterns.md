@@ -12,33 +12,27 @@ Mô hình phổ biến nhất: **Controller $\rightarrow$ Service $\rightarrow$ 
 Nguyên tắc cốt lõi của Clean Architecture: **Quy tắc phụ thuộc (Dependency Rule)**.
 > **Các tầng bên ngoài chỉ được phụ thuộc vào các tầng bên trong, tầng bên trong tuyệt đối KHÔNG ĐƯỢC biết gì về tầng bên ngoài!**
 
-```mermaid
-graph TD
-    subgraph Frameworks & Drivers ["1. Tầng Ngoại Vi (Frameworks & Drivers)"]
-        Web["Web Controllers / REST API"]
-        DB["Spring Data JPA / MySQL"]
-        ThirdParty["Email Service / VNPay API"]
-    end
-
-    subgraph Interface Adapters ["2. Tầng Chuyển Đổi (Adapters)"]
-        Controllers["Controllers / Presenters"]
-        Gateways["Repository Implementations"]
-    end
-
-    subgraph Application ["3. Tầng Ứng Dụng (Use Cases)"]
-        Services["Use Cases / Application Services"]
-    end
-
-    subgraph Domain ["4. Tầng Cốt Lõi (Domain Entities)"]
-        Entities["Domain Models / Business Rules (Java thuần khiết, không dính JPA hay Spring)"]
-    end
-
-    Web --> Controllers
-    DB --> Gateways
-    ThirdParty --> Gateways
-    Controllers --> Services
-    Gateways --> Services
-    Services --> Entities
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│ 1. FRAMEWORKS & DRIVERS (Tầng Ngoại Vi - Web, DB, Devices, UI, External Interfaces)     │
+│    [Web MVC / REST]       [MySQL / Spring Data JPA]       [VNPay / Email Service]      │
+│  ┌──────────────────────────────────────────────────────────────────────────────────┐  │
+│  │ 2. INTERFACE ADAPTERS (Tầng Chuyển Đổi - Controllers, Gateways, Presenters)      │  │
+│  │    [DTOs & Controllers]                    [Repository Implementations / DAOs]   │  │
+│  │  ┌────────────────────────────────────────────────────────────────────────────┐  │  │
+│  │  │ 3. APPLICATION BUSINESS RULES (Tầng Ứng Dụng - Use Cases / Services)       │  │  │
+│  │  │    [CreateUserUseCase]                  [OrderProcessingService]           │  │  │
+│  │  │  ┌──────────────────────────────────────────────────────────────────────┐  │  │  │
+│  │  │  │ 4. ENTERPRISE BUSINESS RULES (Tầng Cốt Lõi - Domain Entities)        │  │  │  │
+│  │  │  │    [Domain Models: User, Order, Product]                             │  │  │  │
+│  │  │  │    (Java thuần khiết POJO, KHÔNG phụ thuộc Spring, JPA hay DB)       │  │  │  │
+│  │  │  └──────────────────────────────────▲───────────────────────────────────┘  │  │  │
+│  │  │                                     │ Phụ thuộc hướng vào tâm            │  │  │
+│  │  └─────────────────────────────────────┼────────────────────────────────────┘  │  │
+│  │                                        │ (Dependency Rule)                     │  │
+│  └────────────────────────────────────────┼───────────────────────────────────────┘  │
+│                                           │                                          │
+└───────────────────────────────────────────┴──────────────────────────────────────────┘
 ```
 
 ---

@@ -55,28 +55,51 @@ $$\text{Signature} = \text{HMACSHA256}(\text{Base64Url}(\text{Header}) + "." + \
 
 ## 3. Quy trình Access Token & Refresh Token Flow
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor Client
-    participant Server as Backend Server
-    participant DB as Database
-
-    Client->>Server: POST /auth/login (email, password)
-    Server->>DB: Kiểm tra tài khoản & mật khẩu
-    Server->>Client: Trả về Access Token (sống 15 phút) + Refresh Token (sống 7 ngày)
-    
-    Note over Client,Server: Client gửi request bình thường
-    Client->>Server: GET /api/v1/orders (Header: Authorization: Bearer <Access_Token>)
-    Server->>Client: 200 OK (Trả về danh sách đơn hàng)
-    
-    Note over Client,Server: Sau 15 phút, Access Token hết hạn
-    Client->>Server: GET /api/v1/orders (Access Token đã hết hạn)
-    Server->>Client: 401 Unauthorized (Token Expired)
-    
-    Client->>Server: POST /auth/refresh-token (Refresh Token)
-    Server->>DB: Kiểm tra Refresh Token trong DB
-    Server->>Client: Cấp Access Token mới (15 phút)
+```
+┌──────────────┐                ┌──────────────────────────────┐                ┌──────────────┐
+│    Client    │                │        Backend Server        │                │   Database   │
+└──────┬───────┘                └──────────────┬───────────────┘                └──────┬───────┘
+       │                                       │                                       │
+═══════╪═══════════════════════════════════════╪═══════════════════════════════════════╪═══════
+       │ GIAI ĐOẠN 1: ĐĂNG NHẬP & CẤP TOKEN CẶP (ACCESS TOKEN + REFRESH TOKEN)
+═══════╪═══════════════════════════════════════╪═══════════════════════════════════════╪═══════
+       │                                       │                                       │
+       │ 1. POST /auth/login (email, password) │                                       │
+       │ ────────────────────────────────────► │                                       │
+       │                                       │ 2. Kiểm tra tài khoản & mật khẩu      │
+       │                                       │ ────────────────────────────────────► │
+       │                                       │ ◄──────────────────────────────────── │
+       │ 3. Trả về Access Token (15 phút)      │                                       │
+       │    + Refresh Token (7 ngày)           │                                       │
+       │ ◄──────────────────────────────────── │                                       │
+       │                                       │                                       │
+═══════╪═══════════════════════════════════════╪═══════════════════════════════════════╪═══════
+       │ GIAI ĐOẠN 2: SỬ DỤNG ACCESS TOKEN ĐỂ GỌI API
+═══════╪═══════════════════════════════════════╪═══════════════════════════════════════╪═══════
+       │                                       │                                       │
+       │ 4. GET /api/v1/orders                 │                                       │
+       │    Header: Authorization: Bearer <JWT>│                                       │
+       │ ────────────────────────────────────► │ Kiểm tra chữ ký & hạn dùng (exp)     │
+       │ 5. 200 OK (Trả về danh sách đơn hàng) │                                       │
+       │ ◄──────────────────────────────────── │                                       │
+       │                                       │                                       │
+═══════╪═══════════════════════════════════════╪═══════════════════════════════════════╪═══════
+       │ GIAI ĐOẠN 3: ACCESS TOKEN HẾT HẠN & DÙNG REFRESH TOKEN ĐỔI TOKEN MỚI
+═══════╪═══════════════════════════════════════╪═══════════════════════════════════════╪═══════
+       │                                       │                                       │
+       │ 6. GET /api/v1/orders (Token hết hạn) │                                       │
+       │ ────────────────────────────────────► │ Hạn token < thời gian hiện tại        │
+       │ 7. 401 Unauthorized (Token Expired)   │                                       │
+       │ ◄──────────────────────────────────── │                                       │
+       │                                       │                                       │
+       │ 8. POST /auth/refresh-token           │                                       │
+       │    Body: { refreshToken: "..." }      │                                       │
+       │ ────────────────────────────────────► │ 9. Kiểm tra Refresh Token hợp lệ?    │
+       │                                       │ ────────────────────────────────────► │
+       │                                       │ ◄──────────────────────────────────── │
+       │ 10. Cấp Access Token mới (15 phút)    │                                       │
+       │ ◄──────────────────────────────────── │                                       │
+       ▼                                       ▼                                       ▼
 ```
 
 ---

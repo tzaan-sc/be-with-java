@@ -14,18 +14,24 @@ Khi viết Unit Test cho tầng **`Service`**, chúng ta chỉ muốn kiểm tra
 
 ## 2. Các Annotation cốt lõi của Mockito
 
-```mermaid
-graph TD
-    subgraph Test Class
-        InjectMocks["@InjectMocks: Class cần test (ví dụ: UserServiceImpl)"]
-        MockRepo["@Mock: Giả lập UserRepository"]
-        MockMapper["@Mock: Giả lập UserMapper"]
-        MockEncoder["@Mock: Giả lập PasswordEncoder"]
-        
-        MockRepo -.->|Tự động tiêm vào| InjectMocks
-        MockMapper -.->|Tự động tiêm vào| InjectMocks
-        MockEncoder -.->|Tự động tiêm vào| InjectMocks
-    end
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                        TEST CLASS (@ExtendWith)                        │
+│                                                                        │
+│  ┌──────────────────────────────────────────────────────────────────┐  │
+│  │    @InjectMocks: Đối tượng thật cần kiểm thử                      │  │
+│  │    private UserServiceImpl userService;                          │  │
+│  └──────────────────▲──────────────────▲──────────────────▲─────────┘  │
+│                     │                  │                  │            │
+│                     │ Tự động tiêm     │ Tự động tiêm     │ Tự động    │
+│                     │ vào Constructor  │ vào Constructor  │ tiêm vào   │
+│                     │                  │                  │            │
+│  ┌──────────────────┴──┐    ┌──────────┴─────────┐    ┌───┴─────────┐  │
+│  │        @Mock        │    │       @Mock        │    │    @Mock    │  │
+│  │   UserRepository    │    │     UserMapper     │    │   Password  │  │
+│  │  (Giả lập CSDL)     │    │  (Giả lập Mapper)  │    │   Encoder   │  │
+│  └─────────────────────┘    └────────────────────┘    └─────────────┘  │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
 | Annotation | Mục đích |

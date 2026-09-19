@@ -17,10 +17,14 @@
 Nếu chỉ cần kiểm tra xem Controller có nhận đúng URL, đọc đúng `@PathVariable`, validate đúng `@Valid` và trả về đúng HTTP Status code hay không:
 👉 **Không cần load toàn bộ ứng dụng bằng `@SpringBootTest`**. Hãy dùng **`@WebMvcTest`** để chỉ khởi động duy nhất tầng Web (nhanh hơn gấp nhiều lần).
 
-```mermaid
-graph LR
-    MockMvc["MockMvc (Giả lập Client HTTP)"] --> Controller["UserController (@WebMvcTest)"]
-    Controller --> MockService["@MockBean: UserService"]
+```
+┌───────────────────────────┐           ┌───────────────────────────┐           ┌───────────────────────────┐
+│          MockMvc          │  1. Gửi   │      UserController       │  2. Gọi   │        @MockBean          │
+│   (Giả lập HTTP Client)   │ ────────► │       (@WebMvcTest)       │ ────────► │        UserService        │
+│                           │  Request  │                           │  hàm mock │                           │
+│ Gửi GET, POST, Header...  │ ◄──────── │ Chỉ khởi động duy nhất    │ ◄──────── │ Trả dữ liệu giả lập sẵn   │
+└───────────────────────────┘  4. Trả   │ Web Layer (Nhanh & cô lập)│  3. Trả   └───────────────────────────┘
+                               Response └───────────────────────────┘  dữ liệu
 ```
 
 ### Triển khai code kiểm thử Controller với MockMvc:

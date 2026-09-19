@@ -11,20 +11,30 @@ System.out.println(arr[5]);  // ❌ ArrayIndexOutOfBoundsException → Chương 
 
 ## 2. Hệ thống phân cấp Exception trong Java
 
-```mermaid
-graph TD
-    Throwable --> Error
-    Throwable --> Exception
-    Error --> SOE["StackOverflowError"]
-    Error --> OOM["OutOfMemoryError"]
-    Exception --> RE["RuntimeException (Unchecked)"]
-    Exception --> CE["IOException, SQLException... (Checked)"]
-    RE --> NPE["NullPointerException"]
-    RE --> IAE["IllegalArgumentException"]
-    RE --> AIOOBE["ArrayIndexOutOfBoundsException"]
-    RE --> AE["ArithmeticException"]
-    RE --> NFE["NumberFormatException"]
-    RE --> CCE["ClassCastException"]
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                              Throwable                                 │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+      ┌─────────────────────────────┴─────────────────────────────┐
+      ▼                                                           ▼
+┌───────────────────────────┐               ┌───────────────────────────┐
+│           Error           │               │         Exception         │
+│  (JVM Crash / Hệ thống)   │               │     (Có thể xử lý)        │
+└─────────────┬─────────────┘               └─────────────┬─────────────┘
+              │                                           │
+  ├── StackOverflowError            ┌─────────────────────┴─────────────────────┐
+  └── OutOfMemoryError (OOM)        ▼                                           ▼
+                              ┌───────────────────────────┐       ┌───────────────────────────┐
+                              │     Checked Exception     │       │     RuntimeException      │
+                              │ (Bắt buộc try-catch/throw)│       │    (Unchecked Exception)  │
+                              └─────────────┬─────────────┘       └─────────────┬─────────────┘
+                                            │                                   │
+                                ├── IOException                     ├── NullPointerException
+                                ├── SQLException                    ├── ArrayIndexOutOfBounds
+                                └── ParseException                  ├── ArithmeticException
+                                                                    ├── IllegalArgumentException
+                                                                    └── NumberFormatException
 ```
 
 ### 2.1 Error (Lỗi hệ thống)
@@ -83,14 +93,34 @@ System.out.println("Chương trình tiếp tục chạy bình thường");
 
 ### 3.2 Luồng thực thi
 
-```mermaid
-graph TD
-    A["Bắt đầu try"] --> B{Exception xảy ra?}
-    B -->|Có| C["Nhảy vào catch tương ứng"]
-    B -->|Không| D["Chạy hết try bình thường"]
-    C --> E["finally (luôn chạy)"]
-    D --> E
-    E --> F["Tiếp tục code sau try-catch"]
+```
+              ┌────────────────────────┐
+              │     Bắt đầu try        │
+              └───────────┬────────────┘
+                          │
+                          ▼
+              ┌────────────────────────┐
+              │   Exception xảy ra?    │
+              └─────┬────────────┬─────┘
+                CÓ  │            │  KHÔNG
+                    ▼            ▼
+┌────────────────────────┐  ┌────────────────────────┐
+│ Nhảy vào khối catch    │  │ Chạy hết khối try      │
+│ tương ứng để xử lý     │  │ một cách bình thường   │
+└───────────────────┬────┘  └────┬───────────────────┘
+                    │            │
+                    └─────┬──────┘
+                          ▼
+              ┌────────────────────────┐
+              │  finally (luôn chạy)   │
+              │(Giải phóng tài nguyên) │
+              └───────────┬────────────┘
+                          │
+                          ▼
+              ┌────────────────────────┐
+              │ Tiếp tục code sau khối │
+              │      try - catch       │
+              └────────────────────────┘
 ```
 
 ### 3.3 Bắt nhiều Exception
