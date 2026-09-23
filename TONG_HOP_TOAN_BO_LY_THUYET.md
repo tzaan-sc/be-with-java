@@ -1,17 +1,14 @@
 # SỔ TAY BÁCH KHOA TOÀN THƯ LÝ THUYẾT JAVA BACKEND
----
 
 ## 📑 MỤC LỤC ĐIỀU HƯỚNG CHI TIẾT 42 CHƯƠNG
 
 ### [PHASE 0: BACKEND CĂN BẢN (BASIC BACKEND)](#phase-0)
-
 - [Chapter 01: Backend là gì? & Vai trò trong hệ thống](#phase-0-chapter-01)
 - [Chapter 02: Kiến trúc Client‑Server & Vòng đời Request‑Response](#phase-0-chapter-02)
 - [Chapter 03: Networking, IP, Port & DNS](#phase-0-chapter-03)
 - [Chapter 04: Web Server, App Server & Database](#phase-0-chapter-04)
 
 ### [PHASE 1: JAVA CORE NỀN TẢNG (CORE LANGUAGE & JVM)](#phase-1)
-
 - [Chapter 01: Biến, Kiểu dữ liệu & Ép kiểu (Variables, Data Types & Casting)](#phase-1-chapter-01)
 - [Chapter 02: Cấu trúc Điều khiển & Vòng lặp (Control Flow)](#phase-1-chapter-02)
 - [Chapter 03: Quản lý Bộ nhớ Java – Stack vs Heap & Garbage Collection](#phase-1-chapter-03)
@@ -19,7 +16,6 @@
 - [Chapter 05: Xử lý Ngoại lệ (Exception Handling)](#phase-1-chapter-05)
 
 ### [PHASE 2: HƯỚNG ĐỐI TƯỢNG (OOP) & COLLECTIONS FRAMEWORK](#phase-2)
-
 - [Chapter 01: 4 Trụ Cột OOP (Encapsulation, Inheritance, Polymorphism, Abstraction)](#phase-2-chapter-01)
 - [Chapter 02: Interface vs Abstract Class & Default/Static Methods](#phase-2-chapter-02)
 - [Chapter 03: 5 Nguyên Lý SOLID trong Java Backend](#phase-2-chapter-03)
@@ -28,7 +24,6 @@
 - [Chapter 06: Java 8 – Lambda, Functional Interface, Stream API & Optional](#phase-2-chapter-06)
 
 ### [PHASE 3: GIAO THỨC HTTP & THIẾT KẾ RESTFUL API](#phase-3)
-
 - [Chapter 01: HTTP Fundamentals – Request, Response, Headers, Cookies](#phase-3-chapter-01)
 - [Chapter 02: HTTP Methods & Status Codes](#phase-3-chapter-02)
 - [Chapter 03: Quy chuẩn thiết kế RESTful API](#phase-3-chapter-03)
@@ -36,7 +31,6 @@
 - [Chapter 05: API Testing Tools – Postman & cURL](#phase-3-chapter-05)
 
 ### [PHASE 4: SPRING BOOT CORE & KIẾN TRÚC 3 TẦNG](#phase-4)
-
 - [Chapter 01: Spring Core – IoC, Dependency Injection, Bean Lifecycle](#phase-4-chapter-01)
 - [Chapter 02: Spring Boot Overview – Auto-configuration, Starters, Config Properties](#phase-4-chapter-02)
 - [Chapter 03: Kiến trúc 3 tầng Spring MVC – Controller, Service, Repository](#phase-4-chapter-03)
@@ -44,7 +38,6 @@
 - [Chapter 05: Global Exception Handling – @RestControllerAdvice](#phase-4-chapter-05)
 
 ### [PHASE 5: DATABASE, JPA & HIBERNATE ORM](#phase-5)
-
 - [Chapter 01: RDBMS & SQL – Primary Key, Foreign Key, Indexing](#phase-5-chapter-01)
 - [Chapter 02: JPA/Hibernate Basics – @Entity, @Id, @Column, @Table](#phase-5-chapter-02)
 - [Chapter 03: Entity Relationships – @OneToMany, @ManyToOne, Lazy vs Eager](#phase-5-chapter-03)
@@ -53,7 +46,6 @@
 - [Chapter 06: Pagination & Sorting – Pageable, Page, Slice](#phase-5-chapter-06)
 
 ### [PHASE 6: BẢO MẬT HỆ THỐNG (SPRING SECURITY & JWT)](#phase-6)
-
 - [Chapter 01: Nền Tảng Bảo Mật – Authentication vs Authorization & Hash Mật Khẩu với BCrypt](#phase-6-chapter-01)
 - [Chapter 02: Kiến Trúc Spring Security – SecurityFilterChain, AuthenticationManager & UserDetailsService](#phase-6-chapter-02)
 - [Chapter 03: Xác Thực Không Trạng Thái với JWT (JSON Web Token)](#phase-6-chapter-03)
@@ -61,27 +53,19 @@
 - [Chapter 05: Cấu Hình CORS & CSRF Trong REST API](#phase-6-chapter-05)
 
 ### [PHASE 7: KIỂM THỬ, KIẾN TRÚC SẠCH & VẬN HÀNH DOCKER](#phase-7)
-
 - [Chapter 01: Unit Testing với JUnit 5 & Assertions](#phase-7-chapter-01)
 - [Chapter 02: Mocking Dependencies Trong Unit Test Với Mockito](#phase-7-chapter-02)
 - [Chapter 03: Integration Testing Với @SpringBootTest, MockMvc & Testcontainers](#phase-7-chapter-03)
 - [Chapter 04: Kiến Trúc Clean Architecture & Design Patterns Trong Spring Boot](#phase-7-chapter-04)
 - [Chapter 05: Tự Động Tạo Tài Liệu API Với Swagger / OpenAPI 3 (springdoc)](#phase-7-chapter-05)
 - [Chapter 06: Containerization – Đóng Gói Spring Boot & Database Với Docker & Docker Compose](#phase-7-chapter-06)
-
 - [PHỤ LỤC: BẢNG TRA CỨU NHANH TRẢ LỜI PHỎNG VẤN SENIOR (CHEAT SHEET)](#phu-luc-cheat-sheet)
 
 ---
 
-<div style="page-break-before: always;"></div>
-
 <a id="phase-0"></a>
 
 # PHASE 0: BACKEND CĂN BẢN (BASIC BACKEND)
-
----
-
-<div style="page-break-before: always;"></div>
 
 <a id="phase-0-chapter-01"></a>
 
@@ -100,68 +84,58 @@
 
 Để một hệ thống Backend vận hành hoàn chỉnh, nó được cấu thành từ 4 thành phần trụ cột sau:
 
-```┌──────────────────────────────┐
+```
+┌──────────────────────────────┐
 │ Client: Web / Mobile         │
 └──────────────┬───────────────┘
-               │
                │ 1. HTTP Request
                ▼
 ┌──────────────────────────────┐
 │ Web / App Server             │
 │ Tomcat, Nginx                │
 └──────────────┬───────────────┘
-               │
                │ 2. Đi qua các tầng lọc
                ▼
 ┌──────────────────────────────────────────────┐
 │ Middleware – "Người gác cổng"                │
-│                                              │
 │  ┌────────────────────────────────────────┐  │
 │  │ Auth Filter                            │  │
 │  │ → Kiểm tra Token                       │  │
 │  └────────────────────────────────────────┘  │
-│                                              │
 │  ┌────────────────────────────────────────┐  │
 │  │ Rate Limiter                           │  │
 │  │ → Chống Spam / giới hạn Request        │  │
 │  └────────────────────────────────────────┘  │
-│                                              │
 │  ┌────────────────────────────────────────┐  │
 │  │ CORS & Logger                          │  │
 │  │ → Kiểm tra CORS + Ghi log              │  │
 │  └────────────────────────────────────────┘  │
 └──────────────────────┬───────────────────────┘
-                       │
                        │ 3. Hợp lệ → Chuyển tiếp
                        ▼
 ┌──────────────────────────────────────┐
 │ Application Core                     │
-│ Controller + Service                  │
-│                                      │
+│ Controller + Service                 │
 │ → Xử lý nghiệp vụ                    │
 └──────────────────┬───────────────────┘
-                   │
                    │ 4. Đọc / Ghi dữ liệu
                    ▼
         ┌─────────────────────────┐
         │ Database                │
         │ MySQL / Redis / ...     │
         └────────────┬────────────┘
-                     │
                      │ 5. Trả kết quả
                      ▼
 ┌──────────────────────────────────────┐
 │ Application Core                     │
-│ Controller + Service                  │
+│ Controller + Service                 │
 └──────────────────┬───────────────────┘
-                   │
                    │ 6. Đóng gói JSON
                    ▼
 ┌──────────────────────────────┐
 │ Web / App Server             │
 │ Tomcat, Nginx                │
 └──────────────┬───────────────┘
-               │
                │ 7. HTTP Response
                ▼
 ┌──────────────────────────────┐
@@ -171,7 +145,6 @@
 
 ```
 Client
-  │
   │ HTTP Request
   ▼
 Web/App Server
@@ -188,22 +161,18 @@ Controller
   │
   ▼
 Service
-  │
   │ Đọc/Ghi
   ▼
 Database
-  │
   │ Kết quả
   ▼
 Service
   │
   ▼
 Controller
-  │
   │ JSON Response
   ▼
 Web/App Server
-  │
   │ HTTP Response
   ▼
 Client
@@ -302,9 +271,7 @@ Việc tách riêng lớp **Service** tuân theo nguyên lý **Separation of Con
 │  Frontend / Mobile   │
 │       (Client)       │
 └──────────┬───────────┘
-           │
            │ Giai đoạn 1: Đăng nhập lấy Token
-           │
            │ POST /auth/login
            │ (username, password)
            ▼
@@ -313,24 +280,20 @@ Việc tách riêng lớp **Service** tuân theo nguyên lý **Separation of Con
 │    (Auth Layer)      │
 └──────────────────────┘
            │
-           │
            ▼
 ┌──────────────────────┐
 │     Controller       │
 └──────────┬───────────┘
-           │
            │ Xác thực tài khoản
            ▼
 ┌──────────────────────┐
 │    Service Layer     │
 └──────────┬───────────┘
-           │
            │ Kiểm tra mật khẩu (hash)
            ▼
 ┌──────────────────────┐
 │      Database        │
 └──────────┬───────────┘
-           │
            │ Kết quả xác thực
            ▼
 ┌──────────────────────┐
@@ -342,13 +305,11 @@ Việc tách riêng lớp **Service** tuân theo nguyên lý **Separation of Con
 │ - roles              │
 │ - exp                 │
 └──────────┬───────────┘
-           │
            │ Trả JWT
            ▼
 ┌──────────────────────┐
 │     Controller       │
 └──────────┬───────────┘
-           │
            │ Token (JWT)
            ▼
 ┌──────────────────────┐
@@ -356,16 +317,13 @@ Việc tách riêng lớp **Service** tuân theo nguyên lý **Separation of Con
 │       (Client)       │
 └──────────────────────┘
 
-
 ══════════════════════════════════════════════════════════════
        GIAI ĐOẠN 2: GỌI API NGHIỆP VỤ (POST /orders)
 ══════════════════════════════════════════════════════════════
-
 ┌──────────────────────┐
 │  Frontend / Mobile   │
 │       (Client)       │
 └──────────┬───────────┘
-           │
            │ POST /orders
            │ Authorization:
            │ Bearer <JWT>
@@ -374,7 +332,6 @@ Việc tách riêng lớp **Service** tuân theo nguyên lý **Separation of Con
 │ Security Filter      │
 │    (Auth Layer)      │
 └──────────┬───────────┘
-           │
            │ Giải mã JWT
            │ Kiểm tra:
            │ ✓ Chữ ký
@@ -384,7 +341,6 @@ Việc tách riêng lớp **Service** tuân theo nguyên lý **Separation of Con
         │ Token hợp lệ ?      │
         └─────────┬───────────┘
              ┌────┴────┐
-             │         │
            KHÔNG       CÓ
              │         │
              ▼         ▼
@@ -404,19 +360,16 @@ Việc tách riêng lớp **Service** tuân theo nguyên lý **Separation of Con
                            ┌──────────────────────┐
                            │    Service Layer     │
                            └──────────┬───────────┘
-                                      │
                                       │ Lưu đơn hàng
                                       ▼
                            ┌──────────────────────┐
                            │      Database        │
                            └──────────┬───────────┘
-                                      │
                                       │ Thành công
                                       ▼
                            ┌──────────────────────┐
                            │     Controller       │
                            └──────────┬───────────┘
-                                      │
                                       │ 200 OK
                                       ▼
                            ┌──────────────────────┐
@@ -447,8 +400,9 @@ Việc tách riêng lớp **Service** tuân theo nguyên lý **Separation of Con
   - **Tác vụ gọi dịch vụ bên thứ ba:** Bắn webhook, ghi log phân tích tracking hành vi người dùng.
 
 ---
+*Hướng dẫn thực hành:* Đọc lại toàn bộ các bước trên, vẽ sơ đồ luồng trên giấy để nắm vững kiến thức nền tảng.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-0-chapter-02"></a>
 
@@ -464,14 +418,12 @@ Việc tách riêng lớp **Service** tuân theo nguyên lý **Separation of Con
 ┌────────────────────────────────────────────────────────┐
 │ Client: Web / Mobile (Browser / App)                   │
 └───────────────────────────┬────────────────────────────┘
-                            │
                             │ 1. Gửi HTTP Request (GET, POST...)
                             ▼
 ┌────────────────────────────────────────────────────────┐
 │ Load Balancer (Nginx / HAProxy - Tùy chọn)             │
 │ → Cân bằng tải & phân phối request                     │
 └───────────────────────────┬────────────────────────────┘
-                            │
                             │ 2. Forward Request tới Server rảnh
                             ▼
 ┌────────────────────────────────────────────────────────┐
@@ -489,13 +441,11 @@ Việc tách riêng lớp **Service** tuân theo nguyên lý **Separation of Con
 │   │ 3. Đọc / Ghi dữ liệu (Repository → Database)   │   │
 │   └────────────────────────────────────────────────┘   │
 └───────────────────────────┬────────────────────────────┘
-                            │
                             │ 3. Trả về HTTP Response
                             ▼
 ┌────────────────────────────────────────────────────────┐
 │ Load Balancer                                          │
 └───────────────────────────┬────────────────────────────┘
-                            │
                             │ 4. Chuyển tiếp Response (JSON / HTML)
                             ▼
 ┌────────────────────────────────────────────────────────┐
@@ -507,13 +457,11 @@ Việc tách riêng lớp **Service** tuân theo nguyên lý **Separation of Con
 Client                      Load Balancer                   Backend Server
   │                               │                               │
   │─── 1. HTTP Request (GET/POST)─►                               │
-  │                               │─── 2. Forward Request ────────►
-  │                               │                               │ ──┐
-  │                               │                               │   │ Auth → Logic → DB
+  │                               │─── 2. Forward Request ────────► 
+  │                               │                               │ ──┐ Auth → Logic → DB
   │                               │                               │ ◄─┘
   │                               │◄── 3. HTTP Response ──────────│
   │◄── 4. Response (JSON/HTML) ───│                               │
-  │                               │                               │
 ```
 - **Load Balancer** (Nginx, HAProxy) – phân phối tải tới nhiều server.
 - **Web Server** – nhận request, trả file tĩnh, chuyển tiếp tới **App Server**.
@@ -561,7 +509,6 @@ Trước khi Client có thể gửi được bất kỳ HTTP Request nào, tần
 ═══════════════╪═══════════════════════════════════════════════╪═══════════════
                │   GIAI ĐOẠN 1: BẮT TAY 3 BƯỚC (TCP 3-WAY HANDSHAKE)
 ═══════════════╪═══════════════════════════════════════════════╪═══════════════
-               │                                               │
                │ 1. Gói SYN (seq = X)                          │
                │ ────────────────────────────────────────────► │ "Tôi muốn kết nối,
                │                                               │  seq của tôi là X"
@@ -573,17 +520,14 @@ Trước khi Client có thể gửi được bất kỳ HTTP Request nào, tần
                │ 3. Gói ACK (ack = Y+1)                        │
                │ ────────────────────────────────────────────► │ "Đã nhận (ACK Y+1).
                │                                               │  Kết nối sẵn sàng!"
-               │                                               │
 ═══════════════╪═══════════════════════════════════════════════╪═══════════════
                │   GIAI ĐOẠN 2: TRUYỀN DỮ LIỆU HTTP (DATA TRANSFER)
 ═══════════════╪═══════════════════════════════════════════════╪═══════════════
-               │                                               │
                │ 4. Gửi HTTP Request (GET /api/v1/products)    │
                │ ────────────────────────────────────────────► │ Xử lý nghiệp vụ...
                │                                               │
                │ 5. Gửi HTTP Response (200 OK + JSON)          │
                │ ◄──────────────────────────────────────────── │ Trả kết quả JSON
-               │                                               │
 ═══════════════╪═══════════════════════════════════════════════╪═══════════════
                │   GIAI ĐOẠN 3: ĐÓNG KẾT NỐI (TCP 4-WAY HANDSHAKE)
 ═══════════════╪═══════════════════════════════════════════════╪═══════════════
@@ -596,7 +540,6 @@ Trước khi Client có thể gửi được bất kỳ HTTP Request nào, tần
                │ ◄──────────────────────────────────────────── │
                │ 4. Gói ACK (Client xác nhận -> Đóng hoàn toàn)│
                │ ────────────────────────────────────────────► │
-               │                                               │
                ▼                                               ▼
          [Đóng kết nối]                                  [Đóng kết nối]
 ```
@@ -608,14 +551,14 @@ Trước khi Client có thể gửi được bất kỳ HTTP Request nào, tần
 ---
 
 ## 5. Ví dụ thực tế – GET danh sách sản phẩm
-```http
+```
 GET /api/v1/products?page=1&size=20 HTTP/1.1
 Host: api.example.com
 Authorization: Bearer eyJhbGciOiJIUzI1Ni...
 Accept: application/json
 ```
 - **Server** xác thực token, gọi `ProductService.getProducts(page, size)`, truy vấn DB, trả về JSON:
-```json
+```
 {
   "status": 200,
   "data": [
@@ -661,8 +604,11 @@ Accept: application/json
 5. **Caching Layer:** Đặt Redis Cache ở giữa App Server và Database để chặn 80-90% các request đọc (Read requests), ngăn Database bị nghẽn I/O.
 
 ---
+*Thực hành Ngày 03 & 04:* 
+1. Mở Chrome DevTools (F12) -> Tab **Network** -> Bấm F5 một trang web bất kỳ để xem các request: Method, Status Code, Headers.
+2. Mở Terminal gõ `curl -I https://google.com` để xem Header trả về có `HTTP/2` hay `Connection: keep-alive` không.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-0-chapter-03"></a>
 
@@ -688,38 +634,12 @@ Accept: application/json
 - **Quy trình phân giải DNS (DNS Resolution Flow):**
 
 ```
-┌───────────────┐     ┌───────────────┐     ┌───────────────┐     ┌───────────────┐     ┌───────────────┐     ┌───────────────┐
-│  Trình duyệt  │     │  OS / Cache   │     │ DNS Resolver  │     │  Root Server  │     │  TLD Server   │     │  Auth Server  │
-│   (Browser)   │     │ (Local Cache) │     │ (ISP/8.8.8.8) │     │      (.)      │     │    (.com)     │     │ (example.com) │
-└───────┬───────┘     └───────┬───────┘     └───────┬───────┘     └───────┬───────┘     └───────┬───────┘     └───────┬───────┘
-        │                     │                     │                     │                     │                     │
-        │ 1. https://api.example.com                │                     │                     │                     │
-        │ ──────────────────► │                     │                     │                     │                     │
-        │                     │                     │                     │                     │                     │
-        │ [Trường hợp 1: Có sẵn trong Cache]        │                     │                     │                     │
-        │ ◄- Trả IP ngay (0ms)│                     │                     │                     │                     │
-        │                     │                     │                     │                     │                     │
-        │ [Trường hợp 2: Chưa có trong Cache]       │                     │                     │                     │
-        │                     │ 2. Nhờ phân giải hộ │                     │                     │                     │
-        │                     │ ──────────────────► │                     │                     │                     │
-        │                     │                     │                     │                     │                     │
-        │                     │                     │ 3. Hỏi: Quản lý .com?                     │                     │
-        │                     │                     │ ──────────────────► │                     │                     │
-        │                     │                     │ ◄- IP của TLD .com ─│                     │                     │
-        │                     │                     │                     │                     │                     │
-        │                     │                     │ 4. Hỏi: Ai giữ example.com?               │                     │
-        │                     │                     │ ────────────────────────────────────────► │                     │
-        │                     │                     │ ◄- IP của Auth Server (example.com) ──────│                     │
-        │                     │                     │                     │                     │                     │
-        │                     │                     │ 5. Hỏi: IP của api.example.com là gì?                           │
-        │                     │                     │ ──────────────────────────────────────────────────────────────► │
-        │                     │                     │ ◄- IP: 203.0.113.12 (A Record, TTL=300s) ───────────────────────│
-        │                     │                     │                     │                     │                     │
-        │                     │ 6. Trả IP + Lưu cache                     │                     │                     │
-        │                     │ ◄────────────────── │                     │                     │                     │
-        │ 7. Trả IP: 203.0.113.12                   │                     │                     │                     │
-        │ ◄────────────────── │                     │                     │                     │                     │
-        ▼                     ▼                     ▼                     ▼                     ▼                     ▼
+[Browser] ──1. URL──> [Local Cache (OS/Browser)] ──(nếu miss)──> [DNS Resolver (ISP)]
+   ▲                                                                    │
+   │ (IP: 203.0.113.12, TTL=300s)                     ┌─────────────────┼─────────────────┐
+   │                                                  ▼ 2. Hỏi .com     ▼ 3. Hỏi domain   ▼ 4. Lấy IP
+   └──────────────────────────────────────────── [Root Server]     [TLD Server]      [Auth Server]
+                                                    (.)               (.com)         (example.com)
 ```
 
 - **Các Record DNS phổ biến:**
@@ -732,8 +652,8 @@ Accept: application/json
 
 ---
 
-## 4. Công cụ kiểm tra mạng qua CLI
-```bash
+## 4. Công cụ kiểm tra mạng qua CLI (Thực hành Ngày 05 & 06)
+```
 # 1. ping: Kiểm tra xem máy chủ đích có online không và đo độ trễ (latency RTT)
 ping google.com
 
@@ -750,7 +670,7 @@ curl -I https://google.com
 ---
 
 ## 5. Ví dụ thực tế – Gọi API Backend
-```http
+```
 GET /api/v1/products HTTP/1.1
 Host: api.example.com   # DNS giải thành IP (203.0.113.12)
 Port: 443               # HTTPS, kết nối TCP an toàn SSL/TLS
@@ -775,7 +695,7 @@ Port: 443               # HTTPS, kết nối TCP an toàn SSL/TLS
 
 ### 6.2. Khi một API chậm, làm sao kiểm tra vấn đề do DNS, Network Latency hay Server Processing?
 Sử dụng công cụ `curl` với các tham số đo thời gian chuyên sâu (`curl -w`):
-```bash
+```
 curl -o /dev/null -s -w 'DNS: %{time_namelookup}s | Connect TCP: %{time_connect}s | TLS: %{time_appconnect}s | First Byte (Server): %{time_starttransfer}s | Total: %{time_total}s\n' https://api.example.com/health
 ```
 - Nếu `time_namelookup` lớn (> 200ms) $\rightarrow$ **Nghẽn do DNS Resolution** (cần đổi DNS Server hoặc tăng TTL).
@@ -801,8 +721,11 @@ curl -o /dev/null -s -w 'DNS: %{time_namelookup}s | Connect TCP: %{time_connect}
 - **Khuyến nghị:** DNS Round-Robin chỉ nên dùng cho tầng phân phối vùng địa lý (GeoDNS). Để cân bằng tải thực tế cho Backend, nên dùng Load Balancer chuyên dụng (Nginx, HAProxy, AWS ALB) có cơ chế Health Check tự động loại bỏ server lỗi.
 
 ---
+*Thực hành Ngày 05 & 06:*
+1. Mở Terminal gõ `nslookup google.com` để xem các IP và kiểm tra thời gian phản hồi.
+2. Thử gõ `ping 127.0.0.1` (IP Loopback localhost) để kiểm tra card mạng máy tính nội bộ của bạn.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-0-chapter-04"></a>
 
@@ -822,35 +745,19 @@ curl -o /dev/null -s -w 'DNS: %{time_namelookup}s | Connect TCP: %{time_connect}
 
 ## 2. Kiến trúc thường gặp
 ```
-┌────────────────────────────────────────────────────────┐
-│ Client / Browser (Web / Mobile App)                    │
-└───────────────────────────┬────────────────────────────┘
-                            │ ▲
-               1. Gửi HTTPS │ │ 6. Trả Response
-                            ▼ │
-┌────────────────────────────────────────────────────────┐
-│ Load Balancer (Nginx / HAProxy)                        │
-└───────────────────────────┬────────────────────────────┘
-                            │ ▲
-           2. Reverse Proxy │ │ 5. Trả JSON / HTML
-                            ▼ │
-┌────────────────────────────────────────────────────────┐
-│ Web Server (Nginx / Apache)                            │
-│ → Phục vụ static file, SSL termination                 │
-└───────────────────────────┬────────────────────────────┘
-                            │ ▲
-           3. Proxy Request │ │ 4. Trả kết quả xử lý
-                            ▼ │
-┌────────────────────────────────────────────────────────┐
-│ Application Server (Tomcat / Spring Boot)              │
-│ → Xử lý Business Logic, Transaction, Security          │
-└───────────────────────────┬────────────────────────────┘
-                            │ ▲
-          JDBC / JPA Query  │ │ Result Set
-                            ▼ │
-┌────────────────────────────────────────────────────────┐
-│ Database (MySQL / PostgreSQL / Redis)                  │
-└────────────────────────────────────────────────────────┘
+[Client / Browser] (Mobile App / Web)
+       │ ▲  1. Gửi HTTPS / 6. Trả Response
+       ▼ │
+[Load Balancer] (Nginx / HAProxy - Cân bằng tải)
+       │ ▲  2. Reverse Proxy / 5. Trả JSON / HTML
+       ▼ │
+[Web Server] (Nginx / Apache - Phục vụ Static file, SSL Termination)
+       │ ▲  3. Proxy Request / 4. Trả kết quả
+       ▼ │
+[App Server] (Tomcat / Spring Boot - Business Logic, Transaction, Security)
+       │ ▲  JDBC / JPA Query / Result Set
+       ▼ │
+[Database] (MySQL / PostgreSQL / Redis Cache)
 ```
 - **Load Balancer** (Nginx, HAProxy) phân phối request tới nhiều Web Server.
 - **Web Server** có thể **serve static** và **proxy** tới App Server (đại diện cho các micro‑service).
@@ -872,7 +779,7 @@ curl -o /dev/null -s -w 'DNS: %{time_namelookup}s | Connect TCP: %{time_connect}
 - **Rate limiting** – bảo vệ khỏi DDoS.
 
 ## 5. Cấu hình mẫu (Nginx)
-```nginx
+```
 # /etc/nginx/conf.d/backend.conf
 server {
     listen 80;
@@ -944,14 +851,14 @@ Nếu log của Spring Boot hoàn toàn trống mà client nhận `500`:
 
 ### 7.5. Đưa ra cách caching nội dung tĩnh và dynamic response ở Nginx
 - **Nội dung tĩnh (Static Assets - CSS, JS, Image):** Bật cache trình duyệt bằng header `Cache-Control` và `expires`:
-  ```nginx
+```
   location ~* \.(jpg|jpeg|png|gif|ico|css|js)$ {
       expires 30d;
       add_header Cache-Control "public, no-transform";
   }
   ```
 - **Dynamic Response (API):** Dùng `proxy_cache`:
-  ```nginx
+```
   proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=my_api_cache:10m inactive=60m;
   
   location /api/v1/products {
@@ -974,16 +881,15 @@ Nếu log của Spring Boot hoàn toàn trống mà client nhận `500`:
 - **Tương quan:** `maxThreads` của Tomcat luôn lớn hơn `pool_size` của HikariCP vì không phải request nào cũng cần query Database (có request chỉ kiểm tra logic hoặc đọc cache Redis).
 
 ---
+*Thực hành Ngày 07 & 08:* Cài đặt Nginx làm Reverse Proxy trỏ về ứng dụng hoặc dùng Docker để chạy thử Nginx kết hợp Tomcat.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-1"></a>
 
 # PHASE 1: JAVA CORE NỀN TẢNG (CORE LANGUAGE & JVM)
 
 ---
-
-<div style="page-break-before: always;"></div>
 
 <a id="phase-1-chapter-01"></a>
 
@@ -995,7 +901,7 @@ Nếu log của Spring Boot hoàn toàn trống mà client nhận `500`:
   - **Tên biến** (Identifier): tuân theo quy tắc camelCase.
   - **Giá trị** (Value): giá trị được gán.
 
-```java
+```
 int age = 25;           // kiểu int, tên "age", giá trị 25
 String name = "Minh";   // kiểu String (tham chiếu), tên "name"
 boolean isActive = true; // kiểu boolean
@@ -1026,7 +932,7 @@ Lưu **địa chỉ** (reference) trỏ tới **đối tượng trên Heap**.
 - Mảng (`int[]`, `String[]`), Class tự tạo (`User`, `Product`)
 - Giá trị mặc định: `null`
 
-```java
+```
 String greeting = "Hello";   // greeting chứa ĐỊA CHỈ trỏ tới "Hello" trên Heap
 int[] numbers = {1, 2, 3};   // numbers chứa địa chỉ trỏ tới mảng trên Heap
 User user = new User();      // user chứa địa chỉ trỏ tới object User trên Heap
@@ -1057,8 +963,7 @@ User user = new User();      // user chứa địa chỉ trỏ tới object User
 - Mỗi kiểu primitive có 1 Wrapper Class tương ứng: `int` → `Integer`, `double` → `Double`, `boolean` → `Boolean`…
 - **Autoboxing**: tự động chuyển primitive → Wrapper.
 - **Unboxing**: tự động chuyển Wrapper → primitive.
-
-```java
+```
 int a = 10;
 Integer b = a;         // Autoboxing: int → Integer
 int c = b;             // Unboxing: Integer → int
@@ -1067,27 +972,22 @@ int c = b;             // Unboxing: Integer → int
 Integer x = null;
 int y = x;             // ❌ NullPointerException tại runtime!
 ```
-
 ## 4. Ép kiểu (Type Casting)
-
 ### 4.1 Ép kiểu ngầm định (Widening / Implicit Casting)
 Chuyển từ kiểu **nhỏ → lớn**, Java tự động thực hiện, **không mất dữ liệu**.
-
 ```
 byte → short → int → long → float → double
 ```
-
-```java
+```
 int num = 100;
 long bigNum = num;      // int → long (tự động)
 double d = bigNum;      // long → double (tự động)
 System.out.println(d);  // 100.0
 ```
-
 ### 4.2 Ép kiểu tường minh (Narrowing / Explicit Casting)
 Chuyển từ kiểu **lớn → nhỏ**, **có thể mất dữ liệu** (tràn số / mất phần thập phân).
 
-```java
+```
 double pi = 3.14159;
 int intPi = (int) pi;      // Ép tường minh: mất phần thập phân → intPi = 3
 System.out.println(intPi);  // 3
@@ -1098,7 +998,7 @@ System.out.println(smallValue);     // -126 (overflow!)
 ```
 
 ### 4.3 Lỗi phổ biến khi chia số nguyên
-```java
+```
 int a = 5, b = 2;
 System.out.println(a / b);           // 2 (mất phần thập phân vì int / int = int)
 System.out.println((double) a / b);  // 2.5 (ép 1 vế sang double trước khi chia)
@@ -1116,7 +1016,7 @@ System.out.println((double) a / b);  // 2.5 (ép 1 vế sang double trước khi
 | `%` | Chia lấy dư (Modulo) | `5 % 2` → 1 |
 
 ### 5.2 Toán tử so sánh & logic
-```java
+```
 // So sánh: ==, !=, >, <, >=, <=
 // Logic:   && (AND), || (OR), ! (NOT)
 if (age >= 18 && isActive) {
@@ -1125,14 +1025,14 @@ if (age >= 18 && isActive) {
 ```
 
 ### 5.3 Toán tử tăng/giảm
-```java
+```
 int i = 5;
 System.out.println(i++);  // In 5 rồi tăng i lên 6 (post-increment)
 System.out.println(++i);  // Tăng i lên 7 rồi in 7 (pre-increment)
 ```
 
 ### 5.4 Toán tử gán mở rộng
-```java
+```
 int x = 10;
 x += 5;   // x = x + 5 → 15
 x -= 3;   // x = x - 3 → 12
@@ -1142,15 +1042,12 @@ x %= 4;   // x = x % 4 → 2
 ```
 
 ## 6. Hằng số (Constants) với `final`
-```java
+```
 final double TAX_RATE = 0.1;   // Không thể thay đổi giá trị sau khi gán
 // TAX_RATE = 0.2;             // ❌ Compilation Error
 ```
-
 - Quy ước đặt tên hằng số: **UPPER_SNAKE_CASE**
-
 ## 7. Câu hỏi phỏng vấn & Trả lời chi tiết
-
 ### 7.1. Primitive và Reference type khác nhau thế nào? Lưu ở đâu trong bộ nhớ?
 - **Primitive (Nguyên thuỷ - 8 kiểu):**
   - Lưu **trực tiếp giá trị nhị phân** trong vùng nhớ **Stack** (hoặc nằm gọn trong object trên Heap nếu là biến instance của class).
@@ -1162,13 +1059,13 @@ final double TAX_RATE = 0.1;   // Không thể thay đổi giá trị sau khi g�
 
 ### 7.2. Toán tử `==` hoạt động khác nhau thế nào khi dùng với `int` và `Integer`?
 - **Với `int` (Primitive):** `==` so sánh **giá trị số học**.
-  ```java
+  ```
   int a = 10, b = 10;
   System.out.println(a == b); // true (vì cùng mang giá trị 10)
   ```
 - **Với `Integer` (Reference Object):** `==` so sánh **địa chỉ ô nhớ** (hai biến có trỏ cùng một object trên Heap hay không), chứ KHÔNG so sánh giá trị nội dung (để so sánh giá trị phải dùng `.equals()`).
   - *Cạm bẫy Integer Cache (-128 đến 127):*
-    ```java
+    ```
     Integer x = 100, y = 100;
     System.out.println(x == y); // true (do nằm trong Integer Cache từ -128 đến 127, JVM tái sử dụng object)
 
@@ -1182,7 +1079,7 @@ final double TAX_RATE = 0.1;   // Không thể thay đổi giá trị sau khi g�
 - **Unboxing:** Trình biên dịch tự động gọi `.intValue()` để lấy giá trị nguyên thuỷ từ Wrapper class.
 - **Nguy cơ gây `NullPointerException` (NPE):**
   Xảy ra khi ta thực hiện phép toán hoặc gán một Wrapper object đang mang giá trị `null` về kiểu nguyên thuỷ:
-  ```java
+  ```
   Integer count = null;
   int total = count; // ❌ Ném ra NullPointerException tại runtime vì JVM âm thầm gọi count.intValue()
   ```
@@ -1201,8 +1098,9 @@ final double TAX_RATE = 0.1;   // Không thể thay đổi giá trị sau khi g�
   - Giá trị bù 2 của `10000010` là: $-(2^7) + 2^1 = -128 + 2 = -126$.
 
 ---
+*Thực hành:* Tạo class `Main`, khai báo đầy đủ 8 kiểu primitive, thử ép kiểu ngầm định & tường minh, và chạy các ví dụ chia số nguyên.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-1-chapter-02"></a>
 
@@ -1211,7 +1109,7 @@ final double TAX_RATE = 0.1;   // Không thể thay đổi giá trị sau khi g�
 ## 1. Cấu trúc rẽ nhánh
 
 ### 1.1 if – else if – else
-```java
+```
 int score = 75;
 
 if (score >= 90) {
@@ -1229,7 +1127,7 @@ if (score >= 90) {
 - Điều kiện nào đúng **trước** sẽ thực thi, các nhánh sau **bị bỏ qua**.
 
 ### 1.2 Toán tử 3 ngôi (Ternary Operator)
-```java
+```
 // Cú pháp: điều_kiện ? giá_trị_đúng : giá_trị_sai
 String result = (score >= 50) ? "Đậu" : "Rớt";
 System.out.println(result);  // "Đậu"
@@ -1238,7 +1136,7 @@ System.out.println(result);  // "Đậu"
 - Thay thế `if-else` đơn giản trong 1 dòng. Không nên lồng nhiều tầng (khó đọc).
 
 ### 1.3 switch – case (Truyền thống)
-```java
+```
 int day = 3;
 switch (day) {
     case 1:
@@ -1261,7 +1159,7 @@ switch (day) {
 - Hỗ trợ: `byte`, `short`, `int`, `char`, `String`, `enum` (không hỗ trợ `long`, `float`, `double`).
 
 ### 1.4 Switch Expression (Java 14+) – Cú pháp mới
-```java
+```
 String dayName = switch (day) {
     case 1 -> "Chủ nhật";
     case 2 -> "Thứ Hai";
@@ -1294,7 +1192,7 @@ System.out.println(dayName);  // "Thứ Ba"
 ### 2.1 Vòng lặp `for`
 Dùng khi **biết trước số lần lặp**.
 
-```java
+```
 // In các số từ 1 đến 5
 for (int i = 1; i <= 5; i++) {
     System.out.print(i + " ");  // 1 2 3 4 5
@@ -1309,7 +1207,7 @@ Cấu trúc: `for (khởi_tạo; điều_kiện; cập_nhật)`
 ### 2.2 Vòng lặp `while`
 Dùng khi **chưa biết trước số lần lặp**, kiểm tra điều kiện **trước** khi chạy.
 
-```java
+```
 int count = 1;
 while (count <= 5) {
     System.out.print(count + " ");  // 1 2 3 4 5
@@ -1322,7 +1220,7 @@ while (count <= 5) {
 ### 2.3 Vòng lặp `do-while`
 Chạy **ít nhất 1 lần**, kiểm tra điều kiện **sau** khi chạy.
 
-```java
+```
 int num = 10;
 do {
     System.out.println("Chạy ít nhất 1 lần, num = " + num);
@@ -1335,7 +1233,7 @@ do {
 ### 2.4 Vòng lặp `for-each` (Enhanced for)
 Dùng để duyệt **mảng** hoặc **Collection** mà không cần index.
 
-```java
+```
 int[] scores = {90, 85, 72, 68, 95};
 for (int score : scores) {
     System.out.print(score + " ");  // 90 85 72 68 95
@@ -1359,7 +1257,7 @@ for (int score : scores) {
 ## 3. Lệnh điều khiển luồng lặp
 
 ### 3.1 `break` – Thoát vòng lặp ngay lập tức
-```java
+```
 for (int i = 1; i <= 10; i++) {
     if (i == 5) break;              // Dừng khi i = 5
     System.out.print(i + " ");      // 1 2 3 4
@@ -1367,7 +1265,7 @@ for (int i = 1; i <= 10; i++) {
 ```
 
 ### 3.2 `continue` – Bỏ qua lần lặp hiện tại, chạy lần tiếp
-```java
+```
 for (int i = 1; i <= 5; i++) {
     if (i == 3) continue;           // Bỏ qua khi i = 3
     System.out.print(i + " ");      // 1 2 4 5
@@ -1375,7 +1273,7 @@ for (int i = 1; i <= 5; i++) {
 ```
 
 ### 3.3 Labeled break/continue (ít dùng)
-```java
+```
 outer:
 for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
@@ -1390,7 +1288,7 @@ for (int i = 0; i < 3; i++) {
 ## 4. Mảng 1 chiều (Array) căn bản
 
 ### 4.1 Khai báo & Khởi tạo
-```java
+```
 // Cách 1: Khai báo kích thước, giá trị mặc định (0 cho int)
 int[] numbers = new int[5];       // [0, 0, 0, 0, 0]
 
@@ -1402,7 +1300,7 @@ int ages[] = new int[3];
 ```
 
 ### 4.2 Truy xuất & Gán giá trị
-```java
+```
 scores[0] = 100;                  // Gán giá trị index 0
 System.out.println(scores[0]);    // 100
 System.out.println(scores.length);// 4 (thuộc tính length, KHÔNG phải method)
@@ -1410,7 +1308,7 @@ System.out.println(scores.length);// 4 (thuộc tính length, KHÔNG phải meth
 ```
 
 ### 4.3 Duyệt mảng
-```java
+```
 // Dùng for truyền thống (có index)
 for (int i = 0; i < scores.length; i++) {
     System.out.println("Index " + i + ": " + scores[i]);
@@ -1440,7 +1338,7 @@ for (int s : scores) {
 - **Fall-through:** Nếu trong một khối `case` mà quên viết lệnh `break;`, chương trình sẽ không dừng lại mà tiếp tục "trôi tuột" xuống thực thi mã của các `case` tiếp theo phía dưới cho tới khi gặp `break` hoặc hết khối `switch`.
 - **Hậu quả:** Gây ra các bug logic cực kỳ nghiêm trọng (ví dụ: User vừa được cấp quyền GUEST lại bị trôi lệnh gán quyền ADMIN).
 - **Giải pháp hiện đại (Java 14+):** Sử dụng cú pháp **Switch Expression mũi tên (`->`)**:
-  ```java
+  ```
   // Không bao giờ bị fall-through, không cần từ khóa break
   switch (day) {
       case 1 -> System.out.println("Thứ Hai");
@@ -1474,8 +1372,9 @@ for (int s : scores) {
   - Không thể trỏ phần tử sang đối tượng mới (`u = new User()`), nhưng **CÓ THỂ** thay đổi trạng thái bên trong đối tượng (`u.setName("Mới")`) vì cả biến tạm và mảng đều trỏ vào cùng một ô nhớ trên Heap.
 
 ---
+*Thực hành:* Viết hàm phân loại học lực (if-else), in ngày trong tuần (switch), tính tổng số chẵn trong mảng (for-each), tìm Max/Min trong mảng (for).
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-1-chapter-03"></a>
 
@@ -1484,26 +1383,15 @@ for (int s : scores) {
 ## 1. Tổng quan kiến trúc bộ nhớ JVM
 
 ```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                                       JVM MEMORY                                       │
-│                                                                                        │
-│  ┌────────────────────────────────────────┐  ┌──────────────────────────────────────┐  │
-│  │      STACK (Mỗi Thread 1 Stack)        │  │   HEAP (Dùng chung tất cả Thread)    │  │
-│  ├────────────────────────────────────────┤  ├──────────────────────────────────────┤  │
-│  │ Frame: calculate()                     │  │ • User object {name='Minh', age=25}  │  │
-│  │   └─ int result = 10                   │  │   (tại địa chỉ 0xA1) ◄────────────┐  │  │
-│  │                                        │  │                                   │  │  │
-│  │ Frame: main()                          │  │ • String 'Hello' (tại 0xB2)       │  │  │
-│  │   ├─ int x = 5                         │  │ • int[] {1, 2, 3} (tại 0xC3)      │  │  │
-│  │   └─ User ref = 0xA1 ──────────────────┼──┼───────────────────────────────────┘  │  │
-│  └────────────────────────────────────────┘  └──────────────────────────────────────┘  │
-│                                                                                        │
-│  ┌──────────────────────────────────────────────────────────────────────────────────┐  │
-│  │                             METASPACE (Java 8+)                                  │  │
-│  ├──────────────────────────────────────────────────────────────────────────────────┤  │
-│  │ Class metadata, Method bytecode, Static variables, Constant Pool                 │  │
-│  └──────────────────────────────────────────────────────────────────────────────────┘  │
-└────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────────────────────────── JVM MEMORY ─────────────────────────────────┐
+│ [STACK (Mỗi Thread 1 Stack)]              [HEAP (Dùng chung các Thread)]     │
+│   Frame: calculate() ──> int result = 10     User obj {name='Minh', age=25}  │
+│   Frame: main()                              (tại 0xA1) ◄─── ref = 0xA1      │
+│     ├─ int x = 5                             String 'Hello' (tại 0xB2)       │
+│     └─ User ref = 0xA1 ───────────────────►  int[] {1, 2, 3} (tại 0xC3)      │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ [METASPACE (Java 8+)]: Class metadata, Method bytecode, Static vars, Const   │
+└──────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## 2. Stack Memory
@@ -1520,7 +1408,7 @@ for (int s : scores) {
 - Lỗi: `StackOverflowError` khi đệ quy quá sâu (quá nhiều frame).
 
 ### 2.2 Ví dụ minh hoạ
-```java
+```
 public class Demo {
     public static void main(String[] args) {
         int x = 10;                  // x lưu trên Stack
@@ -1562,21 +1450,13 @@ public class Demo {
 
 ### 3.2 Cấu trúc Heap (Generational)
 ```
-┌──────────────────────────────────────────────────────────────────────────────────────────┐
-│                                       HEAP MEMORY                                        │
-│                                                                                          │
-│  ┌─────────────────────────────────────────────────────────┐  ┌───────────────────────┐  │
-│  │               YOUNG GENERATION                          │  │    OLD GENERATION     │  │
-│  │                                                         │  │       (Tenured)       │  │
-│  │  ┌──────────────────┐    ┌────────────┐  ┌───────────┐  │  │                       │  │
-│  │  │    Eden Space    │    │ Survivor 0 │  │Survivor 1 │  │  │ ┌───────────────────┐ │  │
-│  │  │ (Object mới tạo) │    │    (S0)    │  │   (S1)    │  │  │ │  Object sống lâu  │ │  │
-│  │  └────────┬─────────┘    └─────┬──────┘  └───────────┘  │  │ │ (vượt ngưỡng tuổi)│ │  │
-│  │           │ Minor GC           │                        │  │ └─────────▲─────────┘ │  │
-│  │           │ sống sót           │ Sống sót nhiều lần     │  │           │           │  │
-│  │           └───────────────────►│ (Age > Threshold) ─────┼──┼───────────┘           │  │
-│  └─────────────────────────────────────────────────────────┘  └───────────────────────┘  │
-└──────────────────────────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────── HEAP MEMORY ────────────────────────────────┐
+│ ┌──────────────── YOUNG GENERATION ────────────────┐ ┌── OLD GENERATION ──┐ │
+│ │ [Eden Space]       [Survivor S0]   [Survivor S1] │ │     (Tenured)      │ │
+│ │ (Object mới tạo)   (Sống sót)      (Sống sót)    │ │ (Object sống lâu,  │ │
+│ │        └── Minor GC ───┴─────────────► Age > Max ┼─┼───► vượt ngưỡng)   │ │
+│ └──────────────────────────────────────────────────┘ └────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 | Vùng | Chứa gì | GC |
@@ -1594,7 +1474,7 @@ public class Demo {
 - Với **reference type**: copy **địa chỉ (reference)** → hàm có thể thay đổi **thuộc tính** của object gốc, nhưng **không thể** thay đổi biến reference gốc trỏ sang object khác.
 
 ### 4.2 Ví dụ với Primitive
-```java
+```
 public static void main(String[] args) {
     int x = 10;
     changeValue(x);
@@ -1607,7 +1487,7 @@ static void changeValue(int num) {
 ```
 
 ### 4.3 Ví dụ với Reference Type
-```java
+```
 public static void main(String[] args) {
     User user = new User("An");
     changeName(user);
@@ -1647,7 +1527,7 @@ Trong replaceUser():
 ### 5.1 Khi nào Object thành "rác"?
 Khi **không còn bất kỳ biến nào** tham chiếu tới nó.
 
-```java
+```
 User a = new User("An");   // Object 1 được tạo, a trỏ tới
 User b = a;                 // b cũng trỏ tới Object 1
 a = new User("Bình");       // a trỏ sang Object 2, Object 1 vẫn có b trỏ tới
@@ -1676,7 +1556,7 @@ Dù có GC, Java vẫn có thể bị **memory leak** khi:
 - Listener/callback đăng ký mà không huỷ (unregister).
 - Thread pool giữ reference quá lâu.
 
-```java
+```
 // ❌ Memory leak: List tĩnh cứ add mãi, GC không thu hồi được
 static List<byte[]> cache = new ArrayList<>();
 
@@ -1703,7 +1583,7 @@ void processData() {
   - Khi truyền biến kiểu Primitive: Java copy **giá trị số** sang hàm mới.
   - Khi truyền biến kiểu Object Reference: Java copy **giá trị của địa chỉ ô nhớ (Memory Address)** sang hàm mới (chứ không phải truyền bản thân biến tham chiếu ban đầu).
   - *Ví dụ chứng minh:*
-    ```java
+    ```
     public static void swap(Person p1, Person p2) {
         Person temp = p1;
         p1 = p2;
@@ -1745,8 +1625,9 @@ void processData() {
   4. **Dùng `ThreadLocal` không gọi `.remove()`:** Trong môi trường Thread Pool (như Tomcat), thread được tái sử dụng. Dữ liệu trong `ThreadLocal` nếu không dọn sẽ tích tụ dần làm tràn bộ nhớ.
 
 ---
+*Thực hành:* Vẽ sơ đồ bộ nhớ Stack/Heap cho 1 đoạn code có gọi hàm, viết code chứng minh Pass-by-Value với int và Object.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-1-chapter-04"></a>
 
@@ -1758,7 +1639,7 @@ void processData() {
 - Sau khi tạo, **nội dung** của String **không thể thay đổi**.
 - Mọi thao tác "thay đổi" String (concat, replace, toUpperCase…) đều **tạo ra String MỚI** trên Heap, String gốc không bị ảnh hưởng.
 
-```java
+```
 String s = "Hello";
 s.concat(" World");       // Tạo String mới "Hello World" nhưng KHÔNG gán lại cho s
 System.out.println(s);    // "Hello" ← Không đổi!
@@ -1787,21 +1668,15 @@ System.out.println(s);    // "Hello World"
 ### 2.2 Minh hoạ
 
 ```
-┌────────────────────────┐             ┌────────────────────────────────────────────────────────┐
-│      STACK MEMORY      │             │                      HEAP MEMORY                       │
-├────────────────────────┤             ├────────────────────────────────────────────────────────┤
-│                        │             │                                                        │
-│  a ────────────────────┼─────────────┼─┐   ┌───────────────────────────────┐                  │
-│                        │             │ │   │          String Pool          │                  │
-│  b ────────────────────┼─────────────┼─┴──►│  "java"  (tại địa chỉ 0xA1)   │                  │
-│                        │             │     └───────────────────────────────┘                  │
-│                        │             │                                                        │
-│  c ────────────────────┼─────────────┼───► new String("java") (Object ngoài Pool tại 0xC3)    │
-│                        │             │                                                        │
-└────────────────────────┘             └────────────────────────────────────────────────────────┘
+[STACK MEMORY]                       [HEAP MEMORY]
+  String a = "java" ────────┐       ┌─── String Pool ───────────────┐
+                            ├──────►│  "java" (ô nhớ 0xA1)          │
+  String b = "java" ────────┘       └───┬───────────────────────────┘
+                                        │ (khác vùng nhớ)
+  String c = new String("java") ────────▼─► Heap Object ngoài Pool (0xC3)
 ```
 
-```java
+```
 String a = "java";              // Tạo "java" trong Pool
 String b = "java";              // Tìm thấy "java" trong Pool → dùng lại
 String c = new String("java");  // Tạo object MỚI trên Heap (NGOÀI Pool)
@@ -1812,7 +1687,7 @@ System.out.println(a.equals(c));  // true  (nội dung giống nhau)
 ```
 
 ### 2.3 Phương thức `intern()`
-```java
+```
 String c = new String("java");
 String d = c.intern();   // Đưa "java" vào Pool (hoặc lấy lại nếu đã có)
 System.out.println(a == d);  // true (d giờ trỏ vào Pool giống a)
@@ -1827,7 +1702,7 @@ System.out.println(a == d);  // true (d giờ trỏ vào Pool giống a)
 
 > 🔴 **Quy tắc vàng:** Luôn dùng `.equals()` khi so sánh nội dung String. KHÔNG dùng `==` cho String.
 
-```java
+```
 String x = "hello";
 String y = new String("hello");
 
@@ -1838,7 +1713,7 @@ System.out.println(x.equalsIgnoreCase("HELLO"));  // true ← Bỏ qua hoa/thư�
 
 ## 4. Các method String thường dùng
 
-```java
+```
 String s = "  Hello World  ";
 
 s.length();                    // 15 (tính cả khoảng trắng)
@@ -1872,7 +1747,7 @@ String joined = String.join("-", parts); // "a-b-c-d"
 ## 5. StringBuilder & StringBuffer
 
 ### 5.1 Vấn đề khi nối String trong vòng lặp
-```java
+```
 // ❌ CHẬM: Mỗi lần += tạo 1 String MỚI → O(n²) bộ nhớ
 String result = "";
 for (int i = 0; i < 10000; i++) {
@@ -1881,7 +1756,7 @@ for (int i = 0; i < 10000; i++) {
 ```
 
 ### 5.2 Giải pháp: StringBuilder (Mutable)
-```java
+```
 // ✅ NHANH: StringBuilder sửa trực tiếp buffer nội bộ
 StringBuilder sb = new StringBuilder();
 for (int i = 0; i < 10000; i++) {
@@ -1891,7 +1766,7 @@ String result = sb.toString();
 ```
 
 ### 5.3 Các method StringBuilder phổ biến
-```java
+```
 StringBuilder sb = new StringBuilder("Hello");
 sb.append(" World");         // "Hello World"
 sb.insert(5, ",");           // "Hello, World"
@@ -1913,7 +1788,7 @@ sb.toString();               // Chuyển về String
 > 💡 Trong thực tế, **luôn dùng StringBuilder** trừ khi có yêu cầu thread-safe rõ ràng.
 
 ### 5.5 Đo thời gian thực thi
-```java
+```
 // Đo String concatenation
 long start = System.currentTimeMillis();
 String s = "";
@@ -1969,7 +1844,7 @@ System.out.println("StringBuilder: " + (end - start) + "ms"); // ~3ms
 - **Toán tử `==`:** So sánh **địa chỉ ô nhớ** (hai biến có cùng trỏ tới 1 object hay không).
 - **Phương thức `.equals()`:** So sánh **nội dung ký tự bên trong chuỗi**.
 - *Ví dụ kinh điển:*
-  ```java
+  ```
   String s1 = "Java";
   String s2 = "Java";
   String s3 = new String("Java");
@@ -1999,7 +1874,7 @@ System.out.println("StringBuilder: " + (end - start) + "ms"); // ~3ms
   - Nếu đã có: Trả về tham chiếu của đối tượng trong Pool.
   - Nếu chưa có: Đưa `s` vào String Pool và trả về tham chiếu đó.
 - *Ví dụ:*
-  ```java
+  ```
   String s1 = new String("hello"); // Nằm trên Heap
   String s2 = s1.intern();          // Ép lấy đối tượng trong Pool
   String s3 = "hello";              // Nằm trong Pool
@@ -2008,8 +1883,9 @@ System.out.println("StringBuilder: " + (end - start) + "ms"); // ~3ms
 - *Ứng dụng:* Dùng khi đọc một lượng cực lớn dữ liệu từ file/database có nhiều chuỗi trùng lặp (ví dụ: tên thành phố, mã quốc gia) để đưa vào Pool giúp tiết kiệm dung lượng RAM.
 
 ---
+*Thực hành:* Code kiểm chứng `==` vs `.equals()` với String literal và `new String()`, đo thời gian nối 100.000 chuỗi bằng String vs StringBuilder.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-1-chapter-05"></a>
 
@@ -2019,7 +1895,7 @@ System.out.println("StringBuilder: " + (end - start) + "ms"); // ~3ms
 - **Exception** (Ngoại lệ) là sự kiện bất thường xảy ra trong quá trình chạy chương trình, làm gián đoạn luồng thực thi bình thường.
 - Nếu không xử lý, chương trình sẽ **crash** và in ra stack trace.
 
-```java
+```
 int[] arr = {1, 2, 3};
 System.out.println(arr[5]);  // ❌ ArrayIndexOutOfBoundsException → Chương trình crash!
 ```
@@ -2027,29 +1903,17 @@ System.out.println(arr[5]);  // ❌ ArrayIndexOutOfBoundsException → Chương 
 ## 2. Hệ thống phân cấp Exception trong Java
 
 ```
-┌────────────────────────────────────────────────────────────────────────┐
-│                              Throwable                                 │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │
-      ┌─────────────────────────────┴─────────────────────────────┐
-      ▼                                                           ▼
-┌───────────────────────────┐               ┌───────────────────────────┐
-│           Error           │               │         Exception         │
-│  (JVM Crash / Hệ thống)   │               │     (Có thể xử lý)        │
-└─────────────┬─────────────┘               └─────────────┬─────────────┘
-              │                                           │
-  ├── StackOverflowError            ┌─────────────────────┴─────────────────────┐
-  └── OutOfMemoryError (OOM)        ▼                                           ▼
-                              ┌───────────────────────────┐       ┌───────────────────────────┐
-                              │     Checked Exception     │       │     RuntimeException      │
-                              │ (Bắt buộc try-catch/throw)│       │    (Unchecked Exception)  │
-                              └─────────────┬─────────────┘       └─────────────┬─────────────┘
-                                            │                                   │
-                                ├── IOException                     ├── NullPointerException
-                                ├── SQLException                    ├── ArrayIndexOutOfBounds
-                                └── ParseException                  ├── ArithmeticException
-                                                                    ├── IllegalArgumentException
-                                                                    └── NumberFormatException
+                         ┌── Throwable ──┐
+                         │               │
+                 ▼ Error                 ▼ Exception (Có thể xử lý)
+           (Crash hệ thống)              │
+            ├─ StackOverflowError        ├─ Checked Exception (Bắt buộc try-catch)
+            └─ OutOfMemoryError (OOM)    │   ├─ IOException, SQLException, ParseException
+                                         │
+                                         └─ RuntimeException (Unchecked Exception)
+                                             ├─ NullPointerException, ArithmeticException
+                                             ├─ ArrayIndexOutOfBounds, NumberFormatException
+                                             └─ IllegalArgumentException
 ```
 
 ### 2.1 Error (Lỗi hệ thống)
@@ -2061,7 +1925,7 @@ System.out.println(arr[5]);  // ❌ ArrayIndexOutOfBoundsException → Chương 
 - Compiler sẽ báo lỗi nếu bạn không xử lý.
 - Ví dụ: `IOException`, `SQLException`, `FileNotFoundException`, `ClassNotFoundException`.
 
-```java
+```
 // ❌ Compile Error nếu không xử lý IOException
 FileReader file = new FileReader("data.txt");  // FileNotFoundException (checked)
 ```
@@ -2072,7 +1936,7 @@ FileReader file = new FileReader("data.txt");  // FileNotFoundException (checked
 - Thường do **lỗi logic của lập trình viên**.
 - Ví dụ: `NullPointerException`, `ArrayIndexOutOfBoundsException`, `ArithmeticException`, `IllegalArgumentException`.
 
-```java
+```
 String s = null;
 s.length();          // ❌ NullPointerException (unchecked, runtime crash)
 
@@ -2091,7 +1955,7 @@ int result = 10 / 0; // ❌ ArithmeticException (unchecked)
 ## 3. Cú pháp try – catch – finally
 
 ### 3.1 Cấu trúc cơ bản
-```java
+```
 try {
     // Code có thể gây exception
     int result = 10 / 0;
@@ -2109,37 +1973,21 @@ System.out.println("Chương trình tiếp tục chạy bình thường");
 ### 3.2 Luồng thực thi
 
 ```
-              ┌────────────────────────┐
-              │     Bắt đầu try        │
-              └───────────┬────────────┘
-                          │
-                          ▼
-              ┌────────────────────────┐
-              │   Exception xảy ra?    │
-              └─────┬────────────┬─────┘
-                CÓ  │            │  KHÔNG
-                    ▼            ▼
-┌────────────────────────┐  ┌────────────────────────┐
-│ Nhảy vào khối catch    │  │ Chạy hết khối try      │
-│ tương ứng để xử lý     │  │ một cách bình thường   │
-└───────────────────┬────┘  └────┬───────────────────┘
-                    │            │
-                    └─────┬──────┘
-                          ▼
-              ┌────────────────────────┐
-              │  finally (luôn chạy)   │
-              │(Giải phóng tài nguyên) │
-              └───────────┬────────────┘
-                          │
-                          ▼
-              ┌────────────────────────┐
-              │ Tiếp tục code sau khối │
-              │      try - catch       │
-              └────────────────────────┘
+           [ Bắt đầu khối try ]
+                    │
+         ┌──────────┴──────────┐
+   (Có Exception)          (Không lỗi)
+         ▼                     ▼
+  [ Khối catch xử lý ]   [ Hết khối try ]
+         └──────────┬──────────┘
+                    ▼
+       [ finally (luôn luôn chạy) ]
+                    ▼
+       [ Tiếp tục code phía sau ]
 ```
 
 ### 3.3 Bắt nhiều Exception
-```java
+```
 try {
     String s = null;
     s.length();         // NullPointerException
@@ -2165,7 +2013,7 @@ try {
 ## 4. throw & throws
 
 ### 4.1 `throw` – Quăng exception ra
-```java
+```
 public void setAge(int age) {
     if (age < 0 || age > 150) {
         throw new IllegalArgumentException("Tuổi không hợp lệ: " + age);
@@ -2175,7 +2023,7 @@ public void setAge(int age) {
 ```
 
 ### 4.2 `throws` – Khai báo method có thể quăng exception
-```java
+```
 // Khai báo: method này CÓ THỂ quăng IOException (checked)
 // Người gọi method PHẢI xử lý (try-catch hoặc throws tiếp)
 public String readFile(String path) throws IOException {
@@ -2200,7 +2048,7 @@ public String readFile(String path) throws IOException {
 - Custom Exception giúp code **rõ ràng hơn** và dễ xử lý theo từng loại lỗi.
 
 ### 5.2 Tạo Unchecked Custom Exception (phổ biến nhất)
-```java
+```
 // Kế thừa RuntimeException → KHÔNG bắt buộc try-catch
 public class ResourceNotFoundException extends RuntimeException {
 
@@ -2222,7 +2070,7 @@ public User getUserById(Long id) {
 ```
 
 ### 5.3 Tạo Checked Custom Exception (ít dùng hơn)
-```java
+```
 // Kế thừa Exception → BẮT BUỘC try-catch
 public class InsufficientBalanceException extends Exception {
 
@@ -2242,7 +2090,7 @@ public class InsufficientBalanceException extends Exception {
 ## 6. Try-with-Resources (Java 7+)
 
 ### 6.1 Vấn đề: Quên đóng tài nguyên
-```java
+```
 // ❌ Phải đóng resource trong finally (code dài dòng, dễ quên)
 BufferedReader reader = null;
 try {
@@ -2258,7 +2106,7 @@ try {
 ```
 
 ### 6.2 Giải pháp: try-with-resources
-```java
+```
 // ✅ Tự động đóng resource khi kết thúc try (gọn, an toàn)
 try (BufferedReader reader = new BufferedReader(new FileReader("data.txt"))) {
     String line = reader.readLine();
@@ -2273,7 +2121,7 @@ try (BufferedReader reader = new BufferedReader(new FileReader("data.txt"))) {
 - Resource phải implement interface `AutoCloseable` (hoặc `Closeable`).
 - Có thể khai báo **nhiều resource** cách nhau bằng `;`:
 
-```java
+```
 try (
     FileInputStream fis = new FileInputStream("input.txt");
     FileOutputStream fos = new FileOutputStream("output.txt")
@@ -2295,7 +2143,7 @@ try (
 | Dùng `try-with-resources` cho I/O | Tự `close()` trong finally |
 | Quăng sớm, bắt muộn (Throw early, Catch late) | Bắt exception ở mọi nơi |
 
-```java
+```
 // ❌ Anti-pattern: Nuốt exception (swallowing)
 try {
     riskyOperation();
@@ -2363,16 +2211,15 @@ try {
 - **Catch late (Bắt lỗi càng muộn càng tốt):** Không nên vội vàng đặt `try-catch` ở khắp mọi hàm nhỏ nếu hàm đó không biết cách khắc phục lỗi. Hãy để ngoại lệ nổi lên (bubble up) tới các tầng trên cùng (như Controller hoặc Global Exception Handler) - nơi có bức tranh toàn cảnh và thẩm quyền quyết định: ghi log ra sao, rollback transaction thế nào, và trả thông điệp gì cho người dùng.
 
 ---
+*Thực hành:* Viết code bắt `ArithmeticException` và `ArrayIndexOutOfBoundsException`, tạo `ResourceNotFoundException` kế thừa `RuntimeException`, thử `try-with-resources` đọc file.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-2"></a>
 
 # PHASE 2: HƯỚNG ĐỐI TƯỢNG (OOP) & COLLECTIONS FRAMEWORK
 
 ---
-
-<div style="page-break-before: always;"></div>
 
 <a id="phase-2-chapter-01"></a>
 
@@ -2384,7 +2231,7 @@ try {
 - Java là ngôn ngữ OOP thuần tuý: mọi thứ đều nằm trong Class.
 
 ### Class vs Object
-```java
+```
 // Class = bản thiết kế (blueprint)
 public class User {
     private String name;
@@ -2404,7 +2251,7 @@ User user2 = new User("Bình", 30); // Object 2
 ## 2. Trụ cột 1: Đóng gói (Encapsulation)
 > Ẩn dữ liệu bên trong, chỉ cho phép truy cập thông qua các method công khai.
 
-```java
+```
 public class BankAccount {
     private double balance;  // ẨN: không cho truy cập trực tiếp từ bên ngoài
 
@@ -2449,7 +2296,7 @@ acc.deposit(500);        // ✅ Qua method kiểm soát
 ## 3. Trụ cột 2: Kế thừa (Inheritance)
 > Class con **kế thừa** thuộc tính và phương thức từ Class cha, mở rộng hoặc ghi đè.
 
-```java
+```
 // Class cha
 public class Employee {
     protected String name;
@@ -2492,7 +2339,7 @@ public class Manager extends Employee {
 ### 4.1 Compile-time Polymorphism: Overloading (Nạp chồng)
 Cùng **tên method**, khác **tham số** (số lượng, kiểu, thứ tự).
 
-```java
+```
 public class Calculator {
     public int add(int a, int b) { return a + b; }
     public double add(double a, double b) { return a + b; }
@@ -2503,7 +2350,7 @@ public class Calculator {
 ### 4.2 Runtime Polymorphism: Overriding (Ghi đè)
 Class con **ghi đè** method cha, JVM quyết định chạy method nào tại **runtime**.
 
-```java
+```
 Employee emp = new Manager("An", 5000, 10);
 System.out.println(emp.calculateBonus());  
 // Gọi method của Manager (runtime), KHÔNG phải Employee!
@@ -2524,7 +2371,7 @@ System.out.println(emp.calculateBonus());
 > Ẩn chi tiết triển khai, chỉ lộ ra **"cái gì"** chứ không lộ **"làm thế nào"**.
 
 ### Dùng Abstract Class
-```java
+```
 public abstract class Shape {
     protected String color;
 
@@ -2589,7 +2436,7 @@ public class Circle extends Shape {
 - **Giải pháp thay thế:**
   1. **Triển khai nhiều Interface (Multiple Interfaces):** Một class có thể `implements` vô số interface: `class C implements InterfaceA, InterfaceB`.
   2. **Ưu tiên Thành phần hơn Kế thừa (Composition over Inheritance):** Thay vì kế thừa, ta nhét các object của `A` và `B` làm thuộc tính bên trong `C`:
-     ```java
+     ```
      class C {
          private A a = new A();
          private B b = new B();
@@ -2604,8 +2451,9 @@ public class Circle extends Shape {
   3. Áp dụng Design Pattern (ví dụ: Template Method Pattern), ép buộc các giá trị mặc định phải có ngay khi tạo đối tượng con.
 
 ---
+*Thực hành:* Tạo class `Employee` → `Manager` với kế thừa, viết `BankAccount` minh hoạ Encapsulation, tạo `Shape` abstract → `Circle`, `Rectangle`.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-2-chapter-02"></a>
 
@@ -2615,7 +2463,7 @@ public class Circle extends Shape {
 - Interface là **hợp đồng** (contract) định nghĩa các method mà class phải triển khai.
 - Mặc định tất cả method trong interface là `public abstract` (trước Java 8).
 
-```java
+```
 public interface PaymentService {
     void pay(double amount);            // abstract (bắt buộc triển khai)
     boolean refund(String transactionId);
@@ -2644,7 +2492,7 @@ public class MomoService implements PaymentService {
 ```
 
 ### Đa kế thừa qua Interface
-```java
+```
 public interface Loggable { void log(String message); }
 public interface Auditable { void audit(); }
 
@@ -2657,7 +2505,7 @@ public class OrderService implements PaymentService, Loggable, Auditable {
 ## 2. Default & Static Methods (Java 8+)
 
 ### 2.1 Default Method
-```java
+```
 public interface PaymentService {
     void pay(double amount);
 
@@ -2672,7 +2520,7 @@ public interface PaymentService {
 - Mục đích: Thêm method mới vào interface **mà không phá vỡ** các class đã implement.
 
 ### 2.2 Static Method
-```java
+```
 public interface PaymentService {
     static PaymentService create(String provider) {
         return switch (provider) {
@@ -2688,10 +2536,9 @@ PaymentService payment = PaymentService.create("vnpay");
 ```
 
 ### 2.3 Diamond Problem
-```java
+```
 interface A { default void hello() { System.out.println("A"); } }
 interface B { default void hello() { System.out.println("B"); } }
-
 // Class phải override để giải quyết xung đột
 class C implements A, B {
     @Override
@@ -2700,7 +2547,6 @@ class C implements A, B {
     }
 }
 ```
-
 ## 3. So sánh Interface vs Abstract Class
 
 | Tiêu chí | Interface | Abstract Class |
@@ -2729,7 +2575,7 @@ class C implements A, B {
 ### 4.2. Default method trong Interface giải quyết vấn đề gì?
 - **Vấn đề lịch sử (trước Java 8):** Interface chỉ chứa abstract method. Khi một thư viện mở rộng thêm 1 hàm mới vào Interface, **hàng ngàn class đang implements interface đó trên toàn thế giới sẽ lập tức bị lỗi biên dịch** vì chưa override hàm mới đó.
 - **Giải pháp của Java 8:** Bổ sung từ khóa `default`:
-  ```java
+  ```
   public interface List<E> {
       default void sort(Comparator<? super E> c) {
           // Cung cấp sẵn mã nguồn mặc định
@@ -2741,7 +2587,7 @@ class C implements A, B {
 ### 4.3. Diamond Problem là gì? Java giải quyết thế nào với Default Method?
 - **Diamond Problem với Interface:** Nếu Class `C` triển khai 2 Interface `A` và `B`, mà cả `A` và `B` đều có cùng một hàm `default void print()`.
 - **Cách Java bắt buộc xử lý:** Trình biên dịch Java sẽ phát hiện xung đột và **báo lỗi biên dịch ngay lập tức**. Java ép lập trình viên tại Class `C` **bắt buộc phải Override lại hàm `print()`** để chỉ định rõ ràng muốn dùng triển khai của interface nào:
-  ```java
+  ```
   public class C implements A, B {
       @Override
       public void print() {
@@ -2751,7 +2597,6 @@ class C implements A, B {
       }
   }
   ```
-
 ### 4.4. Có thể tạo biến (field) trong Interface không? Có ràng buộc gì?
 - **Câu trả lời:** Có thể khai báo trường dữ liệu trong Interface, nhưng **chỉ duy nhất dưới dạng HẰNG SỐ**.
 - **Ràng buộc mặc định:** Dù bạn không viết từ khóa nào, JVM luôn tự động ngầm định mọi field trong Interface đều là:
@@ -2769,8 +2614,9 @@ class C implements A, B {
 - **Với Interface:** Thuần túy là "đặc tả giao diện" (chỉ có tên hàm và tham số). Kể cả 2 interface có hàm trùng tên, class con cũng chỉ cần triển khai một thân hàm duy nhất để thỏa mãn cả 2 giao diện. Không có xung đột bộ nhớ, không có vấn đề Constructor, do đó hoàn toàn an toàn và trong sáng.
 
 ---
+*Thực hành:* Tạo `PaymentService` interface → `VnPayService`, `MomoService` implements. Thêm default method. Thử Diamond Problem.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-2-chapter-03"></a>
 
@@ -2782,7 +2628,7 @@ SOLID là 5 nguyên lý thiết kế hướng đối tượng giúp code **dễ 
 ## 1. S – Single Responsibility Principle (SRP)
 > Mỗi class chỉ có **một lý do duy nhất để thay đổi** (một nhiệm vụ duy nhất).
 
-```java
+```
 // ❌ Vi phạm SRP: UserService vừa xử lý user, vừa gửi email, vừa ghi log
 public class UserService {
     public void createUser(User user) { /* lưu DB */ }
@@ -2799,7 +2645,7 @@ public class LogService { public void log(String message) { } }
 ## 2. O – Open/Closed Principle (OCP)
 > **Mở** cho việc mở rộng, **Đóng** cho việc sửa đổi code cũ.
 
-```java
+```
 // ❌ Vi phạm: Mỗi lần thêm hình dạng mới phải SỬA method calculateArea
 public double calculateArea(Shape shape) {
     if (shape.type.equals("circle")) return Math.PI * shape.radius * shape.radius;
@@ -2822,7 +2668,7 @@ public class Triangle extends Shape {  // MỞ RỘNG mà không sửa code cũ
 ## 3. L – Liskov Substitution Principle (LSP)
 > Class con phải **thay thế được** class cha mà không làm sai logic chương trình.
 
-```java
+```
 // ❌ Vi phạm: Chim cánh cụt không bay được nhưng kế thừa Bird có fly()
 public class Bird { public void fly() { System.out.println("Bay"); } }
 public class Penguin extends Bird {
@@ -2838,7 +2684,7 @@ public class Penguin { /* không implements Flyable */ }
 ## 4. I – Interface Segregation Principle (ISP)
 > **Không** ép class implement interface mà nó **không cần**.
 
-```java
+```
 // ❌ Vi phạm: Interface quá lớn
 public interface Worker {
     void code();
@@ -2859,7 +2705,7 @@ public class Manager implements TeamLeader { /* chỉ quản lý */ }
 > Module cấp cao **không phụ thuộc** module cấp thấp. Cả hai phụ thuộc **abstraction** (interface).
 > Đây chính là **nền tảng của Spring Dependency Injection**.
 
-```java
+```
 // ❌ Vi phạm: OrderService phụ thuộc TRỰC TIẾP vào MySQLOrderRepository
 public class OrderService {
     private MySQLOrderRepository repo = new MySQLOrderRepository(); // Tight coupling!
@@ -2912,7 +2758,7 @@ OrderService service = new OrderService(new MongoOrderRepository());
 
 ### 7.3. Cho ví dụ vi phạm SRP và cách Refactor trong thực tế
 - **Đoạn code vi phạm:**
-  ```java
+  ```
   public class UserService {
       public void registerUser(User user) {
           // 1. Validate email, password
@@ -2929,7 +2775,7 @@ OrderService service = new OrderService(new MongoOrderRepository());
   ```
   Class này có tới 3 lý do để bị sửa đổi: khi quy tắc validate đổi, khi câu lệnh SQL đổi, hoặc khi mẫu email đổi.
 - **Refactor chuẩn SRP:**
-  ```java
+  ```
   @Service
   @RequiredArgsConstructor
   public class UserService {
@@ -2947,7 +2793,7 @@ OrderService service = new OrderService(new MongoOrderRepository());
 
 ### 7.4. OCP áp dụng trong Spring Boot thế nào? (Strategy Pattern + @Service)
 Spring Boot hỗ trợ triển khai Open/Closed Principle cực kỳ thanh lịch thông qua **Strategy Pattern** và tính năng **Auto-wiring Map/List Beans**:
-```java
+```
 // 1. Interface chung
 public interface PaymentGateway {
     String getPaymentType(); // "MOMO", "VNPAY", "ZALOPAY"
@@ -2988,8 +2834,9 @@ public class PaymentFactory {
 $\rightarrow$ **Khi cần thêm cổng thanh toán ZaloPay:** Ta chỉ cần tạo class mới `ZaloPayGateway implements PaymentGateway`. Class `PaymentFactory` hoàn toàn **đóng để sửa (không cần sửa một dòng code nào)** nhưng hệ thống vẫn **mở rộng thêm tính năng mới thành công**!
 
 ---
+*Thực hành:* Phân tích 1 class vi phạm SRP, refactor lại. Viết code minh hoạ DIP bằng Interface + Constructor Injection.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-2-chapter-04"></a>
 
@@ -2997,32 +2844,15 @@ $\rightarrow$ **Khi cần thêm cổng thanh toán ZaloPay:** Ta chỉ cần t�
 
 ## 1. Tổng quan Collections Framework
 ```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                              JAVA COLLECTIONS FRAMEWORK                                │
-├────────────────────────────────────────────────────────────┬───────────────────────────┤
-│                    COLLECTION HIERARCHY                    │       MAP HIERARCHY       │
-│                                                            │ (Không kế thừa Collection)│
-│                        ┌──────────┐                        │                           │
-│                        │ Iterable │                        │                           │
-│                        └────┬─────┘                        │                           │
-│                             ▼                              │                           │
-│                       ┌────────────┐                       │                           │
-│                       │ Collection │                       │                           │
-│                       └─────┬──────┘                       │                           │
-│         ┌───────────────────┼───────────────────┐          │                           │
-│         ▼                   ▼                   ▼          │             ▼             │
-│   ┌───────────┐       ┌───────────┐       ┌───────────┐    │       ┌───────────┐       │
-│   │   List    │       │    Set    │       │   Queue   │    │       │    Map    │       │
-│   │(Có thứ tự,│       │(Không trùng│      │  (FIFO /  │    │       │(Key-Value)│       │
-│   │ cho trùng)│       │ lặp phần tử│      │ Ưu tiên)  │    │       │           │       │
-│   └─────┬─────┘       └─────┬─────┘       └─────┬─────┘    │       └─────┬─────┘       │
-│         │                   │                   │          │             │             │
-│   ├── ArrayList       ├── HashSet         ├── Priority     │       ├── HashMap         │
-│   │                   │                   │   Queue        │       ├── LinkedHashMap   │
-│   └── LinkedList      ├── LinkedHashSet   │                │       ├── TreeMap         │
-│                       │                   └── ArrayDeque   │       └── Concurrent      │
-│                       └── TreeSet                          │           HashMap         │
-└────────────────────────────────────────────────────────────┴───────────────────────────┘
+┌───────────────────────── JAVA COLLECTIONS FRAMEWORK ─────────────────────────┐
+│ [Iterable] ──► [Collection]                 [Map] (Key-Value, không thuộc    │
+│   ├── List (Thứ tự, cho trùng)                │    Collection hierarchy)     │
+│   │     ├── ArrayList, LinkedList             ├── HashMap, LinkedHashMap     │
+│   ├── Set (Không trùng lặp)                   ├── TreeMap (Sorted Key)       │
+│   │     ├── HashSet, LinkedHashSet, TreeSet   └── ConcurrentHashMap (Thread) │
+│   └── Queue (FIFO / Hàng đợi ưu tiên)                                        │
+│         ├── PriorityQueue, ArrayDeque                                        │
+└──────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## 2. List Interface – Danh sách có thứ tự, cho phép trùng
@@ -3031,7 +2861,7 @@ $\rightarrow$ **Khi cần thêm cổng thanh toán ZaloPay:** Ta chỉ cần t�
 - Cơ chế: **mảng động** (dynamic array), tự mở rộng khi đầy.
 - `get(i)` → **O(1)** (truy xuất nhanh). `add/remove` ở giữa → **O(n)** (phải dịch phần tử).
 
-```java
+```
 List<String> names = new ArrayList<>();
 names.add("An");
 names.add("Bình");
@@ -3068,7 +2898,7 @@ names.size();            // 2
 - **Tự động sắp xếp** (natural ordering hoặc Comparator). Cài đặt bằng Red-Black Tree.
 - `add`, `remove`, `contains` → **O(log n)**.
 
-```java
+```
 Set<String> hashSet = new HashSet<>(List.of("Bình", "An", "Cường", "An"));
 // [Cường, An, Bình] – không thứ tự, bỏ trùng "An"
 
@@ -3080,7 +2910,7 @@ Set<String> treeSet = new TreeSet<>(List.of("Bình", "An", "Cường"));
 ```
 
 ### hashCode() & equals()
-```java
+```
 // Set kiểm tra trùng bằng: hashCode() → equals()
 // Nếu override equals() thì PHẢI override hashCode()
 public class Product {
@@ -3103,7 +2933,7 @@ public class Product {
 - Cơ chế: Mảng Bucket → Hash Function → xử lý va chạm (LinkedList → Red-Black Tree khi > 8 node).
 - `get`, `put`, `containsKey` → **O(1)** trung bình.
 
-```java
+```
 Map<String, Integer> scores = new HashMap<>();
 scores.put("An", 90);
 scores.put("Bình", 85);
@@ -3129,7 +2959,7 @@ for (Map.Entry<String, Integer> entry : scores.entrySet()) {
 
 ## 5. Queue & Deque
 
-```java
+```
 // PriorityQueue: phần tử nhỏ nhất luôn ở đầu (Min-Heap)
 Queue<Integer> pq = new PriorityQueue<>();
 pq.offer(30); pq.offer(10); pq.offer(20);
@@ -3201,8 +3031,9 @@ Index 7: [ TreeNode: Red-Black Tree (Khi collision > 8 phần tử -> O(log n)) 
   - Các thao tác đọc (`get()`) diễn ra hoàn toàn không cần lock (**Lock-free**) nhờ dùng biến `volatile`, đem lại tốc độ siêu cao trong môi trường Backend đa luồng.
 
 ---
+*Thực hành:* Dùng ArrayList, HashSet, HashMap thao tác CRUD. Test trùng lặp trong Set. Duyệt Map bằng entrySet().
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-2-chapter-05"></a>
 
@@ -3212,7 +3043,7 @@ Index 7: [ TreeNode: Red-Black Tree (Khi collision > 8 phần tử -> O(log n)) 
 - Generics cho phép viết code **an toàn kiểu dữ liệu** (type-safe) tại compile-time mà vẫn linh hoạt.
 - Thay vì ép kiểu thủ công, compiler kiểm tra lỗi kiểu ngay khi viết code.
 
-```java
+```
 // Không có Generics → phải ép kiểu, dễ lỗi runtime
 List list = new ArrayList();
 list.add("Hello");
@@ -3227,7 +3058,7 @@ String s = list.get(0);       // Không cần ép kiểu
 ```
 
 ## 2. Generic Class
-```java
+```
 public class ApiResponse<T> {
     private int statusCode;
     private String message;
@@ -3247,7 +3078,7 @@ ApiResponse<List<Product>> productRes = new ApiResponse<>(200, "OK", productList
 ```
 
 ## 3. Generic Method
-```java
+```
 public class Utils {
     // <T> khai báo trước return type
     public static <T> void printArray(T[] arr) {
@@ -3262,7 +3093,7 @@ Utils.printArray(nums);   // 1 2 3
 ```
 
 ## 4. Bounded Type Parameters
-```java
+```
 // T phải là Number hoặc subclass của Number
 public static <T extends Number> double sum(List<T> list) {
     double total = 0;
@@ -3287,7 +3118,7 @@ public <T extends Comparable<T> & Serializable> T findMax(List<T> list) { ... }
 | `<? super T>` | T hoặc superclass của T | Ghi được (Consumer) |
 
 ### PECS: Producer Extends, Consumer Super
-```java
+```
 // Producer (đọc dữ liệu ra): extends
 public double sumOfList(List<? extends Number> list) {
     double sum = 0;
@@ -3338,8 +3169,9 @@ public void addNumbers(List<? super Integer> list) {
   - Hoặc tạo mảng Object rồi ép kiểu: `(T[]) new Object[size];` (như cách mã nguồn của `ArrayList` trong JDK đang làm).
 
 ---
+*Thực hành:* Tạo `ApiResponse<T>`, viết hàm `sumOfList(List<? extends Number>)`, áp dụng PECS.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-2-chapter-06"></a>
 
@@ -3348,7 +3180,7 @@ public void addNumbers(List<? super Integer> list) {
 ## 1. Lambda Expression
 - Cú pháp viết gọn cho **anonymous class** chỉ có 1 method (Functional Interface).
 
-```java
+```
 // Trước Java 8: Anonymous class
 Comparator<String> comp = new Comparator<String>() {
     @Override
@@ -3363,7 +3195,7 @@ Comparator<String> comp = String::compareTo;
 ```
 
 ### Cú pháp Lambda
-```java
+```
 (parameters) -> expression              // 1 dòng, tự return
 (parameters) -> { statements; }         // Nhiều dòng, cần return tường minh
 () -> System.out.println("Hello")       // Không tham số
@@ -3379,7 +3211,7 @@ x -> x * 2                              // 1 tham số, bỏ dấu ()
 | `Consumer<T>` | T | void | `accept(T)` | Nhận và xử lý |
 | `Supplier<T>` | — | T | `get()` | Cung cấp dữ liệu |
 
-```java
+```
 Predicate<Integer> isAdult = age -> age >= 18;
 isAdult.test(20);  // true
 
@@ -3396,7 +3228,7 @@ random.get();  // 0.xxxx
 ## 3. Stream API
 
 ### Pipeline: Source → Intermediate → Terminal
-```java
+```
 List<String> names = List.of("An", "Bình", "Cường", "An", "Dũng");
 
 List<String> result = names.stream()       // 1. Source
@@ -3430,7 +3262,7 @@ List<String> result = names.stream()       // 1. Source
 | `anyMatch` / `allMatch` / `noneMatch` | Kiểm tra điều kiện |
 
 ### Collectors nâng cao
-```java
+```
 // groupingBy: Gom nhóm theo category
 Map<String, List<Product>> grouped = products.stream()
     .collect(Collectors.groupingBy(Product::getCategory));
@@ -3444,7 +3276,7 @@ Map<Long, String> idToName = users.stream()
 ```
 
 ### map() vs flatMap()
-```java
+```
 // map: 1 → 1
 List<String> upper = List.of("an", "bình").stream()
     .map(String::toUpperCase).toList();  // ["AN", "BÌNH"]
@@ -3457,7 +3289,7 @@ List<Integer> flat = nested.stream()
 
 ## 4. Optional\<T\> – Xử lý Null an toàn
 
-```java
+```
 // Tạo Optional
 Optional<String> opt1 = Optional.of("Hello");          // Không được null
 Optional<String> opt2 = Optional.ofNullable(null);     // Cho phép null
@@ -3537,7 +3369,7 @@ String email = userOpt
 - **`orElseGet(() -> defaultValue)` (Lazy Evaluation - Đánh giá trì hoãn):**
   - Chỉ khi nào `Optional` **thực sự rỗng (`empty`)** thì hàm Supplier bên trong mới được gọi.
 - *Cạm bẫy chết người trong Backend:*
-  ```java
+  ```
   // ❌ NGUY HIỂM: Hàm createDefaultUser() sẽ LUÔN ĐƯỢC CHẠY và gọi ghi DB tốn tài nguyên, dù userOpt đã tìm thấy!
   User user = userOpt.orElse(createDefaultUserInDatabase());
 
@@ -3546,16 +3378,15 @@ String email = userOpt
   ```
 
 ---
+*Thực hành:* Lọc danh sách user > 18 tuổi bằng Stream, gom nhóm sản phẩm theo category, dùng Optional xử lý findById().
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-3"></a>
 
 # PHASE 3: GIAO THỨC HTTP & THIẾT KẾ RESTFUL API
 
 ---
-
-<div style="page-break-before: always;"></div>
 
 <a id="phase-3-chapter-01"></a>
 
@@ -3644,8 +3475,9 @@ Set-Cookie: sessionId=abc123
   - **Là chuẩn số 1 tuyệt đối cho các RESTful API hiện đại**, giao tiếp giữa Frontend (React/Vue/Flutter) với Backend (Spring Boot).
 
 ---
+*Thực hành:* Dùng Postman hoặc cURL gửi cả 2 loại `Content-Type` để quan sát sự khác nhau trong Request Body.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-3-chapter-02"></a>
 
@@ -3669,7 +3501,7 @@ Set-Cookie: sessionId=abc123
 - `POST /users` → **KHÔNG** idempotent: mỗi lần gọi tạo 1 user mới!
 
 ### PUT vs PATCH
-```json
+```
 // PUT: Thay thế TOÀN BỘ (field không gửi sẽ bị null/default)
 PUT /api/v1/users/1
 { "name": "An Updated", "email": "an@new.com", "age": 26 }
@@ -3743,8 +3575,9 @@ PATCH /api/v1/users/1
 - **`204 No Content`:** Yêu cầu thành công nhưng Server **cố tình không trả về dữ liệu gì** trong Response Body. Rất phổ biến khi thực hiện `DELETE /users/1` thành công, hoặc cập nhật nhanh không cần trả về entity.
 
 ---
+*Thực hành:* Mở Chrome DevTools kiểm tra status code của các thao tác Đăng nhập, Xem bài viết, Xóa bài viết.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-3-chapter-03"></a>
 
@@ -3802,7 +3635,7 @@ GET /api/v1/products?page=0&size=20&sort=price,desc&category=electronics&keyword
 ## 4. Cấu trúc Response chuẩn
 
 ### Thành công
-```json
+```
 {
   "status": 200,
   "message": "Lấy danh sách thành công",
@@ -3812,7 +3645,7 @@ GET /api/v1/products?page=0&size=20&sort=price,desc&category=electronics&keyword
 ```
 
 ### Lỗi
-```json
+```
 {
   "status": 400,
   "message": "Validation failed",
@@ -3825,7 +3658,7 @@ GET /api/v1/products?page=0&size=20&sort=price,desc&category=electronics&keyword
 ```
 
 ### Phân trang
-```json
+```
 {
   "status": 200,
   "data": { "content": [...], "pageNo": 0, "pageSize": 20, "totalElements": 150, "totalPages": 8, "last": false },
@@ -3860,7 +3693,7 @@ GET /api/v1/products?page=0&size=20&sort=price,desc&category=electronics&keyword
 | **Ví dụ** | `GET /orders/105` (Xem đơn hàng số 105), `DELETE /products/42`. | `GET /products?category=laptop&sort=price,desc&page=0&size=20`. |
 
 ### 5.4. Thiết kế API CRUD chuẩn REST cho hệ thống Quản lý Đơn hàng (Orders & Items)
-```http
+```
 # 1. Quản lý Đơn hàng (Orders)
 GET    /api/v1/orders                 -> Lấy danh sách đơn hàng (hỗ trợ phân trang ?page=0&size=10)
 POST   /api/v1/orders                 -> Tạo đơn hàng mới
@@ -3876,15 +3709,16 @@ DELETE /api/v1/orders/{orderId}/items/{itemId}  -> Xóa món hàng cụ thể kh
 ```
 
 ---
+*Thực hành:* Viết danh sách URL cho hệ thống quản lý Blog (posts, comments, tags) tuân thủ 100% chuẩn RESTful.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-3-chapter-04"></a>
 
 # Chapter 04: JSON & Serialization/Deserialization (Jackson)
 
 ## 1. JSON Format
-```json
+```
 {
   "id": 1,
   "name": "Nguyễn Văn An",
@@ -3904,7 +3738,7 @@ DELETE /api/v1/orders/{orderId}/items/{itemId}  -> Xóa món hàng cụ thể kh
 - **Deserialization**: JSON String → Java Object (nhận request body).
 - Spring Boot dùng **Jackson** (tự động) để chuyển đổi.
 
-```java
+```
 ObjectMapper mapper = new ObjectMapper();
 
 // Serialize
@@ -3917,7 +3751,7 @@ User parsed = mapper.readValue(json, User.class);
 ```
 
 ## 3. Jackson Annotations quan trọng
-```java
+```
 public class UserDto {
     private Long id;
 
@@ -3956,7 +3790,7 @@ public class UserDto {
 ### 4.2. Khi nào dùng `@JsonIgnore`? Cho ví dụ thực tế (Ẩn Password)
 - **Mục đích:** Dùng để đánh dấu một trường dữ liệu (field) mà bạn **tuyệt đối không muốn xuất hiện** trong chuỗi JSON trả về cho Client, hoặc bỏ qua không đọc khi parse JSON.
 - **Ví dụ thực tế:**
-  ```java
+  ```
   public class UserResponse {
       private Long id;
       private String username;
@@ -3971,7 +3805,7 @@ public class UserDto {
 ### 4.3. `@JsonProperty` dùng để làm gì?
 - **Mục đích:** Dùng để tùy biến ánh xạ (mapping) giữa **tên thuộc tính trong Java (theo quy tắc camelCase)** và **tên khóa trong chuỗi JSON (theo quy tắc snake_case hoặc chuẩn bên thứ 3)**.
 - **Ví dụ:**
-  ```java
+  ```
   public class OrderDto {
       @JsonProperty("order_id")
       private Long orderId;
@@ -3985,8 +3819,9 @@ public class UserDto {
   - `@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)`: Chỉ cho phép nhận vào khi deserialize (tạo mới/cập nhật), nhưng khi serialize trả về response cho client thì tự động giấu đi (rất thích hợp cho trường `password`).
 
 ---
+*Thực hành:* Thử dùng `ObjectMapper` của Jackson serialize một object có `@JsonIgnore` và `@JsonProperty` ra chuỗi JSON.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-3-chapter-05"></a>
 
@@ -4010,7 +3845,7 @@ Body (raw JSON):
 ```
 
 ### Test Script (tab Tests)
-```javascript
+```
 pm.test("Status 201 Created", () => {
     pm.response.to.have.status(201);
 });
@@ -4029,7 +3864,7 @@ Headers: Authorization: Bearer {{jwt_token}}
 ```
 
 ## 2. cURL (Command Line)
-```bash
+```
 # GET
 curl https://jsonplaceholder.typicode.com/posts/1
 
@@ -4077,7 +3912,7 @@ curl -v http://localhost:8080/api/v1/health
 ### 3.2. Làm sao tự động hoá test API trong Postman? (Postman Tests & Newman CLI)
 - **Viết Test Scripts trong tab "Tests" của Postman:**
   Sử dụng cú pháp JavaScript của thư viện Chai Assertion được tích hợp sẵn:
-  ```javascript
+```
   // 1. Kiểm tra Status Code
   pm.test("Status code is 201 Created", function () {
       pm.response.to.have.status(201);
@@ -4105,16 +3940,15 @@ curl -v http://localhost:8080/api/v1/health
   - Nhúng lệnh này vào GitHub Actions / GitLab CI để tự động test toàn bộ API mỗi khi developer push code mới lên repository.
 
 ---
+*Thực hành:* Tạo Postman Collection gồm 3 request: Login -> Lấy Token -> Tạo Order dùng Token đó.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-4"></a>
 
 # PHASE 4: SPRING BOOT CORE & KIẾN TRÚC 3 TẦNG
 
 ---
-
-<div style="page-break-before: always;"></div>
 
 <a id="phase-4-chapter-01"></a>
 
@@ -4127,7 +3961,7 @@ curl -v http://localhost:8080/api/v1/health
 ## 2. Dependency Injection (DI) – 3 cách
 
 ### Constructor Injection ✅ (Khuyên dùng)
-```java
+```
 @Service
 public class UserService {
     private final UserRepository userRepository;  // final = immutable
@@ -4140,7 +3974,7 @@ public class UserService {
 ```
 
 ### Field Injection ❌ (Không khuyên dùng)
-```java
+```
 @Service
 public class UserService {
     @Autowired
@@ -4149,7 +3983,7 @@ public class UserService {
 ```
 
 ### Setter Injection (Ít dùng)
-```java
+```
 @Autowired
 public void setUserRepository(UserRepository repo) { this.userRepository = repo; }
 ```
@@ -4167,7 +4001,7 @@ public void setUserRepository(UserRepository repo) { this.userRepository = repo;
 | `@Configuration` | Cấu hình | Khai báo `@Bean` methods |
 
 ## 4. @Bean vs @Component
-```java
+```
 // @Component: Đánh dấu class của MÌNH
 @Component
 public class EmailService { }
@@ -4183,7 +4017,7 @@ public class AppConfig {
 ```
 
 ## 5. @Qualifier & @Primary
-```java
+```
 // Khi có 2 Bean cùng kiểu → xung đột
 @Service("vnpay")
 public class VnPayService implements PaymentService { }
@@ -4248,7 +4082,7 @@ Field Injection (`@Autowired private UserService userService;`) tuy viết ngắ
   - Mặc định mỗi HTTP request từ người dùng gửi tới Tomcat sẽ được phục vụ bởi một **Thread riêng biệt**.
   - Cả 100 thread này sẽ **cùng lúc gọi vào phương thức của DUY NHẤT 1 instance Singleton Bean** (Controller hoặc Service).
   - **NGUY HIỂM:** Nếu bạn khai báo **Biến trạng thái có thể thay đổi (Mutable State / Instance Variable)** bên trong Bean:
-    ```java
+    ```
     @Service
     public class OrderService {
         private Long currentUserId; // ❌ CHẾT NGƯỜI: Nhiều thread cùng ghi đè biến này!
@@ -4258,8 +4092,9 @@ Field Injection (`@Autowired private UserService userService;`) tuy viết ngắ
 - **Quy tắc vàng:** Các Bean Spring (Service, Controller, Repository) **bắt buộc phải là STATELESS** (không chứa biến instance lưu trạng thái người dùng; mọi dữ liệu phải truyền qua tham số hàm cục bộ nằm trên Stack của từng Thread).
 
 ---
+*Thực hành:* Tạo 1 Service dùng Constructor Injection với `@RequiredArgsConstructor` của Lombok, thử nghiệm in Hashcode của Bean để thấy tính chất Singleton.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-4-chapter-02"></a>
 
@@ -4286,7 +4121,7 @@ Field Injection (`@Autowired private UserService userService;`) tuy viết ngắ
 ## 4. File cấu hình
 
 ### application.properties
-```properties
+```
 server.port=8081
 spring.datasource.url=jdbc:mysql://localhost:3306/mydb
 spring.datasource.username=root
@@ -4295,7 +4130,7 @@ spring.jpa.hibernate.ddl-auto=update
 ```
 
 ### application.yml (khuyên dùng – dễ đọc hơn)
-```yaml
+```
 server:
   port: 8081
 spring:
@@ -4312,7 +4147,7 @@ spring:
 ## 5. Đọc cấu hình trong code
 
 ### @Value
-```java
+```
 @Value("${server.port}")
 private int port;
 
@@ -4321,7 +4156,7 @@ private String secretKey;
 ```
 
 ### @ConfigurationProperties (type-safe, khuyên dùng)
-```java
+```
 @Configuration
 @ConfigurationProperties(prefix = "app.jwt")
 @Data  // Lombok
@@ -4333,7 +4168,7 @@ public class JwtProperties {
 ```
 
 ## 6. Profiles (Dev/Prod)
-```yaml
+```
 # application-dev.yml
 server:
   port: 8080
@@ -4381,8 +4216,9 @@ Chạy: `java -jar app.jar --spring.profiles.active=prod`
   3. Bằng tham số dòng lệnh khi chạy file Jar: `java -jar app.jar --spring.profiles.active=prod`
 
 ---
+*Thực hành:* Tạo 2 file `application-dev.yml` và `application-prod.yml`, chạy thử với tham số `--spring.profiles.active=dev` để kiểm chứng.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-4-chapter-03"></a>
 
@@ -4390,37 +4226,19 @@ Chạy: `java -jar app.jar --spring.profiles.active=prod`
 
 ## 1. Kiến trúc 3 tầng
 ```
-┌──────────────────┐
-│ Client / Browser │
-└────────┬─────────┘
-         │ ▲
-  HTTP   │ │ HTTP
- Request │ │ Response
-         ▼ │
-┌──────────────────┐
-│ @RestController  │ ──► Nhận HTTP Request, validate dữ liệu (DTO), điều hướng
-└────────┬─────────┘
-         │ ▲
-    Gọi  │ │ Trả DTO/
-  Service│ │ Domain model
-         ▼ │
-┌──────────────────┐
-│     @Service     │ ──► Xử lý Business Logic, tính toán, phân quyền, Transaction
-└────────┬─────────┘
-         │ ▲
-    Gọi  │ │ Trả
-    Repo │ │ Entity
-         ▼ │
-┌──────────────────┐
-│   @Repository    │ ──► Tương tác CSDL (Spring Data JPA / Hibernate / JDBC)
-└────────┬─────────┘
-         │ ▲
-   Query │ │ Result
-  SQL/JPA│ │ Set
-         ▼ │
-┌──────────────────┐
-│     Database     │ ──► Lưu trữ dữ liệu bền vững (MySQL, PostgreSQL...)
-└──────────────────┘
+[Client / Browser]
+       │ ▲  HTTP Request / Response
+       ▼ │
+[@RestController] ── Nhận Request, validate DTO, điều hướng, trả ResponseEntity
+       │ ▲  Gọi Service / Trả DTO hoặc Domain Model
+       ▼ │
+[@Service]        ── Xử lý Business Logic, tính toán, phân quyền, Transaction
+       │ ▲  Gọi Repository / Trả Entity
+       ▼ │
+[@Repository]     ── Tương tác CSDL qua Spring Data JPA / Hibernate
+       │ ▲  Query SQL / Result Set
+       ▼ │
+[Database]        ── Lưu trữ dữ liệu bền vững (MySQL, PostgreSQL, Redis...)
 ```
 
 | Tầng | Annotation | Nhiệm vụ |
@@ -4430,7 +4248,7 @@ Chạy: `java -jar app.jar --spring.profiles.active=prod`
 | **Repository** | `@Repository` | Truy cập database |
 
 ## 2. @RestController
-```java
+```
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
@@ -4474,7 +4292,7 @@ public class UserController {
 | `@RequestHeader` | HTTP header | `@RequestHeader("Authorization") String token` |
 
 ## 4. ResponseEntity\<T\>
-```java
+```
 // Tuỳ biến status code, headers, body
 return ResponseEntity.ok(data);                           // 200
 return ResponseEntity.status(HttpStatus.CREATED).body(d); // 201
@@ -4523,7 +4341,7 @@ Khi viết `@GetMapping("/users/{id}")`:
   - Không thể tự thêm các HTTP Headers đặc thù (như `Location`, `Cache-Control`, `Set-Cookie`).
 - **Khi dùng `ResponseEntity<T>`:**
   - Là một đối tượng bọc toàn diện đại diện cho toàn bộ HTTP Response của Spring:
-    ```java
+    ```
     return ResponseEntity.status(HttpStatus.CREATED)
             .header("Custom-Header", "Value")
             .body(savedUserDto);
@@ -4532,8 +4350,9 @@ Khi viết `@GetMapping("/users/{id}")`:
   - Giúp API tuân thủ 100% chuẩn thiết kế RESTful chuyên nghiệp.
 
 ---
+*Thực hành:* Tạo cấu trúc package chuẩn cho thực thể `Product`, viết `ProductController` trả về `ResponseEntity` với các mã 200, 201, 204.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-4-chapter-04"></a>
 
@@ -4543,7 +4362,7 @@ Khi viết `@GetMapping("/users/{id}")`:
 - **Không** trả Entity/Database Model trực tiếp cho client (lộ cấu trúc DB, password, metadata).
 - Tạo **DTO riêng** cho request (input) và response (output).
 
-```java
+```
 // Request DTO (nhận dữ liệu từ client)
 public class UserRequest {
     @NotBlank(message = "Tên không được để trống")
@@ -4572,7 +4391,7 @@ public class UserResponse {
 ```
 
 ## 2. Ánh xạ Entity ↔ DTO
-```java
+```
 // Thủ công (đơn giản, dễ hiểu)
 public static UserResponse toResponse(UserEntity entity) {
     UserResponse dto = new UserResponse();
@@ -4600,7 +4419,7 @@ public static UserResponse toResponse(UserEntity entity) {
 | `@Positive` / `@PositiveOrZero` | Số dương / không âm |
 
 ## 4. Kích hoạt Validation
-```java
+```
 @PostMapping
 public ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserRequest request) {
     // Nếu validation fail → Spring tự quăng MethodArgumentNotValidException
@@ -4628,14 +4447,14 @@ Trả trực tiếp Entity (`@Entity User`) ra Controller là một cạm bẫy 
 
 ### 5.3. `@Valid` đặt ở đâu để kích hoạt Validation trong Spring Boot?
 1. **Trên tham số Request Body của Controller:**
-   ```java
+   ```
    @PostMapping("/users")
    public ResponseEntity<?> create(@Valid @RequestBody UserCreateRequest request)
    ```
    Nếu dữ liệu vi phạm annotation (như `@NotBlank`, `@Min`), Spring sẽ chặn request lại và ném ra ngoại lệ `MethodArgumentNotValidException`.
 2. **Trước các Object lồng nhau bên trong DTO (Nested Validation):**
    Nếu DTO chứa một đối tượng con hoặc danh sách con:
-   ```java
+   ```
    public class OrderRequest {
        @Valid // 👈 BẮT BUỘC phải có @Valid ở đây thì Spring mới duyệt sâu vào trong để kiểm tra các trường của OrderItemRequest!
        @NotEmpty
@@ -4643,7 +4462,7 @@ Trả trực tiếp Entity (`@Entity User`) ra Controller là một cạm bẫy 
    }
    ```
 3. **Trên Controller Class level (`@Validated`) khi validate PathVariable hoặc RequestParam:**
-   ```java
+   ```
    @RestController
    @Validated // 👈 Cần đặt trên Class
    public class UserController {
@@ -4653,8 +4472,9 @@ Trả trực tiếp Entity (`@Entity User`) ra Controller là một cạm bẫy 
    ```
 
 ---
+*Thực hành:* Tạo `UserRegisterRequest` có kiểm tra `@NotBlank` cho tên, `@Email` cho email, `@Size(min=8)` cho password, và bọc `@Valid` tại Controller.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-4-chapter-05"></a>
 
@@ -4665,7 +4485,7 @@ Trả trực tiếp Entity (`@Entity User`) ra Controller là một cạm bẫy 
 - Bắt trong từng controller → **code trùng lặp**, khó bảo trì.
 
 ## 2. Giải pháp: @RestControllerAdvice
-```java
+```
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -4710,7 +4530,7 @@ public class GlobalExceptionHandler {
 ```
 
 ## 3. ErrorResponse class
-```java
+```
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
 public class ErrorResponse {
     private LocalDateTime timestamp;
@@ -4722,7 +4542,7 @@ public class ErrorResponse {
 ```
 
 ## 4. Custom Exception
-```java
+```
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String resource, Long id) {
         super(resource + " không tìm thấy với ID: " + id);
@@ -4751,7 +4571,7 @@ public class DuplicateResourceException extends RuntimeException {
 ### 5.2. Tại sao BẮT BUỘC cần Global Exception Handler thay vì viết `try-catch` trong từng Controller?
 1. **Loại bỏ trùng lặp mã nguồn (DRY - Don't Repeat Yourself):** Nếu không có Global Handler, bạn sẽ phải viết hàng trăm khối `try { ... } catch (Exception e)` giống hệt nhau ở khắp mọi Controller trong dự án.
 2. **Chuẩn hóa cấu trúc lỗi trả về (Consistent Error Response):** Đảm bảo 100% các API trong hệ thống (dù lỗi 400, 404, hay 500) đều trả về một cấu trúc JSON đồng nhất duy nhất:
-   ```json
+```
    {
      "status": 404,
      "message": "User không tìm thấy với ID: 10",
@@ -4763,7 +4583,7 @@ public class DuplicateResourceException extends RuntimeException {
 
 ### 5.3. Cách bắt lỗi Validation (`@Valid`) và trả về định dạng đẹp, chi tiết từng trường cho Client
 Khi tham số `@Valid` bị vi phạm, Spring sẽ ném ra `MethodArgumentNotValidException`. Ta bắt ngoại lệ này trong Global Handler như sau:
-```java
+```
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -4787,16 +4607,15 @@ public class GlobalExceptionHandler {
 ```
 
 ---
+*Thực hành:* Tạo `GlobalExceptionHandler` bắt `ResourceNotFoundException` trả về 404, và bắt `MethodArgumentNotValidException` trả về map lỗi trường 400.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-5"></a>
 
 # PHASE 5: DATABASE, JPA & HIBERNATE ORM
 
 ---
-
-<div style="page-break-before: always;"></div>
 
 <a id="phase-5-chapter-01"></a>
 
@@ -4810,7 +4629,7 @@ public class GlobalExceptionHandler {
 - **PK**: Định danh duy nhất 1 hàng. Thường dùng `id BIGINT AUTO_INCREMENT`.
 - **FK**: Tham chiếu PK của bảng khác, tạo quan hệ giữa 2 bảng.
 
-```sql
+```
 CREATE TABLE categories (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL
@@ -4829,7 +4648,7 @@ CREATE TABLE products (
 - **Clustered Index**: PK mặc định, dữ liệu sắp xếp vật lý theo index.
 - **Non-clustered Index**: Index phụ, trỏ tới vị trí dữ liệu.
 
-```sql
+```
 CREATE INDEX idx_product_name ON products(name);
 CREATE UNIQUE INDEX idx_user_email ON users(email);
 ```
@@ -4865,8 +4684,9 @@ Tạo Index không phải là "viên đạn bạc" (Silver Bullet), bạn không
   - **Không có sự phụ thuộc bắc cầu (Transitive Dependency)** giữa các cột không khóa. Nếu cột A xác định cột B, và cột B xác định cột C $\rightarrow$ Phải tách C ra một bảng riêng (ví dụ: `order` lưu `customer_id`, không được lưu trực tiếp `customer_city` vào bảng `order` mà phải lưu ở bảng `customers`).
 
 ---
+*Thực hành:* Dùng `EXPLAIN ANALYZE SELECT * FROM users WHERE email = '...'` trong MySQL để xem câu query có đang dùng Index hay bị Full Table Scan.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-5-chapter-02"></a>
 
@@ -4877,7 +4697,7 @@ Tạo Index không phải là "viên đạn bạc" (Silver Bullet), bạn không
 - **JPA** (Jakarta Persistence API): Specification (chuẩn). **Hibernate**: Implementation phổ biến nhất.
 
 ## 2. Entity cơ bản
-```java
+```
 @Entity
 @Table(name = "users")
 public class UserEntity {
@@ -4916,7 +4736,7 @@ public class UserEntity {
 | `@Transient` | KHÔNG lưu vào DB |
 
 ## 4. Cấu hình kết nối (application.yml)
-```yaml
+```
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/mydb?useSSL=false&serverTimezone=UTC
@@ -4962,7 +4782,7 @@ spring:
 
 ### 6.3. `@Enumerated(STRING)` vs `@Enumerated(ORDINAL)` – Tại sao BẮT BUỘC nên dùng `STRING`?
 Giả sử bạn có Enum trạng thái đơn hàng:
-```java
+```
 public enum OrderStatus {
     PENDING,   // Index 0
     SHIPPING,  // Index 1
@@ -4972,7 +4792,7 @@ public enum OrderStatus {
 - **Nếu dùng `@Enumerated(EnumType.ORDINAL)` (Mặc định của JPA):**
   - Hibernate sẽ lưu **số thứ tự index (0, 1, 2)** vào cột trong Database.
   - **THẢM HỌA XẢY RA KHI:** Sau này một lập trình viên thêm trạng thái mới `CANCELLED` chèn vào đầu hoặc giữa Enum:
-    ```java
+    ```
     public enum OrderStatus {
         PENDING, CANCELLED, SHIPPING, DELIVERED
     }
@@ -4983,8 +4803,9 @@ public enum OrderStatus {
   - Dù bạn có đổi thứ tự, thêm bớt enum, dữ liệu trong Database vẫn nguyên vẹn 100% ngữ nghĩa và cực kỳ dễ đọc khi xem trực tiếp bằng SQL.
 
 ---
+*Thực hành:* Tạo entity `Order` có trường Enum dùng `STRING`, cấu hình `ddl-auto: update` trên local và kiểm tra bảng sinh ra trong MySQL.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-5-chapter-03"></a>
 
@@ -4999,7 +4820,7 @@ public enum OrderStatus {
 | `@ManyToMany` | Student ↔ Course | Bảng trung gian (`student_course`) |
 
 ## 2. Quan hệ 1-N (Category – Product)
-```java
+```
 @Entity @Table(name = "categories")
 public class CategoryEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -5073,22 +4894,23 @@ public class ProductEntity {
   - **TUYỆT ĐỐI KHÔNG DÙNG:** Cho các mối quan hệ độc lập như `Product -> Category`, `User -> Role`.
 
 ---
+*Thực hành:* Tạo mối quan hệ 2 chiều giữa `Category` (One) và `Product` (Many), nhớ dùng `mappedBy` và đặt `fetch = FetchType.LAZY`.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-5-chapter-04"></a>
 
 # Chapter 04: Spring Data JPA – Derived Query, JPQL, N+1 Problem
 
 ## 1. JpaRepository
-```java
+```
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     // Kế thừa sẵn: save(), findById(), findAll(), deleteById(), existsById(), count()
 }
 ```
 
 ## 2. Derived Query Methods (Tự sinh SQL từ tên method)
-```java
+```
 Optional<UserEntity> findByEmail(String email);
 List<UserEntity> findByNameContainingIgnoreCase(String keyword);
 List<UserEntity> findByAgeGreaterThanEqual(int age);
@@ -5099,7 +4921,7 @@ List<UserEntity> findByNameOrderByCreatedAtDesc(String name);
 ```
 
 ## 3. @Query – JPQL & Native SQL
-```java
+```
 // JPQL (truy vấn trên Entity, không phải table)
 @Query("SELECT u FROM UserEntity u WHERE u.email = :email AND u.active = true")
 Optional<UserEntity> findActiveByEmail(@Param("email") String email);
@@ -5115,7 +4937,7 @@ void deactivateUser(@Param("id") Long id);
 ```
 
 ## 4. N+1 Problem
-```java
+```
 // ❌ N+1: Lấy 10 categories → mỗi category query thêm products → 1 + 10 = 11 queries!
 List<CategoryEntity> categories = categoryRepo.findAll();
 for (CategoryEntity c : categories) {
@@ -5124,7 +4946,7 @@ for (CategoryEntity c : categories) {
 ```
 
 ### Giải pháp
-```java
+```
 // ✅ JOIN FETCH: 1 query duy nhất
 @Query("SELECT c FROM CategoryEntity c LEFT JOIN FETCH c.products")
 List<CategoryEntity> findAllWithProducts();
@@ -5159,21 +4981,22 @@ List<CategoryEntity> findAll();
   - $\rightarrow$ Tổng số câu query bắn xuống DB: **$1 + N$ queries**. Nếu $N = 1000$, hệ thống sẽ bắn 1001 câu truy vấn, làm nghẽn mạng và sập Database ngay lập tức!
 - **2 Cách giải quyết triệt để:**
   1. **Cách 1: Sử dụng `JOIN FETCH` trong JPQL (Khuyên dùng):**
-     ```java
+     ```
      @Query("SELECT c FROM CategoryEntity c LEFT JOIN FETCH c.products")
      List<CategoryEntity> findAllWithProducts();
      ```
      Hibernate sẽ gộp lại thành **DUY NHẤT 1 câu lệnh SQL `LEFT OUTER JOIN`** để kéo toàn bộ cha và con về cùng lúc.
   2. **Cách 2: Sử dụng `@EntityGraph`:**
-     ```java
+     ```
      @EntityGraph(attributePaths = {"products"})
      List<CategoryEntity> findAll();
      ```
      Khai báo cho Spring Data JPA biết trường `products` cần được nạp Eager tức thì trong câu query này mà không cần viết lại câu JPQL.
 
 ---
+*Thực hành:* Bật `spring.jpa.show-sql: true` trong console để đếm số lượng câu query, viết `JOIN FETCH` để thấy số câu query giảm từ $1+N$ về còn duy nhất 1.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-5-chapter-05"></a>
 
@@ -5188,7 +5011,7 @@ List<CategoryEntity> findAll();
 | **D**urability | Dữ liệu đã commit sẽ không mất dù server crash |
 
 ## 2. @Transactional trong Spring
-```java
+```
 @Service
 public class OrderService {
     @Transactional  // Nếu bất kỳ bước nào lỗi → rollback TẤT CẢ
@@ -5210,7 +5033,7 @@ public class OrderService {
 | `NOT_SUPPORTED` | Chạy không transaction |
 
 ## 4. Rollback Rules
-```java
+```
 // Mặc định: Chỉ rollback với RuntimeException (Unchecked)
 @Transactional  // IOException (Checked) sẽ KHÔNG rollback!
 
@@ -5251,7 +5074,7 @@ public class OrderService {
   - Nếu gặp **`Checked Exception`** (như `IOException`, `SQLException`, hoặc class custom kế thừa từ `Exception`), Spring **MẶC ĐỊNH SẼ KHÔNG ROLLBACK** (Giao dịch vẫn bị Commit dù có lỗi!).
 - **Cách cấu hình chuẩn an toàn:**
   Bắt buộc phải thêm thuộc tính `rollbackFor = Exception.class`:
-  ```java
+  ```
   @Transactional(rollbackFor = Exception.class)
   public void transferMoney(...) { ... }
   ```
@@ -5269,7 +5092,7 @@ public class OrderService {
   - `@Transactional` hoạt động dựa trên cơ chế **Dynamic Proxy**.
   - Khi một Class bên ngoài (như `Controller`) gọi `orderService.placeOrder()`, thực chất nó đang gọi xuyên qua một lớp vỏ bọc **Proxy Object**. Proxy này sẽ mở kết nối DB $\rightarrow$ Bắt đầu Transaction $\rightarrow$ Gọi hàm thật $\rightarrow$ Commit / Rollback.
   - Nhưng khi bạn viết:
-    ```java
+    ```
     public void methodA() {
         methodB(); // 👈 Gọi nội bộ cùng class (this.methodB())
     }
@@ -5284,15 +5107,16 @@ public class OrderService {
   2. Hoặc tự inject chính interface của Service vào bản thân (Self-autowiring).
 
 ---
+*Thực hành:* Viết 1 hàm chuyển tiền có `@Transactional(rollbackFor = Exception.class)`, thử quăng `RuntimeException` để kiểm tra số dư không bị trừ lẹm.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-5-chapter-06"></a>
 
 # Chapter 06: Pagination & Sorting – Pageable, Page, Slice
 
 ## 1. Tạo Pageable
-```java
+```
 // PageRequest.of(page, size, sort)  – page bắt đầu từ 0
 Pageable pageable = PageRequest.of(0, 20, Sort.by("createdAt").descending());
 
@@ -5302,7 +5126,7 @@ Pageable pageable = PageRequest.of(0, 20,
 ```
 
 ## 2. Repository
-```java
+```
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     Page<ProductEntity> findByCategory(String category, Pageable pageable);
     Slice<ProductEntity> findByActiveTrue(Pageable pageable);
@@ -5319,7 +5143,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 | Phù hợp | Phân trang truyền thống (1, 2, 3...) | Infinite scroll / Load more |
 
 ## 4. Controller nhận Pageable tự động
-```java
+```
 @GetMapping
 public ResponseEntity<Page<ProductResponse>> getProducts(
     @RequestParam(defaultValue = "0") int page,
@@ -5334,7 +5158,7 @@ public ResponseEntity<Page<ProductResponse>> getProducts(
 ```
 
 ## 5. Response DTO cho phân trang
-```json
+```
 {
   "content": [...],
   "pageNo": 0,
@@ -5366,22 +5190,21 @@ public ResponseEntity<Page<ProductResponse>> getProducts(
   - Thay vì dùng `OFFSET`, Client gửi kèm `id` của phần tử cuối cùng ở trang trước:
     `GET /products?lastId=200000&size=20`
   - SQL chuyển thành câu lệnh tìm kiếm index trực tiếp:
-    ```sql
+```
     SELECT * FROM products WHERE id > 200000 ORDER BY id ASC LIMIT 20;
     ```
   - **Hiệu năng:** Database dùng B-Tree Index nhảy thẳng tới `id = 200000` với tốc độ **$O(1)$ tức thì (dưới 5 mili-giây)**, bất kể bạn đang phân trang ở trang thứ 1 hay trang thứ 1 triệu!
 
 ---
+*Thực hành:* Viết API phân trang dùng `Pageable`, dùng Postman test thử truyền tham số `?page=0&size=5&sort=name,asc`.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-6"></a>
 
 # PHASE 6: BẢO MẬT HỆ THỐNG (SPRING SECURITY & JWT)
 
 ---
-
-<div style="page-break-before: always;"></div>
 
 <a id="phase-6-chapter-01"></a>
 
@@ -5394,37 +5217,18 @@ public ResponseEntity<Page<ProductResponse>> getProducts(
 Trong phát triển hệ thống Backend, đây là 2 khái niệm nền tảng luôn đi kèm nhưng có mục đích hoàn toàn riêng biệt:
 
 ```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                           Client / Người dùng                           │
-└────────────────────────────────────┬────────────────────────────────────┘
-                                     │
-                                     │ 1. Cung cấp thông tin đăng nhập (Credentials)
-                                     ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│                      AUTHENTICATION (XÁC THỰC)                          │
-│                      Câu hỏi: "BẠN LÀ AI?"                              │
-│  → So khớp mật khẩu đã hash, kiểm tra tài khoản có tồn tại/bị khóa?     │
-└────────────────────────────────────┬────────────────────────────────────┘
-                                     │
-                                     │ Xác thực thành công → Cấp Danh tính (Token / Session)
-                                     ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│                   Cấp Danh Tính / Access Token (JWT)                    │
-└────────────────────────────────────┬────────────────────────────────────┘
-                                     │
-                                     │ 2. Gửi request nghiệp vụ kèm Token (Authorization: Bearer)
-                                     ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│                      AUTHORIZATION (PHÂN QUYỀN)                         │
-│                      Câu hỏi: "BẠN ĐƯỢC PHÉP LÀM GÌ?"                   │
-│  → Đọc Roles/Permissions trong Token, kiểm tra quyền truy cập Endpoint  │
-└────────────────────────────────────┬────────────────────────────────────┘
-                                     │
-                                     │ Hợp lệ (Đủ quyền hạn)
-                                     ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│               Tài nguyên bảo vệ / API Endpoint (@PreAuthorize)          │
-└─────────────────────────────────────────────────────────────────────────┘
+[Client / Người dùng]
+       │ 1. Đăng nhập (username, password)
+       ▼
+[AUTHENTICATION: Xác thực] ── "BẠN LÀ AI?"
+  └─ So khớp mật khẩu hash BCrypt, kiểm tra tài khoản khóa/hết hạn
+       │ Thành công ──► Cấp Access Token (JWT)
+       ▼
+[AUTHORIZATION: Phân quyền] ── "BẠN ĐƯỢC PHÉP LÀM GÌ?"
+  └─ Đọc Roles/Permissions từ JWT, đối chiếu quy tắc phân quyền
+       │ Hợp lệ (Đủ quyền)
+       ▼
+[API Endpoint Bảo Vệ] (@PreAuthorize, Secure Resource)
 ```
 
 | Tiêu chí | Authentication (Xác thực - 401 Unauthorized) | Authorization (Phân quyền - 403 Forbidden) |
@@ -5465,7 +5269,7 @@ Trong phát triển hệ thống Backend, đây là 2 khái niệm nền tảng 
 
 Một chuỗi BCrypt lưu trong database thường có độ dài 60 ký tự, chia thành 3 phần:
 
-```text
+```
 $2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy
 \__/ \/ \____________________/\_____________________________/
  (1) (2)         (3)                        (4)
@@ -5483,7 +5287,7 @@ $2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy
 Spring Security cung cấp interface `PasswordEncoder` với implementation chuẩn mực là `BCryptPasswordEncoder`.
 
 ### Cấu hình Bean trong Spring:
-```java
+```
 package com.example.app.config;
 
 import org.springframework.context.annotation.Bean;
@@ -5503,7 +5307,7 @@ public class SecurityBeanConfig {
 ```
 
 ### Sử dụng khi Đăng ký (Encode) & Đăng nhập (Matches):
-```java
+```
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -5550,8 +5354,6 @@ public class UserService {
 
 ---
 
-<div style="page-break-before: always;"></div>
-
 <a id="phase-6-chapter-02"></a>
 
 # Chapter 02: Kiến Trúc Spring Security – SecurityFilterChain, AuthenticationManager & UserDetailsService
@@ -5564,49 +5366,24 @@ Trong ứng dụng Spring Boot Web, mọi HTTP Request gửi tới server **khô
 Thay vào đó, nó phải đi qua một chuỗi các bộ lọc an ninh gọi là **Servlet Filter Chain**, trong đó Spring Security cắm vào một mắt xích tối quan trọng: **`DelegatingFilterProxy`** và **`FilterChainProxy`**.
 
 ```
-┌────────────────────────────────────────────────────────┐
-│                  Client HTTP Request                   │
-└───────────────────────────┬────────────────────────────┘
-                            │
-                            ▼
-┌────────────────────────────────────────────────────────┐
-│   DelegatingFilterProxy (Cầu nối giữa Servlet & Spring)│
-└───────────────────────────┬────────────────────────────┘
-                            │
-                            ▼
-┌────────────────────────────────────────────────────────┐
-│        FilterChainProxy (Quản lý SecurityFilterChain)  │
-└───────────────────────────┬────────────────────────────┘
-                            │
-                            ▼
-┌────────────────────────────────────────────────────────┐
-│        SecurityFilterChain (Chuỗi các Security Filter) │
-│                                                        │
-│   ┌────────────────────────────────────────────────┐   │
-│   │ 1. CorsFilter (Kiểm tra nguồn truy cập CORS)   │   │
-│   └───────────────────────┬────────────────────────┘   │
-│                           ▼                            │
-│   ┌────────────────────────────────────────────────┐   │
-│   │ 2. CsrfFilter (Bảo vệ chống tấn công CSRF)     │   │
-│   └───────────────────────┬────────────────────────┘   │
-│                           ▼                            │
-│   ┌────────────────────────────────────────────────┐   │
-│   │ 3. JwtAuthenticationFilter (Custom Token Parse)│   │
-│   └───────────────────────┬────────────────────────┘   │
-│                           ▼                            │
-│   ┌────────────────────────────────────────────────┐   │
-│   │ 4. UsernamePasswordAuthenticationFilter        │   │
-│   └───────────────────────┬────────────────────────┘   │
-│                           ▼                            │
-│   ┌────────────────────────────────────────────────┐   │
-│   │ 5. AuthorizationFilter (Kiểm tra quyền Role)   │   │
-│   └────────────────────────────────────────────────┘   │
-└───────────────────────────┬────────────────────────────┘
-                            │ (Vượt qua mọi Filter an toàn)
-                            ▼
-┌────────────────────────────────────────────────────────┐
-│       DispatcherServlet ──► @RestController            │
-└────────────────────────────────────────────────────────┘
+[Client Request]
+       │
+       ▼
+[DelegatingFilterProxy] ── (Cầu nối Servlet container & Spring ApplicationContext)
+       │
+       ▼
+[FilterChainProxy]      ── (Quản lý các chuỗi SecurityFilterChain)
+       │
+       ▼
+[SecurityFilterChain]   ── (Chuỗi các bộ lọc an ninh):
+  ├─ 1. CorsFilter               (Kiểm tra nguồn gốc truy cập CORS)
+  ├─ 2. CsrfFilter               (Chống giả mạo request CSRF)
+  ├─ 3. JwtAuthenticationFilter  (Parse & validate JWT token từ Header)
+  ├─ 4. UsernamePasswordAuth...  (Xử lý form đăng nhập username/password)
+  └─ 5. AuthorizationFilter      (Kiểm tra quyền hạn Role/Authority)
+       │ (Hợp lệ qua mọi filter)
+       ▼
+[DispatcherServlet] ──► [@RestController]
 ```
 
 ---
@@ -5616,43 +5393,24 @@ Thay vào đó, nó phải đi qua một chuỗi các bộ lọc an ninh gọi l
 Khi một user gửi yêu cầu đăng nhập (username + password), hệ thống Spring Security điều phối các thành phần theo mô hình sau:
 
 ```
-┌────────────────────────────────────────────────────────────────────────┐
-│                 Request Đăng nhập (username, password)                 │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│      UsernamePasswordAuthenticationFilter / Custom AuthController      │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ Tạo UsernamePasswordAuthenticationToken (unauthenticated)
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│       AuthenticationManager (Interface trung tâm điều phối xác thực)   │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ Giao việc cho Provider thích hợp
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│                      DaoAuthenticationProvider                         │
-│                                                                        │
-│   ┌────────────────────────────────────────────────────────────────┐   │
-│   │ 1. UserDetailsService: Tìm User theo username từ Database     │   │
-│   │    └─► Database (Truy vấn User, Password hash, Roles)          │   │
-│   └───────────────────────────────┬────────────────────────────────┘   │
-│                                   ▼                                    │
-│   ┌────────────────────────────────────────────────────────────────┐   │
-│   │ 2. PasswordEncoder: BCrypt so khớp mật khẩu gửi lên vs DB hash │   │
-│   └────────────────────────────────────────────────────────────────┘   │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ Trùng khớp thông tin (Credentials Valid)
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│          Authentication Object (Trạng thái: Authenticated = true)      │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ Lưu trữ thông tin người dùng vào luồng hiện tại
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│           SecurityContextHolder ──► SecurityContext                    │
-└────────────────────────────────────────────────────────────────────────┘
+[Request Login (username, password)]
+       │
+       ▼
+[UsernamePasswordAuthenticationFilter] ──► Tạo Authentication Token (chưa xác thực)
+       │
+       ▼
+[AuthenticationManager] (ProviderManager điều phối)
+       │
+       ▼
+[DaoAuthenticationProvider]
+  ├─ 1. UserDetailsService: Tìm User trong Database theo username
+  └─ 2. PasswordEncoder:    BCrypt so khớp raw password vs DB hash
+       │ (Mật khẩu chính xác)
+       ▼
+[Authentication (Đã xác thực: Authenticated = true, kèm UserDetails & Roles)]
+       │
+       ▼
+[SecurityContextHolder] ──► [SecurityContext] (Lưu danh tính cho Thread hiện tại)
 ```
 
 ### Các thành phần cốt lõi:
@@ -5661,7 +5419,7 @@ Khi một user gửi yêu cầu đăng nhập (username + password), hệ thốn
    - Nơi lưu trữ thông tin của người dùng đang thực hiện request hiện tại (`Authentication` object).
    - Được gắn vào `ThreadLocal` của mỗi request thread.
    - Để lấy thông tin user hiện tại ở bất kỳ đâu trong code:
-     ```java
+     ```
      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
      String currentUsername = auth.getName();
      ```
@@ -5677,7 +5435,7 @@ Khi một user gửi yêu cầu đăng nhập (username + password), hệ thốn
 4. **`UserDetailsService` & `UserDetails`**:
    - **`UserDetails`**: Interface đại diện cho hồ sơ user của Spring Security (gồm username, password, authorities, trạng thái khóa tài khoản).
    - **`UserDetailsService`**: Interface chỉ có **duy nhất 1 phương thức**:
-     ```java
+     ```
      UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
      ```
 
@@ -5686,7 +5444,7 @@ Khi một user gửi yêu cầu đăng nhập (username + password), hệ thốn
 ## 3. Triển khai code thực tế (Spring Boot 3.x)
 
 ### Bước 1: Tạo Entity hoặc Adaptor triển khai `UserDetails`
-```java
+```
 package com.example.app.security;
 
 import com.example.app.entity.UserEntity;
@@ -5734,7 +5492,7 @@ public class CustomUserDetails implements UserDetails {
 ```
 
 ### Bước 2: Triển khai `UserDetailsService`
-```java
+```
 package com.example.app.security;
 
 import com.example.app.repository.UserRepository;
@@ -5762,7 +5520,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 ### Bước 3: Cấu hình `SecurityFilterChain` trong Spring Boot 3.x
 Từ Spring Security 6.x (Spring Boot 3.x), không còn dùng `WebSecurityConfigurerAdapter` mà sử dụng `SecurityFilterChain` Bean với Lambda DSL:
 
-```java
+```
 package com.example.app.config;
 
 import com.example.app.security.CustomUserDetailsService;
@@ -5872,8 +5630,9 @@ public class SecurityConfig {
   5. Nếu sai: Ném ra ngoại lệ `BadCredentialsException`.
 
 ---
+*Thực hành:* Cấu hình `SecurityFilterChain` với Spring Boot 3.x, tắt form login mặc định và cho phép public các endpoint Swagger `/swagger-ui/**`.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-6-chapter-03"></a>
 
@@ -5897,7 +5656,7 @@ Một chuỗi JWT gồm 3 phần được phân tách bằng dấu chấm (`.`):
 
 $$\text{JWT} = \underbrace{\text{Header}}_{\text{Base64Url}} \,.\, \underbrace{\text{Payload}}_{\text{Base64Url}} \,.\, \underbrace{\text{Signature}}_{\text{Mã băm bí mật}}$$
 
-```text
+```
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
 \_________________________________/ \____________________________________________________________________/ \____________________________________________/
              Header                                                 Payload                                                     Signature
@@ -5905,7 +5664,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4
 
 ### A. Header
 Chứa loại token (`JWT`) và thuật toán ký mã hóa sử dụng (thường là `HS256` hoặc `RS256`):
-```json
+```
 {
   "alg": "HS256",
   "typ": "JWT"
@@ -5916,7 +5675,7 @@ Chứa loại token (`JWT`) và thuật toán ký mã hóa sử dụng (thườn
 Chứa dữ liệu cần truyền tải (Không bao giờ để thông tin nhạy cảm như password vào đây vì ai cũng có thể giải mã Base64 để xem):
 - **Registered Claims**: `sub` (Subject - username/id), `iat` (Issued At), `exp` (Expiration Time).
 - **Custom Claims**: `role`, `userId`, `permissions`.
-```json
+```
 {
   "sub": "user@example.com",
   "role": "ROLE_USER",
@@ -5935,50 +5694,21 @@ $$\text{Signature} = \text{HMACSHA256}(\text{Base64Url}(\text{Header}) + "." + \
 ## 3. Quy trình Access Token & Refresh Token Flow
 
 ```
-┌──────────────┐                ┌──────────────────────────────┐                ┌──────────────┐
-│    Client    │                │        Backend Server        │                │   Database   │
-└──────┬───────┘                └──────────────┬───────────────┘                └──────┬───────┘
-       │                                       │                                       │
-═══════╪═══════════════════════════════════════╪═══════════════════════════════════════╪═══════
-       │ GIAI ĐOẠN 1: ĐĂNG NHẬP & CẤP TOKEN CẶP (ACCESS TOKEN + REFRESH TOKEN)
-═══════╪═══════════════════════════════════════╪═══════════════════════════════════════╪═══════
-       │                                       │                                       │
-       │ 1. POST /auth/login (email, password) │                                       │
-       │ ────────────────────────────────────► │                                       │
-       │                                       │ 2. Kiểm tra tài khoản & mật khẩu      │
-       │                                       │ ────────────────────────────────────► │
-       │                                       │ ◄──────────────────────────────────── │
-       │ 3. Trả về Access Token (15 phút)      │                                       │
-       │    + Refresh Token (7 ngày)           │                                       │
-       │ ◄──────────────────────────────────── │                                       │
-       │                                       │                                       │
-═══════╪═══════════════════════════════════════╪═══════════════════════════════════════╪═══════
-       │ GIAI ĐOẠN 2: SỬ DỤNG ACCESS TOKEN ĐỂ GỌI API
-═══════╪═══════════════════════════════════════╪═══════════════════════════════════════╪═══════
-       │                                       │                                       │
-       │ 4. GET /api/v1/orders                 │                                       │
-       │    Header: Authorization: Bearer <JWT>│                                       │
-       │ ────────────────────────────────────► │ Kiểm tra chữ ký & hạn dùng (exp)     │
-       │ 5. 200 OK (Trả về danh sách đơn hàng) │                                       │
-       │ ◄──────────────────────────────────── │                                       │
-       │                                       │                                       │
-═══════╪═══════════════════════════════════════╪═══════════════════════════════════════╪═══════
-       │ GIAI ĐOẠN 3: ACCESS TOKEN HẾT HẠN & DÙNG REFRESH TOKEN ĐỔI TOKEN MỚI
-═══════╪═══════════════════════════════════════╪═══════════════════════════════════════╪═══════
-       │                                       │                                       │
-       │ 6. GET /api/v1/orders (Token hết hạn) │                                       │
-       │ ────────────────────────────────────► │ Hạn token < thời gian hiện tại        │
-       │ 7. 401 Unauthorized (Token Expired)   │                                       │
-       │ ◄──────────────────────────────────── │                                       │
-       │                                       │                                       │
-       │ 8. POST /auth/refresh-token           │                                       │
-       │    Body: { refreshToken: "..." }      │                                       │
-       │ ────────────────────────────────────► │ 9. Kiểm tra Refresh Token hợp lệ?    │
-       │                                       │ ────────────────────────────────────► │
-       │                                       │ ◄──────────────────────────────────── │
-       │ 10. Cấp Access Token mới (15 phút)    │                                       │
-       │ ◄──────────────────────────────────── │                                       │
-       ▼                                       ▼                                       ▼
+Client                          Backend Server                         Database
+  │                                   │                                   │
+  ├── 1. POST /auth/login ───────────►│── 2. Kiểm tra tài khoản & pass ──►│
+  │                                   │◄──────────────────────────────────┤
+  │◄── 3. Trả Access & Refresh Token ─┤ (AT: 15 phút, RT: 7 ngày lưu DB)  │
+  │                                   │                                   │
+  ├── 4. GET /api kèm Bearer Token ──►│ (Kiểm tra chữ ký JWT hợp lệ)      │
+  │◄── 5. 200 OK (Trả dữ liệu API) ───┤                                   │
+  │                                   │                                   │
+  ├── 6. GET /api (Token hết hạn) ───►│ (401 Unauthorized - Token Expired)│
+  │◄── 7. Lỗi 401 ────────────────────┤                                   │
+  │                                   │                                   │
+  ├── 8. POST /auth/refresh-token ───►│── 9. Kiểm tra Refresh Token ─────►│
+  │    (kèm refreshToken)             │◄──────────────────────────────────┤
+  │◄── 10. Cấp cặp Token mới ─────────┤                                   │
 ```
 
 ---
@@ -5986,7 +5716,7 @@ $$\text{Signature} = \text{HMACSHA256}(\text{Base64Url}(\text{Header}) + "." + \
 ## 4. Cài đặt JWT Service với thư viện `jjwt`
 
 Thêm dependency trong `pom.xml`:
-```xml
+```
 <dependency>
     <groupId>io.jsonwebtoken</groupId>
     <artifactId>jjwt-api</artifactId>
@@ -6007,7 +5737,7 @@ Thêm dependency trong `pom.xml`:
 ```
 
 ### Class `JwtService`:
-```java
+```
 package com.example.app.security;
 
 import io.jsonwebtoken.Claims;
@@ -6090,7 +5820,7 @@ public class JwtService {
 
 Bộ lọc này sẽ can thiệp vào từng request để trích xuất Header `Authorization: Bearer <token>`:
 
-```java
+```
 package com.example.app.security;
 
 import jakarta.servlet.FilterChain;
@@ -6161,7 +5891,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 ```
 
 ### Đăng ký Filter vào `SecurityConfig`:
-```java
+```
 http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 ```
 
@@ -6199,8 +5929,9 @@ Vì JWT là Stateless (Server không lưu trạng thái), khi người dùng b�
   3. **Lưu `token_version` trong Database:** Bảng `users` lưu cột `token_version = 1`. Đưa số `1` vào claims của JWT. Khi user đổi mật khẩu hoặc bấm đăng xuất khỏi mọi thiết bị $\rightarrow$ Tăng `token_version` trong DB lên `2`. Các token cũ mang version `1` sẽ tự động bị coi là không hợp lệ khi kiểm tra.
 
 ---
+*Thực hành:* Viết API `POST /auth/refresh-token` nhận Refresh Token, kiểm tra trong DB và cấp lại Access Token mới.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-6-chapter-04"></a>
 
@@ -6213,37 +5944,16 @@ Vì JWT là Stateless (Server không lưu trạng thái), khi người dùng b�
 **RBAC** là mô hình quản lý quyền truy cập hệ thống dựa trên vai trò (Role) của người dùng. Thay vì cấp quyền trực tiếp cho từng cá nhân, quyền hạn (Permission/Privilege) được gán vào Vai trò, và Người dùng được gán một hoặc nhiều vai trò.
 
 ```
-┌───────────────────────────────────────┐
-│           Người dùng (User)           │
-│   (Ví dụ: account 'nguyenvana')       │
-└───────────────────┬───────────────────┘
-                    │
-                    │ Được gán (Assigned to)
-                    ▼
-┌───────────────────────────────────────┐
-│        Vai trò (Roles: ROLE_*)        │
-│   • ROLE_ADMIN                        │
-│   • ROLE_STAFF                        │
-│   • ROLE_USER                         │
-└───────────────────┬───────────────────┘
-                    │
-                    │ Bao gồm một tập hợp (Contains)
-                    ▼
-┌───────────────────────────────────────┐
-│  Quyền hạn chi tiết (Authorities)     │
-│   • product:read                      │
-│   • product:create                    │
-│   • product:delete                    │
-└───────────────────┬───────────────────┘
-                    │
-                    │ Dùng để bảo vệ (Secures)
-                    ▼
-┌───────────────────────────────────────┐
-│    Endpoint / Nghiệp vụ (@PreAuth)    │
-│   • GET /api/v1/products              │
-│   • POST /api/v1/products             │
-│   • DELETE /api/v1/products/{id}      │
-└───────────────────────────────────────┘
+[Người dùng (User)] (vd: account 'nguyenvana')
+        │ Được gán (Assigned)
+        ▼
+[Vai trò (Roles)]   (ROLE_ADMIN, ROLE_STAFF, ROLE_USER)
+        │ Bao gồm tập hợp (Contains)
+        ▼
+[Quyền hạn (Authorities)] (product:read, product:create, product:delete)
+        │ Dùng để bảo vệ (Secures)
+        ▼
+[Endpoint / Nghiệp vụ] (@PreAuthorize("hasAuthority('product:create')"))
 ```
 
 ---
@@ -6265,7 +5975,7 @@ Spring Security quản lý mọi đặc quyền thông qua interface **`GrantedA
 
 Được cấu hình tập trung trong `SecurityFilterChain`:
 
-```java
+```
 @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
@@ -6297,7 +6007,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
 Phân quyền ở tầng URL rất hữu ích, nhưng trong các ứng dụng thực tế phức tạp, **Method-level Security** mạnh mẽ và linh hoạt hơn rất nhiều vì cho phép bảo vệ trực tiếp các hàm trong Controller hoặc Service.
 
 ### Bước 1: Kích hoạt trong cấu hình
-```java
+```
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity // Kích hoạt @PreAuthorize, @PostAuthorize, @Secured
@@ -6308,7 +6018,7 @@ public class SecurityConfig {
 
 ### Bước 2: Sử dụng `@PreAuthorize` với biểu thức SpEL (Spring Expression Language)
 
-```java
+```
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
@@ -6353,7 +6063,7 @@ Khi một người dùng đã đăng nhập (đã có Token hợp lệ) nhưng k
 
 Ta cần tạo một custom `AccessDeniedHandler` để trả về JSON format đồng nhất:
 
-```java
+```
 @Component
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
@@ -6378,7 +6088,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 ```
 
 Đăng ký vào `SecurityFilterChain`:
-```java
+```
 http.exceptionHandling(ex -> ex
     .accessDeniedHandler(customAccessDeniedHandler)
 );
@@ -6415,8 +6125,9 @@ http.exceptionHandling(ex -> ex
     `@PreAuthorize("#userId == authentication.principal.id")` (chỉ cho phép user tự sửa thông tin của chính mình).
 
 ---
+*Thực hành:* Viết API có `@PreAuthorize("hasRole('ADMIN')")`, dùng token của User thường gọi để xem có trả về đúng mã 403 từ `CustomAccessDeniedHandler` không.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-6-chapter-05"></a>
 
@@ -6435,7 +6146,7 @@ Ví dụ:
 - Server Backend: `http://localhost:8080` (Spring Boot)
 - **Khác Port (3000 vs 8080) $\rightarrow$ Khác Origin $\rightarrow$ Trình duyệt tự động chặn kết quả và báo lỗi CORS!**
 
-```text
+```
 Access to fetch at 'http://localhost:8080/api/v1/products' from origin 'http://localhost:3000' 
 has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
 ```
@@ -6454,7 +6165,7 @@ Khi gửi các request làm thay đổi dữ liệu hoặc có chứa Header tù
 
 Trong ứng dụng Spring Security, **CorsFilter phải được đặt trước chuỗi xác thực**, cấu hình thông qua `CorsConfigurationSource`:
 
-```java
+```
 package com.example.app.config;
 
 import org.springframework.context.annotation.Bean;
@@ -6498,7 +6209,7 @@ public class CorsConfig {
 ```
 
 Kích hoạt trong `SecurityFilterChain`:
-```java
+```
 @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
@@ -6564,16 +6275,15 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
 - **Cách phòng chống:** Dùng **CSRF Token** (mỗi form có 1 token ngẫu nhiên mà trang lạ không thể đọc được), hoặc cấu hình thuộc tính Cookie **`SameSite=Strict`** để cấm trình duyệt gửi cookie khi click từ trang web khác.
 
 ---
+*Thực hành:* Cấu hình `CorsConfigurationSource` cho phép Frontend `http://localhost:3000` gọi API với đầy đủ các method `GET, POST, PUT, DELETE`.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-7"></a>
 
 # PHASE 7: KIỂM THỬ, KIẾN TRÚC SẠCH & VẬN HÀNH DOCKER
 
 ---
-
-<div style="page-break-before: always;"></div>
 
 <a id="phase-7-chapter-01"></a>
 
@@ -6627,7 +6337,7 @@ Mỗi test case chuẩn mực nên được cấu trúc rõ ràng theo 3 bước
 
 ## 4. Các Assertions thông dụng trong JUnit 5
 
-```java
+```
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
@@ -6684,7 +6394,7 @@ class CalculatorTest {
 
 Giúp giảm trùng lặp code khi kiểm tra cùng một hàm logic với nhiều case khác nhau:
 
-```java
+```
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -6714,7 +6424,7 @@ Một bộ Unit Test chất lượng cao bắt buộc phải thỏa mãn 5 tiêu
 
 ### 6.2. Cấu trúc 3A (Arrange - Act - Assert) tổ chức một ca kiểm thử thế nào?
 Mọi hàm Unit Test chuẩn mực đều được chia thành 3 phần rõ ràng:
-```java
+```
 @Test
 void withdraw_shouldDeductBalance_whenBalanceIsSufficient() {
     // 1. Arrange (Chuẩn bị): Thiết lập dữ liệu đầu vào và trạng thái ban đầu
@@ -6736,8 +6446,9 @@ void withdraw_shouldDeductBalance_whenBalanceIsSufficient() {
   - **Mục tiêu thực tế:** Mức độ phủ lý tưởng của các dự án Backend chất lượng thường là **75% - 85%**, tập trung 100% cho các **Core Business Logic nhạy cảm** (tính tiền, bảo mật, xử lý giao dịch) và bỏ qua các hàm Getter/Setter, DTO, Config boiler-plate.
 
 ---
+*Thực hành:* Viết Unit Test bằng JUnit 5 cho hàm tính chiết khấu đơn hàng với `@ParameterizedTest` và `@CsvSource`.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-7-chapter-02"></a>
 
@@ -6758,22 +6469,15 @@ Khi viết Unit Test cho tầng **`Service`**, chúng ta chỉ muốn kiểm tra
 ## 2. Các Annotation cốt lõi của Mockito
 
 ```
-┌────────────────────────────────────────────────────────────────────────┐
-│                        TEST CLASS (@ExtendWith)                        │
+┌─────────────────────── TEST CLASS (@ExtendWith) ───────────────────────┐
 │                                                                        │
-│  ┌──────────────────────────────────────────────────────────────────┐  │
-│  │    @InjectMocks: Đối tượng thật cần kiểm thử                      │  │
-│  │    private UserServiceImpl userService;                          │  │
-│  └──────────────────▲──────────────────▲──────────────────▲─────────┘  │
-│                     │                  │                  │            │
-│                     │ Tự động tiêm     │ Tự động tiêm     │ Tự động    │
-│                     │ vào Constructor  │ vào Constructor  │ tiêm vào   │
-│                     │                  │                  │            │
-│  ┌──────────────────┴──┐    ┌──────────┴─────────┐    ┌───┴─────────┐  │
-│  │        @Mock        │    │       @Mock        │    │    @Mock    │  │
-│  │   UserRepository    │    │     UserMapper     │    │   Password  │  │
-│  │  (Giả lập CSDL)     │    │  (Giả lập Mapper)  │    │   Encoder   │  │
-│  └─────────────────────┘    └────────────────────┘    └─────────────┘  │
+│   @InjectMocks: private UserServiceImpl userService; (Class cần test)  │
+│                                ▲                                       │
+│          ┌─────────────────────┼─────────────────────┐                 │
+│          │ Tự động tiêm        │ Tự động tiêm        │ Tự động tiêm    │
+│          ▼                     ▼                     ▼                 │
+│   @Mock: UserRepository  @Mock: UserMapper    @Mock: PasswordEncoder   │
+│   (Giả lập CSDL)         (Giả lập Mapper)     (Giả lập mã hóa pass)    │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -6789,7 +6493,7 @@ Khi viết Unit Test cho tầng **`Service`**, chúng ta chỉ muốn kiểm tra
 ## 3. Cú pháp Stubbing & Verification
 
 ### A. Định nghĩa hành vi (Stubbing) với `when().thenReturn()`
-```java
+```
 // Khi repo được gọi với ID = 1L, hãy trả về Optional chứa user mẫu
 Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(mockUser));
 
@@ -6801,7 +6505,7 @@ Mockito.when(userRepository.save(any())).thenThrow(new RuntimeException("Databas
 ```
 
 ### B. Kiểm chứng tương tác (Verification) với `verify()`
-```java
+```
 // Kiểm tra method findById(1L) có được gọi đúng 1 lần không
 Mockito.verify(userRepository, Mockito.times(1)).findById(1L);
 
@@ -6813,7 +6517,7 @@ Mockito.verify(userRepository, Mockito.never()).save(any());
 
 ## 4. Viết Unit Test hoàn chỉnh cho tầng Service
 
-```java
+```
 package com.example.app.service;
 
 import com.example.app.dto.UserRequestDto;
@@ -6936,7 +6640,7 @@ class UserServiceImplTest {
 - **Vấn đề:** Đôi khi phương thức của bạn gọi `userRepository.save(entity)`, nhưng `entity` này được tạo ra bên trong thân hàm, bạn không có tham chiếu ở ngoài để `assertEquals()`.
 - **Giải pháp `ArgumentCaptor`:**
   Cho phép "bắt trộm" chính xác đối tượng đã được truyền vào hàm mock để kiểm tra từng trường dữ liệu:
-  ```java
+  ```
   ArgumentCaptor<UserEntity> userCaptor = ArgumentCaptor.forClass(UserEntity.class);
   verify(userRepository).save(userCaptor.capture());
 
@@ -6946,8 +6650,9 @@ class UserServiceImplTest {
   ```
 
 ---
+*Thực hành:* Viết Unit Test cho `OrderService` dùng `@Mock` cho `OrderRepository` và `@InjectMocks` cho Service, kiểm tra hàm `createOrder`.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-7-chapter-03"></a>
 
@@ -6981,7 +6686,7 @@ Nếu chỉ cần kiểm tra xem Controller có nhận đúng URL, đọc đúng
 ```
 
 ### Triển khai code kiểm thử Controller với MockMvc:
-```java
+```
 package com.example.app.controller;
 
 import com.example.app.dto.UserRequestDto;
@@ -7059,7 +6764,7 @@ Nhiều dự án dùng H2 DB để chạy test cho tiện. Tuy nhiên:
 ### B. Giải pháp hiện đại: Testcontainers
 **Testcontainers** là thư viện Java cho phép tự động khởi chạy một Docker container chứa Database thật (MySQL, PostgreSQL, Redis, Kafka) ngay khi bắt đầu chạy test, và tự động xóa container khi test hoàn thành.
 
-```java
+```
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
 class FullApplicationIntegrationTest {
@@ -7106,7 +6811,7 @@ class FullApplicationIntegrationTest {
 
 ### 4.3. Làm sao đảm bảo dữ liệu test không bị "bẩn" (Dirty Data) làm ảnh hưởng tới các ca test khác?
 - Sử dụng annotation **`@Transactional` trên class hoặc hàm test**:
-  ```java
+  ```
   @SpringBootTest
   @Transactional // 👈 Phép màu của Spring Test
   class OrderServiceIntegrationTest { ... }
@@ -7115,8 +6820,9 @@ class FullApplicationIntegrationTest {
   - Nhờ đó, Database luôn sạch sẽ và các bài test hoàn toàn độc lập, không làm sai lệch số lượng bản ghi của nhau.
 
 ---
+*Thực hành:* Viết 1 bài Slice Test dùng `@WebMvcTest` kiểm tra Controller trả về lỗi 400 khi body JSON vi phạm `@NotBlank`.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-7-chapter-04"></a>
 
@@ -7135,26 +6841,18 @@ Nguyên tắc cốt lõi của Clean Architecture: **Quy tắc phụ thuộc (De
 > **Các tầng bên ngoài chỉ được phụ thuộc vào các tầng bên trong, tầng bên trong tuyệt đối KHÔNG ĐƯỢC biết gì về tầng bên ngoài!**
 
 ```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│ 1. FRAMEWORKS & DRIVERS (Tầng Ngoại Vi - Web, DB, Devices, UI, External Interfaces)     │
-│    [Web MVC / REST]       [MySQL / Spring Data JPA]       [VNPay / Email Service]      │
-│  ┌──────────────────────────────────────────────────────────────────────────────────┐  │
-│  │ 2. INTERFACE ADAPTERS (Tầng Chuyển Đổi - Controllers, Gateways, Presenters)      │  │
-│  │    [DTOs & Controllers]                    [Repository Implementations / DAOs]   │  │
-│  │  ┌────────────────────────────────────────────────────────────────────────────┐  │  │
-│  │  │ 3. APPLICATION BUSINESS RULES (Tầng Ứng Dụng - Use Cases / Services)       │  │  │
-│  │  │    [CreateUserUseCase]                  [OrderProcessingService]           │  │  │
-│  │  │  ┌──────────────────────────────────────────────────────────────────────┐  │  │  │
-│  │  │  │ 4. ENTERPRISE BUSINESS RULES (Tầng Cốt Lõi - Domain Entities)        │  │  │  │
-│  │  │  │    [Domain Models: User, Order, Product]                             │  │  │  │
-│  │  │  │    (Java thuần khiết POJO, KHÔNG phụ thuộc Spring, JPA hay DB)       │  │  │  │
-│  │  │  └──────────────────────────────────▲───────────────────────────────────┘  │  │  │
-│  │  │                                     │ Phụ thuộc hướng vào tâm            │  │  │
-│  │  └─────────────────────────────────────┼────────────────────────────────────┘  │  │
-│  │                                        │ (Dependency Rule)                     │  │
-│  └────────────────────────────────────────┼───────────────────────────────────────┘  │
-│                                           │                                          │
-└───────────────────────────────────────────┴──────────────────────────────────────────┘
+┌─────────────── CLEAN ARCHITECTURE (Phụ thuộc hướng vào tâm) ───────────────┐
+│ 1. FRAMEWORKS & DRIVERS (Tầng Ngoại Vi: Web MVC, JPA, MySQL, Mail...)      │
+│   ┌─────────────────────────────────────────────────────────────────────┐   │
+│   │ 2. INTERFACE ADAPTERS (Chuyển Đổi: Controllers, DTOs, Repo Impls)   │   │
+│   │   ┌─────────────────────────────────────────────────────────────┐   │   │
+│   │   │ 3. APPLICATION RULES (Ứng Dụng: UseCases, Services)         │   │   │
+│   │   │   ┌─────────────────────────────────────────────────────┐   │   │   │
+│   │   │   │ 4. ENTERPRISE RULES (Cốt Lõi: Domain Entities POJO) │   │   │   │
+│   │   │   └─────────────────────────────────────────────────────┘   │   │   │
+│   │   └─────────────────────────────────────────────────────────────┘   │   │
+│   └─────────────────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -7163,7 +6861,7 @@ Nguyên tắc cốt lõi của Clean Architecture: **Quy tắc phụ thuộc (De
 
 Thay vì gom tất cả Controller vào một thư mục, gom tất cả Service vào một thư mục (`Package by Layer`), các dự án lớn ưu tiên tổ chức theo **Tính năng (Package by Feature)** để tăng tính đóng gói:
 
-```text
+```
 src/main/java/com/example/app/
 ├── common/                     <-- Các tiện ích dùng chung (BaseResponse, Exception, Utils)
 │   ├── exception/
@@ -7195,7 +6893,7 @@ src/main/java/com/example/app/
 ### Pattern 1: Strategy Pattern (Xử lý đa cổng thanh toán)
 Tránh dùng chuỗi `if-else` hoặc `switch-case` dài dòng khi cần xử lý nhiều phương thức thanh toán (`VNPAY`, `MOMO`, `ZALOPAY`).
 
-```java
+```
 // 1. Khai báo Strategy Interface
 public interface PaymentStrategy {
     PaymentType getType();
@@ -7253,7 +6951,7 @@ public class PaymentContext {
 ### Pattern 2: Event-Driven Pattern với `ApplicationEventPublisher`
 Tách rời luồng xử lý chính với các tác vụ phụ trợ (như gửi email xác nhận, cộng điểm thưởng):
 
-```java
+```
 // 1. Tạo Sự Kiện (Event)
 public record OrderPlacedEvent(Long orderId, String customerEmail, BigDecimal totalAmount) {}
 
@@ -7318,8 +7016,9 @@ public class EmailNotificationListener {
   - Sau này nếu bạn muốn làm thêm tính năng: "Cộng điểm tích lũy" hay "Bắn thông báo qua Telegram", bạn chỉ cần viết thêm `BonusPointsListener` mới mà **hoàn toàn không cần sửa 1 dòng code nào trong `OrderService`** (Tuân thủ chuẩn Open/Closed Principle).
 
 ---
+*Thực hành:* Tạo 1 event `UserRegisteredEvent`, viết `@EventListener` có `@Async` để giả lập gửi email chào mừng bất đồng bộ.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-7-chapter-05"></a>
 
@@ -7341,7 +7040,7 @@ public class EmailNotificationListener {
 
 Trong Spring Boot 3.x, không dùng `springfox` (đã lỗi thời), ta sử dụng thư viện **`springdoc-openapi-starter-webmvc-ui`**:
 
-```xml
+```
 <dependency>
     <groupId>org.springdoc</groupId>
     <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -7358,7 +7057,7 @@ Sau khi thêm dependency và chạy ứng dụng, truy cập vào đường dẫ
 
 Để xuất hiện nút **Authorize 🔓** trên giao diện Swagger UI (cho phép dán JWT token và test các API có bảo mật), ta tạo class cấu hình `OpenApiConfig`:
 
-```java
+```
 package com.example.app.config;
 
 import io.swagger.v3.oas.models.Components;
@@ -7412,7 +7111,7 @@ public class OpenApiConfig {
 | `@Schema(description, example)` | Trên trường của DTO | Mô tả ý nghĩa của trường dữ liệu và cung cấp giá trị ví dụ mẫu trên Swagger. |
 
 ### Ví dụ áp dụng thực tế:
-```java
+```
 @Tag(name = "Product Management", description = "Quản lý danh mục và sản phẩm trong kho")
 @RestController
 @RequestMapping("/api/v1/products")
@@ -7457,7 +7156,7 @@ public class ProductController {
 ### 4.3. Làm sao bảo vệ trang Swagger UI trên môi trường Production?
 Trang Swagger UI phơi bày toàn bộ danh sách endpoint, tham số và cấu trúc Database của bạn cho công chúng. Trên Production, bạn phải bảo vệ bằng 1 trong 3 cách:
 1. **Tắt hoàn toàn Swagger trên Production bằng Profile:**
-   ```yaml
+```
    # application-prod.yml
    springdoc:
      api-docs:
@@ -7469,8 +7168,9 @@ Trang Swagger UI phơi bày toàn bộ danh sách endpoint, tham số và cấu 
 3. **Đổi đường dẫn mặc định:** Đổi `/swagger-ui.html` thành một URL bí mật nội bộ bằng cấu hình `springdoc.swagger-ui.path=/internal-secret-docs`.
 
 ---
+*Thực hành:* Tích hợp dependency `springdoc-openapi-starter-webmvc-ui`, cấu hình nút Authorize nhập Bearer Token và mở `/swagger-ui/index.html` gọi thử API.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phase-7-chapter-06"></a>
 
@@ -7488,27 +7188,16 @@ Sự khác biệt về phiên bản Java, cấu hình hệ điều hành (Window
 - Chạy giống hệt nhau trên máy Mac, Windows, Linux server hay Cloud (AWS, GCP).
 
 ```
-┌────────────────────────────────────────────────────────┐
-│     Source Code (Mã nguồn Java Spring Boot + pom.xml)  │
-└───────────────────────────┬────────────────────────────┘
-                            │
-                            │ Cung cấp chỉ dẫn nạp & đóng gói
-                            ▼
-┌────────────────────────────────────────────────────────┐
-│       Dockerfile (Tập lệnh build JAR & thiết lập JRE)  │
-└───────────────────────────┬────────────────────────────┘
-                            │
-                            │ docker build -t my-app .
-                            ▼
-┌────────────────────────────────────────────────────────┐
-│     Docker Image (Bản thiết kế đóng gói độc lập)       │
-└───────────────────────────┬────────────────────────────┘
-                            │
-                            │ docker run -p 8080:8080 my-app
-                            ▼
-┌────────────────────────────────────────────────────────┐
-│    Docker Container (Tiến trình đang chạy cô lập)      │
-└────────────────────────────────────────────────────────┘
+[Source Code] (Mã nguồn Java Spring Boot + pom.xml)
+      │
+      ▼ (Chỉ dẫn đóng gói)
+[Dockerfile]  (Tập lệnh build JAR & thiết lập JRE môi trường)
+      │
+      ▼ (docker build -t my-app .)
+[Docker Image] (Bản thiết kế đóng gói tĩnh, độc lập OS)
+      │
+      ▼ (docker run -p 8080:8080 my-app)
+[Docker Container] (Tiến trình đang chạy thực thi trong môi trường cô lập)
 ```
 
 ---
@@ -7518,7 +7207,7 @@ Sự khác biệt về phiên bản Java, cấu hình hệ điều hành (Window
 Kỹ thuật **Multi-stage build** giúp tách biệt quá trình compile (cần JDK và Maven cồng kềnh) với quá trình runtime (chỉ cần JRE siêu nhẹ), giúp giảm dung lượng image từ ~700MB xuống chỉ còn **~150MB**:
 
 Tạo file `Dockerfile` ngay tại thư mục gốc của project:
-```dockerfile
+```
 # ==========================================
 # GIAI ĐOẠN 1: BUILD JAR VỚI MAVEN & JDK
 # ==========================================
@@ -7576,7 +7265,7 @@ ENTRYPOINT ["java", "-XX:+UseG1GC", "-XX:MaxRAMPercentage=75.0", "-jar", "app.ja
 Thay vì phải chạy thủ công từng lệnh khởi động PostgreSQL, rồi sau đó mới khởi động Spring Boot, **Docker Compose** cho phép khởi chạy toàn bộ kiến trúc chỉ bằng **1 lệnh duy nhất**:
 
 Tạo file `docker-compose.yml` tại thư mục gốc:
-```yaml
+```
 version: '3.8'
 
 services:
@@ -7653,15 +7342,16 @@ networks:
 - **`ENTRYPOINT`:** Định nghĩa câu lệnh **cố định và bất biến** sẽ luôn luôn được chạy khi Container khởi động (ví dụ: `ENTRYPOINT ["java", "-jar", "app.jar"]`).
 - **`CMD`:** Cung cấp các **tham số mặc định** cho `ENTRYPOINT`. Các tham số này có thể dễ dàng bị **ghi đè (override)** khi người dùng truyền tham số từ dòng lệnh `docker run`.
 - **Thực tiễn tốt nhất cho Spring Boot:**
-  ```dockerfile
+```
   ENTRYPOINT ["java", "-jar", "app.jar"]
   CMD ["--spring.profiles.active=prod"]
   ```
   Nếu chạy `docker run my-app` $\rightarrow$ Profile sẽ là `prod`. Nếu chạy `docker run my-app --spring.profiles.active=dev` $\rightarrow$ Lệnh mới sẽ ghi đè tham số của `CMD` để chạy profile `dev` linh hoạt.
 
 ---
+*Thực hành:* Viết file `Dockerfile` Multi-stage build cho dự án Spring Boot, build image bằng `docker build -t my-app .` và chạy thử bằng `docker run -p 8080:8080 my-app`.
 
-<div style="page-break-before: always;"></div>
+---
 
 <a id="phu-luc-cheat-sheet"></a>
 
