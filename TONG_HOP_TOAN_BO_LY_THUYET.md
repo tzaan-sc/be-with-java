@@ -1,9 +1,4 @@
 # SỔ TAY BÁCH KHOA TOÀN THƯ LÝ THUYẾT JAVA BACKEND
-
-> **BẢN ĐẦY ĐỦ 100% NỘI DUNG (UNABRIDGED)**
-> - **Mục đích:** Biên soạn trọn vẹn toàn bộ 42 bài học lý thuyết từ Phase 0 đến Phase 7 phục vụ cho việc học tập chuyên sâu, tra cứu thực tế, in ấn và photocopy.
-> - **Định dạng tối ưu in ấn:** Mỗi chương đều được định cấu hình ngắt trang in (`<div style="page-break-before: always;"></div>`), giúp khi xuất file sang PDF hoặc in qua trình duyệt (Ctrl + P) mỗi chương sẽ tự động bắt đầu từ đầu trang mới, sơ đồ và code không bị đứt gãy giữa chừng.
-
 ---
 
 ## 📑 MỤC LỤC ĐIỀU HƯỚNG CHI TIẾT 42 CHƯƠNG
@@ -452,9 +447,6 @@ Việc tách riêng lớp **Service** tuân theo nguyên lý **Separation of Con
   - **Tác vụ gọi dịch vụ bên thứ ba:** Bắn webhook, ghi log phân tích tracking hành vi người dùng.
 
 ---
-*Hướng dẫn thực hành:* Đọc lại toàn bộ các bước trên, vẽ sơ đồ luồng trên giấy để nắm vững kiến thức nền tảng.
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -669,11 +661,6 @@ Accept: application/json
 5. **Caching Layer:** Đặt Redis Cache ở giữa App Server và Database để chặn 80-90% các request đọc (Read requests), ngăn Database bị nghẽn I/O.
 
 ---
-*Thực hành Ngày 03 & 04:* 
-1. Mở Chrome DevTools (F12) -> Tab **Network** -> Bấm F5 một trang web bất kỳ để xem các request: Method, Status Code, Headers.
-2. Mở Terminal gõ `curl -I https://google.com` để xem Header trả về có `HTTP/2` hay `Connection: keep-alive` không.
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -745,7 +732,7 @@ Accept: application/json
 
 ---
 
-## 4. Công cụ kiểm tra mạng qua CLI (Thực hành Ngày 05 & 06)
+## 4. Công cụ kiểm tra mạng qua CLI
 ```bash
 # 1. ping: Kiểm tra xem máy chủ đích có online không và đo độ trễ (latency RTT)
 ping google.com
@@ -812,11 +799,6 @@ curl -o /dev/null -s -w 'DNS: %{time_namelookup}s | Connect TCP: %{time_connect}
   1. **Không biết tình trạng máy chủ (No Health Check):** Nếu 1 trong các server bị sập (die), DNS vẫn vô tư phát IP đó cho người dùng, khiến người dùng gặp lỗi trắng trang hoặc không thể kết nối.
   2. **Vấn đề do Cache (TTL):** Trình duyệt hoặc nhà mạng ISP lưu cache IP đó hàng chục phút, khiến lưu lượng không thể phân bổ đều và không thể ngắt người dùng khỏi server gặp sự cố ngay lập tức.
 - **Khuyến nghị:** DNS Round-Robin chỉ nên dùng cho tầng phân phối vùng địa lý (GeoDNS). Để cân bằng tải thực tế cho Backend, nên dùng Load Balancer chuyên dụng (Nginx, HAProxy, AWS ALB) có cơ chế Health Check tự động loại bỏ server lỗi.
-
----
-*Thực hành Ngày 05 & 06:*
-1. Mở Terminal gõ `nslookup google.com` để xem các IP và kiểm tra thời gian phản hồi.
-2. Thử gõ `ping 127.0.0.1` (IP Loopback localhost) để kiểm tra card mạng máy tính nội bộ của bạn.
 
 ---
 
@@ -990,9 +972,6 @@ Nếu log của Spring Boot hoàn toàn trống mà client nhận `500`:
     $$\text{pool\_size} = 2 \times \text{Core CPU} + \text{Số lượng ổ cứng}$$
     Ví dụ máy chủ DB có 4 Core CPU $\rightarrow$ connection pool tối ưu chỉ khoảng $10 - 15$ kết nối. Đặt connection pool quá lớn sẽ khiến Database tranh chấp khóa và nghẽn I/O đĩa cứng.
 - **Tương quan:** `maxThreads` của Tomcat luôn lớn hơn `pool_size` của HikariCP vì không phải request nào cũng cần query Database (có request chỉ kiểm tra logic hoặc đọc cache Redis).
-
----
-*Thực hành Ngày 07 & 08:* Cài đặt Nginx làm Reverse Proxy trỏ về ứng dụng hoặc dùng Docker để chạy thử Nginx kết hợp Tomcat.
 
 ---
 
@@ -1220,9 +1199,6 @@ final double TAX_RATE = 0.1;   // Không thể thay đổi giá trị sau khi g�
   - Khi ép kiểu tường minh sang `(byte)`, Java cắt lấy đúng **8 bit cuối**: `10000010`.
   - Bit đầu tiên là `1` đại diện cho số âm.
   - Giá trị bù 2 của `10000010` là: $-(2^7) + 2^1 = -128 + 2 = -126$.
-
----
-*Thực hành:* Tạo class `Main`, khai báo đầy đủ 8 kiểu primitive, thử ép kiểu ngầm định & tường minh, và chạy các ví dụ chia số nguyên.
 
 ---
 
@@ -1498,9 +1474,6 @@ for (int s : scores) {
   - Không thể trỏ phần tử sang đối tượng mới (`u = new User()`), nhưng **CÓ THỂ** thay đổi trạng thái bên trong đối tượng (`u.setName("Mới")`) vì cả biến tạm và mảng đều trỏ vào cùng một ô nhớ trên Heap.
 
 ---
-*Thực hành:* Viết hàm phân loại học lực (if-else), in ngày trong tuần (switch), tính tổng số chẵn trong mảng (for-each), tìm Max/Min trong mảng (for).
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -1772,9 +1745,6 @@ void processData() {
   4. **Dùng `ThreadLocal` không gọi `.remove()`:** Trong môi trường Thread Pool (như Tomcat), thread được tái sử dụng. Dữ liệu trong `ThreadLocal` nếu không dọn sẽ tích tụ dần làm tràn bộ nhớ.
 
 ---
-*Thực hành:* Vẽ sơ đồ bộ nhớ Stack/Heap cho 1 đoạn code có gọi hàm, viết code chứng minh Pass-by-Value với int và Object.
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -2036,9 +2006,6 @@ System.out.println("StringBuilder: " + (end - start) + "ms"); // ~3ms
   System.out.println(s2 == s3);     // true
   ```
 - *Ứng dụng:* Dùng khi đọc một lượng cực lớn dữ liệu từ file/database có nhiều chuỗi trùng lặp (ví dụ: tên thành phố, mã quốc gia) để đưa vào Pool giúp tiết kiệm dung lượng RAM.
-
----
-*Thực hành:* Code kiểm chứng `==` vs `.equals()` với String literal và `new String()`, đo thời gian nối 100.000 chuỗi bằng String vs StringBuilder.
 
 ---
 
@@ -2396,9 +2363,6 @@ try {
 - **Catch late (Bắt lỗi càng muộn càng tốt):** Không nên vội vàng đặt `try-catch` ở khắp mọi hàm nhỏ nếu hàm đó không biết cách khắc phục lỗi. Hãy để ngoại lệ nổi lên (bubble up) tới các tầng trên cùng (như Controller hoặc Global Exception Handler) - nơi có bức tranh toàn cảnh và thẩm quyền quyết định: ghi log ra sao, rollback transaction thế nào, và trả thông điệp gì cho người dùng.
 
 ---
-*Thực hành:* Viết code bắt `ArithmeticException` và `ArrayIndexOutOfBoundsException`, tạo `ResourceNotFoundException` kế thừa `RuntimeException`, thử `try-with-resources` đọc file.
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -2640,9 +2604,6 @@ public class Circle extends Shape {
   3. Áp dụng Design Pattern (ví dụ: Template Method Pattern), ép buộc các giá trị mặc định phải có ngay khi tạo đối tượng con.
 
 ---
-*Thực hành:* Tạo class `Employee` → `Manager` với kế thừa, viết `BankAccount` minh hoạ Encapsulation, tạo `Shape` abstract → `Circle`, `Rectangle`.
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -2806,9 +2767,6 @@ class C implements A, B {
   2. Xung đột Constructor (thứ tự gọi `super()` từ cha nào trước?).
   3. Lỗi Diamond Problem khó lường lúc runtime.
 - **Với Interface:** Thuần túy là "đặc tả giao diện" (chỉ có tên hàm và tham số). Kể cả 2 interface có hàm trùng tên, class con cũng chỉ cần triển khai một thân hàm duy nhất để thỏa mãn cả 2 giao diện. Không có xung đột bộ nhớ, không có vấn đề Constructor, do đó hoàn toàn an toàn và trong sáng.
-
----
-*Thực hành:* Tạo `PaymentService` interface → `VnPayService`, `MomoService` implements. Thêm default method. Thử Diamond Problem.
 
 ---
 
@@ -3030,9 +2988,6 @@ public class PaymentFactory {
 $\rightarrow$ **Khi cần thêm cổng thanh toán ZaloPay:** Ta chỉ cần tạo class mới `ZaloPayGateway implements PaymentGateway`. Class `PaymentFactory` hoàn toàn **đóng để sửa (không cần sửa một dòng code nào)** nhưng hệ thống vẫn **mở rộng thêm tính năng mới thành công**!
 
 ---
-*Thực hành:* Phân tích 1 class vi phạm SRP, refactor lại. Viết code minh hoạ DIP bằng Interface + Constructor Injection.
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -3246,9 +3201,6 @@ Index 7: [ TreeNode: Red-Black Tree (Khi collision > 8 phần tử -> O(log n)) 
   - Các thao tác đọc (`get()`) diễn ra hoàn toàn không cần lock (**Lock-free**) nhờ dùng biến `volatile`, đem lại tốc độ siêu cao trong môi trường Backend đa luồng.
 
 ---
-*Thực hành:* Dùng ArrayList, HashSet, HashMap thao tác CRUD. Test trùng lặp trong Set. Duyệt Map bằng entrySet().
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -3384,9 +3336,6 @@ public void addNumbers(List<? super Integer> list) {
 - **Cách giải quyết thực tế:**
   - Truyền đối tượng `Class<T> clazz` vào constructor và dùng Reflection: `clazz.getDeclaredConstructor().newInstance()`.
   - Hoặc tạo mảng Object rồi ép kiểu: `(T[]) new Object[size];` (như cách mã nguồn của `ArrayList` trong JDK đang làm).
-
----
-*Thực hành:* Tạo `ApiResponse<T>`, viết hàm `sumOfList(List<? extends Number>)`, áp dụng PECS.
 
 ---
 
@@ -3597,9 +3546,6 @@ String email = userOpt
   ```
 
 ---
-*Thực hành:* Lọc danh sách user > 18 tuổi bằng Stream, gom nhóm sản phẩm theo category, dùng Optional xử lý findById().
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -3696,9 +3642,6 @@ Set-Cookie: sessionId=abc123
 - **`application/json`:**
   - Dữ liệu ở định dạng JSON có cấu trúc phức tạp: mảng lồng nhau, object lồng object, kiểu dữ liệu boolean, number rõ ràng.
   - **Là chuẩn số 1 tuyệt đối cho các RESTful API hiện đại**, giao tiếp giữa Frontend (React/Vue/Flutter) với Backend (Spring Boot).
-
----
-*Thực hành:* Dùng Postman hoặc cURL gửi cả 2 loại `Content-Type` để quan sát sự khác nhau trong Request Body.
 
 ---
 
@@ -3798,9 +3741,6 @@ PATCH /api/v1/users/1
 - **`200 OK`:** Yêu cầu thành công và Server **có trả về dữ liệu** trong Response Body. Dùng cho hầu hết các request `GET`, `PUT`, `PATCH` thành công.
 - **`201 Created`:** Yêu cầu thành công và **một tài nguyên mới vừa được khởi tạo** trong Database. Dùng cho `POST` tạo User, tạo Đơn hàng (kèm header `Location: /api/v1/orders/123`).
 - **`204 No Content`:** Yêu cầu thành công nhưng Server **cố tình không trả về dữ liệu gì** trong Response Body. Rất phổ biến khi thực hiện `DELETE /users/1` thành công, hoặc cập nhật nhanh không cần trả về entity.
-
----
-*Thực hành:* Mở Chrome DevTools kiểm tra status code của các thao tác Đăng nhập, Xem bài viết, Xóa bài viết.
 
 ---
 
@@ -3936,9 +3876,6 @@ DELETE /api/v1/orders/{orderId}/items/{itemId}  -> Xóa món hàng cụ thể kh
 ```
 
 ---
-*Thực hành:* Viết danh sách URL cho hệ thống quản lý Blog (posts, comments, tags) tuân thủ 100% chuẩn RESTful.
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -4046,9 +3983,6 @@ public class UserDto {
   Khi xuất ra JSON, key sẽ là `"order_id"` và `"customer_full_name"`.
 - **Hỗ trợ quyền truy cập (Access control):**
   - `@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)`: Chỉ cho phép nhận vào khi deserialize (tạo mới/cập nhật), nhưng khi serialize trả về response cho client thì tự động giấu đi (rất thích hợp cho trường `password`).
-
----
-*Thực hành:* Thử dùng `ObjectMapper` của Jackson serialize một object có `@JsonIgnore` và `@JsonProperty` ra chuỗi JSON.
 
 ---
 
@@ -4169,9 +4103,6 @@ curl -v http://localhost:8080/api/v1/health
   - Export Postman Collection và Environment ra file `.json`.
   - Chạy lệnh: `newman run my_collection.json -e my_env.json --reporters cli,junit`
   - Nhúng lệnh này vào GitHub Actions / GitLab CI để tự động test toàn bộ API mỗi khi developer push code mới lên repository.
-
----
-*Thực hành:* Tạo Postman Collection gồm 3 request: Login -> Lấy Token -> Tạo Order dùng Token đó.
 
 ---
 
@@ -4327,9 +4258,6 @@ Field Injection (`@Autowired private UserService userService;`) tuy viết ngắ
 - **Quy tắc vàng:** Các Bean Spring (Service, Controller, Repository) **bắt buộc phải là STATELESS** (không chứa biến instance lưu trạng thái người dùng; mọi dữ liệu phải truyền qua tham số hàm cục bộ nằm trên Stack của từng Thread).
 
 ---
-*Thực hành:* Tạo 1 Service dùng Constructor Injection với `@RequiredArgsConstructor` của Lombok, thử nghiệm in Hashcode của Bean để thấy tính chất Singleton.
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -4451,9 +4379,6 @@ Chạy: `java -jar app.jar --spring.profiles.active=prod`
   1. Trong file cấu hình: `spring.profiles.active=prod`
   2. Bằng biến môi trường (Environment Variable trên Docker/K8s): `SPRING_PROFILES_ACTIVE=prod`
   3. Bằng tham số dòng lệnh khi chạy file Jar: `java -jar app.jar --spring.profiles.active=prod`
-
----
-*Thực hành:* Tạo 2 file `application-dev.yml` và `application-prod.yml`, chạy thử với tham số `--spring.profiles.active=dev` để kiểm chứng.
 
 ---
 
@@ -4607,9 +4532,6 @@ Khi viết `@GetMapping("/users/{id}")`:
   - Giúp API tuân thủ 100% chuẩn thiết kế RESTful chuyên nghiệp.
 
 ---
-*Thực hành:* Tạo cấu trúc package chuẩn cho thực thể `Product`, viết `ProductController` trả về `ResponseEntity` với các mã 200, 201, 204.
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -4729,9 +4651,6 @@ Trả trực tiếp Entity (`@Entity User`) ra Controller là một cạm bẫy 
        public UserResponse getById(@PathVariable @Min(1) Long id) // Ném ConstraintViolationException nếu id < 1
    }
    ```
-
----
-*Thực hành:* Tạo `UserRegisterRequest` có kiểm tra `@NotBlank` cho tên, `@Email` cho email, `@Size(min=8)` cho password, và bọc `@Valid` tại Controller.
 
 ---
 
@@ -4868,9 +4787,6 @@ public class GlobalExceptionHandler {
 ```
 
 ---
-*Thực hành:* Tạo `GlobalExceptionHandler` bắt `ResourceNotFoundException` trả về 404, và bắt `MethodArgumentNotValidException` trả về map lỗi trường 400.
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -4947,9 +4863,6 @@ Tạo Index không phải là "viên đạn bạc" (Silver Bullet), bạn không
 - **3NF (Third Normal Form - Dạng chuẩn 3):**
   - Đã đạt 2NF.
   - **Không có sự phụ thuộc bắc cầu (Transitive Dependency)** giữa các cột không khóa. Nếu cột A xác định cột B, và cột B xác định cột C $\rightarrow$ Phải tách C ra một bảng riêng (ví dụ: `order` lưu `customer_id`, không được lưu trực tiếp `customer_city` vào bảng `order` mà phải lưu ở bảng `customers`).
-
----
-*Thực hành:* Dùng `EXPLAIN ANALYZE SELECT * FROM users WHERE email = '...'` trong MySQL để xem câu query có đang dùng Index hay bị Full Table Scan.
 
 ---
 
@@ -5070,9 +4983,6 @@ public enum OrderStatus {
   - Dù bạn có đổi thứ tự, thêm bớt enum, dữ liệu trong Database vẫn nguyên vẹn 100% ngữ nghĩa và cực kỳ dễ đọc khi xem trực tiếp bằng SQL.
 
 ---
-*Thực hành:* Tạo entity `Order` có trường Enum dùng `STRING`, cấu hình `ddl-auto: update` trên local và kiểm tra bảng sinh ra trong MySQL.
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -5161,9 +5071,6 @@ public class ProductEntity {
 - **Quy tắc sử dụng chuẩn:**
   - **CHỈ NÊN DÙNG `CascadeType.ALL` (kèm `orphanRemoval = true`):** Cho mối quan hệ cha - con phụ thuộc tuyệt đối (Composition / Parent-Child), nơi mà thực thể con **không thể tồn tại độc lập** nếu thiếu cha. Ví dụ: `Order` $\rightarrow$ `OrderItem`, `Post` $\rightarrow$ `Comment`.
   - **TUYỆT ĐỐI KHÔNG DÙNG:** Cho các mối quan hệ độc lập như `Product -> Category`, `User -> Role`.
-
----
-*Thực hành:* Tạo mối quan hệ 2 chiều giữa `Category` (One) và `Product` (Many), nhớ dùng `mappedBy` và đặt `fetch = FetchType.LAZY`.
 
 ---
 
@@ -5263,9 +5170,6 @@ List<CategoryEntity> findAll();
      List<CategoryEntity> findAll();
      ```
      Khai báo cho Spring Data JPA biết trường `products` cần được nạp Eager tức thì trong câu query này mà không cần viết lại câu JPQL.
-
----
-*Thực hành:* Bật `spring.jpa.show-sql: true` trong console để đếm số lượng câu query, viết `JOIN FETCH` để thấy số câu query giảm từ $1+N$ về còn duy nhất 1.
 
 ---
 
@@ -5380,9 +5284,6 @@ public class OrderService {
   2. Hoặc tự inject chính interface của Service vào bản thân (Self-autowiring).
 
 ---
-*Thực hành:* Viết 1 hàm chuyển tiền có `@Transactional(rollbackFor = Exception.class)`, thử quăng `RuntimeException` để kiểm tra số dư không bị trừ lẹm.
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -5469,9 +5370,6 @@ public ResponseEntity<Page<ProductResponse>> getProducts(
     SELECT * FROM products WHERE id > 200000 ORDER BY id ASC LIMIT 20;
     ```
   - **Hiệu năng:** Database dùng B-Tree Index nhảy thẳng tới `id = 200000` với tốc độ **$O(1)$ tức thì (dưới 5 mili-giây)**, bất kể bạn đang phân trang ở trang thứ 1 hay trang thứ 1 triệu!
-
----
-*Thực hành:* Viết API phân trang dùng `Pageable`, dùng Postman test thử truyền tham số `?page=0&size=5&sort=name,asc`.
 
 ---
 
@@ -5974,9 +5872,6 @@ public class SecurityConfig {
   5. Nếu sai: Ném ra ngoại lệ `BadCredentialsException`.
 
 ---
-*Thực hành:* Cấu hình `SecurityFilterChain` với Spring Boot 3.x, tắt form login mặc định và cho phép public các endpoint Swagger `/swagger-ui/**`.
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -6304,9 +6199,6 @@ Vì JWT là Stateless (Server không lưu trạng thái), khi người dùng b�
   3. **Lưu `token_version` trong Database:** Bảng `users` lưu cột `token_version = 1`. Đưa số `1` vào claims của JWT. Khi user đổi mật khẩu hoặc bấm đăng xuất khỏi mọi thiết bị $\rightarrow$ Tăng `token_version` trong DB lên `2`. Các token cũ mang version `1` sẽ tự động bị coi là không hợp lệ khi kiểm tra.
 
 ---
-*Thực hành:* Viết API `POST /auth/refresh-token` nhận Refresh Token, kiểm tra trong DB và cấp lại Access Token mới.
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -6523,9 +6415,6 @@ http.exceptionHandling(ex -> ex
     `@PreAuthorize("#userId == authentication.principal.id")` (chỉ cho phép user tự sửa thông tin của chính mình).
 
 ---
-*Thực hành:* Viết API có `@PreAuthorize("hasRole('ADMIN')")`, dùng token của User thường gọi để xem có trả về đúng mã 403 từ `CustomAccessDeniedHandler` không.
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -6673,9 +6562,6 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
   4. Trình duyệt tự động đính kèm Cookie ngân hàng hợp lệ của nạn nhân vào request chuyển tiền đó.
   5. Ngân hàng nhận được request kèm đúng Cookie của nạn nhân nên tưởng là lệnh thật $\rightarrow$ Chuyển tiền thành công cho hacker!
 - **Cách phòng chống:** Dùng **CSRF Token** (mỗi form có 1 token ngẫu nhiên mà trang lạ không thể đọc được), hoặc cấu hình thuộc tính Cookie **`SameSite=Strict`** để cấm trình duyệt gửi cookie khi click từ trang web khác.
-
----
-*Thực hành:* Cấu hình `CorsConfigurationSource` cho phép Frontend `http://localhost:3000` gọi API với đầy đủ các method `GET, POST, PUT, DELETE`.
 
 ---
 
@@ -6848,9 +6734,6 @@ void withdraw_shouldDeductBalance_whenBalanceIsSufficient() {
 - **Có nên chạy theo 100% Coverage?**
   - **KHÔNG NÊN.** 100% Coverage chỉ chứng minh rằng "mọi dòng code đã được đi qua", chứ **KHÔNG HỀ CHỨNG MINH code không có bug logic** (ví dụ bạn gọi hàm nhưng không viết câu `assertEquals()` nào thì coverage vẫn là 100% nhưng test hoàn toàn vô dụng!).
   - **Mục tiêu thực tế:** Mức độ phủ lý tưởng của các dự án Backend chất lượng thường là **75% - 85%**, tập trung 100% cho các **Core Business Logic nhạy cảm** (tính tiền, bảo mật, xử lý giao dịch) và bỏ qua các hàm Getter/Setter, DTO, Config boiler-plate.
-
----
-*Thực hành:* Viết Unit Test bằng JUnit 5 cho hàm tính chiết khấu đơn hàng với `@ParameterizedTest` và `@CsvSource`.
 
 ---
 
@@ -7063,9 +6946,6 @@ class UserServiceImplTest {
   ```
 
 ---
-*Thực hành:* Viết Unit Test cho `OrderService` dùng `@Mock` cho `OrderRepository` và `@InjectMocks` cho Service, kiểm tra hàm `createOrder`.
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -7233,9 +7113,6 @@ class FullApplicationIntegrationTest {
   ```
   - Khi đặt `@Transactional` trong bài test, Spring sẽ tự động **ROLLBACK toàn bộ dữ liệu về trạng thái ban đầu ngay sau khi hàm test kết thúc**, bất kể bài test đó Pass hay Fail!
   - Nhờ đó, Database luôn sạch sẽ và các bài test hoàn toàn độc lập, không làm sai lệch số lượng bản ghi của nhau.
-
----
-*Thực hành:* Viết 1 bài Slice Test dùng `@WebMvcTest` kiểm tra Controller trả về lỗi 400 khi body JSON vi phạm `@NotBlank`.
 
 ---
 
@@ -7441,9 +7318,6 @@ public class EmailNotificationListener {
   - Sau này nếu bạn muốn làm thêm tính năng: "Cộng điểm tích lũy" hay "Bắn thông báo qua Telegram", bạn chỉ cần viết thêm `BonusPointsListener` mới mà **hoàn toàn không cần sửa 1 dòng code nào trong `OrderService`** (Tuân thủ chuẩn Open/Closed Principle).
 
 ---
-*Thực hành:* Tạo 1 event `UserRegisteredEvent`, viết `@EventListener` có `@Async` để giả lập gửi email chào mừng bất đồng bộ.
-
----
 
 <div style="page-break-before: always;"></div>
 
@@ -7593,9 +7467,6 @@ Trang Swagger UI phơi bày toàn bộ danh sách endpoint, tham số và cấu 
    ```
 2. **Khóa bằng Spring Security:** Chỉ cho phép người dùng có vai trò `ROLE_ADMIN` hoặc tài khoản nội bộ (Internal IP) mới được mở trang `/swagger-ui/**`.
 3. **Đổi đường dẫn mặc định:** Đổi `/swagger-ui.html` thành một URL bí mật nội bộ bằng cấu hình `springdoc.swagger-ui.path=/internal-secret-docs`.
-
----
-*Thực hành:* Tích hợp dependency `springdoc-openapi-starter-webmvc-ui`, cấu hình nút Authorize nhập Bearer Token và mở `/swagger-ui/index.html` gọi thử API.
 
 ---
 
@@ -7787,9 +7658,6 @@ networks:
   CMD ["--spring.profiles.active=prod"]
   ```
   Nếu chạy `docker run my-app` $\rightarrow$ Profile sẽ là `prod`. Nếu chạy `docker run my-app --spring.profiles.active=dev` $\rightarrow$ Lệnh mới sẽ ghi đè tham số của `CMD` để chạy profile `dev` linh hoạt.
-
----
-*Thực hành:* Viết file `Dockerfile` Multi-stage build cho dự án Spring Boot, build image bằng `docker build -t my-app .` và chạy thử bằng `docker run -p 8080:8080 my-app`.
 
 ---
 
